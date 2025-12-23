@@ -6,18 +6,14 @@
 <title>Ehtisham News</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-}
-
 body{
   margin:0;
-  background:#fafafa;
+  font-family:Arial, sans-serif;
+  background:#f7f7f7;
   color:#222;
 }
 
-/* ================= SPLASH ================= */
+/* SPLASH */
 #splash{
   position:fixed;
   inset:0;
@@ -26,105 +22,95 @@ body{
   align-items:center;
   justify-content:center;
   z-index:9999;
-  transition:opacity .5s ease, visibility .5s ease;
 }
-
-#splash.hide{
-  opacity:0;
-  visibility:hidden;
-}
-
+#splash.hide{display:none;}
 .loader{
-  font-size:26px;
-  font-weight:700;
+  font-size:24px;
+  font-weight:bold;
   color:#c9a23f;
-  animation:pulse 1.2s infinite;
+  animation:pulse 1s infinite;
 }
-
 @keyframes pulse{
   0%{opacity:.3}
   50%{opacity:1}
   100%{opacity:.3}
 }
 
-/* ================= APP ================= */
-#app{
-  display:none;
-}
-
-/* Header */
+/* HEADER */
 header{
   text-align:center;
-  padding:24px 16px 10px;
+  padding:20px;
+  background:#fff;
 }
+header h1 span{color:#c9a23f}
 
-header h1{
-  margin:0;
-  font-size:30px;
-}
-
-header h1 span{
-  color:#c9a23f;
-}
-
-header p{
-  margin-top:6px;
-  color:#666;
-  font-size:14px;
-}
-
-/* Cards */
-.container{
-  padding:16px;
-}
-
+/* CARDS */
+.container{padding:15px}
 .card{
   background:#fff;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 6px 20px rgba(0,0,0,.06);
-  border:2px solid #f2f2f2;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
 }
-
-.tag{
+.card h2{margin:10px 0}
+.badge{
   display:inline-block;
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:600;
-  color:#c9a23f;
+  padding:5px 12px;
   border:1px solid #c9a23f;
-  margin-bottom:8px;
+  border-radius:20px;
+  color:#c9a23f;
+  font-size:13px;
 }
 
-.card h2{
-  margin:6px 0 6px;
-  font-size:22px;
-}
-
-.card p{
-  font-size:14px;
-  color:#555;
-}
-
+/* BUTTON */
 .btn{
-  margin-top:10px;
   display:inline-block;
-  padding:10px 16px;
-  border-radius:25px;
+  margin-top:10px;
+  padding:10px 18px;
   background:#c9a23f;
   color:#fff;
-  font-weight:600;
+  border-radius:25px;
   text-decoration:none;
+  cursor:pointer;
 }
 
-/* Footer */
+/* NEWS VIEW */
+#newsView{display:none}
+
+/* CONTACT */
 footer{
-  text-align:center;
+  background:#fff;
   padding:20px;
-  font-size:13px;
-  color:#777;
+  text-align:center;
+  margin-top:30px;
+}
+footer a{
+  margin:0 8px;
+  text-decoration:none;
+  color:#c9a23f;
+}
+
+/* POPUPS */
+.popup{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#222;
+  color:#fff;
+  padding:15px 20px;
+  border-radius:12px;
+  display:none;
+  z-index:999;
+}
+.popup button{
+  margin-left:10px;
+  background:#c9a23f;
+  border:none;
+  padding:5px 10px;
+  color:#fff;
+  border-radius:8px;
 }
 </style>
 </head>
@@ -132,70 +118,113 @@ footer{
 <body>
 
 <!-- SPLASH -->
-<div id="splash">
-  <div class="loader">Ehtisham News</div>
-</div>
+<div id="splash"><div class="loader">Ehtisham News</div></div>
 
 <!-- APP -->
-<div id="app">
+<div id="app" style="display:none">
 
 <header>
   <h1>Ehtisham <span>News</span></h1>
   <p>Free Fire • Esports • Gaming Community</p>
 </header>
 
-<div class="container">
+<div class="container" id="home">
 
   <div class="card">
-    <div class="tag">🔥 Gaming</div>
+    <span class="badge">🔥 Gaming</span>
     <h2>Gaming News</h2>
-    <p>Latest Free Fire and gaming updates from around the world.</p>
-    <a class="btn" href="#" onclick="openNews()">Read more</a>
+    <p>Latest Free Fire & gaming updates.</p>
+    <div class="btn" onclick="openNews('gaming')">Read More</div>
   </div>
 
   <div class="card">
-    <div class="tag">🏆 Esports</div>
+    <span class="badge">🏆 Esports</span>
     <h2>Esports World</h2>
-    <p>Tournaments, teams, rankings and World Cup updates.</p>
-    <a class="btn" href="#" onclick="openNews()">Read more</a>
+    <p>Tournaments, teams & rankings.</p>
+    <div class="btn" onclick="openNews('esports')">Read More</div>
   </div>
 
   <div class="card">
-    <div class="tag">💬 Community</div>
+    <span class="badge">👥 Community</span>
     <h2>Community News</h2>
-    <p>Creator updates, announcements and community highlights.</p>
-    <a class="btn" href="#" onclick="openNews()">Read more</a>
+    <p>Creator & community updates.</p>
+    <div class="btn" onclick="openNews('community')">Read More</div>
   </div>
 
 </div>
 
+<!-- NEWS PAGE -->
+<div class="container" id="newsView">
+  <div class="card">
+    <h2 id="newsTitle"></h2>
+    <p id="newsText"></p>
+    <hr>
+    <p><b>More News:</b></p>
+    <div class="btn" onclick="openNews('gaming')">Gaming</div>
+    <div class="btn" onclick="openNews('esports')">Esports</div>
+    <div class="btn" onclick="openNews('community')">Community</div>
+    <br><br>
+    <div class="btn" onclick="goHome()">Back</div>
+  </div>
+</div>
+
 <footer>
-  © 2025 Ehtisham News • Built for Mobile
+  <h3>Contact Us</h3>
+  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
+  <a href="https://www.facebook.com/share/16UChCgJTn/" target="_blank">Facebook</a>
+  <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
+  <a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank">TikTok</a>
+  <p>© 2025 Ehtisham News</p>
 </footer>
 
 </div>
 
-<script>
-/* ===== SPLASH FIX (NO STUCK GUARANTEE) ===== */
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    const splash = document.getElementById("splash");
-    const app = document.getElementById("app");
-    splash.classList.add("hide");
-    app.style.display = "block";
-  }, 1800);
-});
+<!-- POPUPS -->
+<div class="popup" id="notify">
+  Enable notifications?
+  <button onclick="closePopup('notify')">OK</button>
+</div>
 
-/* ===== NEWS OPEN (NEW TAB) ===== */
-function openNews(){
-  window.open("https://ehtisham-news.vercel.app/", "_blank");
+<div class="popup" id="install">
+  Install Ehtisham News App?
+  <button onclick="closePopup('install')">Install</button>
+</div>
+
+<script>
+// SPLASH FIX
+setTimeout(()=>{
+  document.getElementById("splash").classList.add("hide");
+  document.getElementById("app").style.display="block";
+},1500);
+
+// NEWS
+function openNews(type){
+  document.getElementById("home").style.display="none";
+  document.getElementById("newsView").style.display="block";
+
+  const data={
+    gaming:"Gaming news detail here...",
+    esports:"Esports news detail here...",
+    community:"Community news detail here..."
+  };
+  document.getElementById("newsTitle").innerText=type.toUpperCase()+" NEWS";
+  document.getElementById("newsText").innerText=data[type];
 }
 
-/* ===== ADMIN PANEL (HIDDEN URL READY) ===== */
-/*
-Future:
-https://yoursite.com/admin?pass=CHATGPTSEBNWAIHAI
-*/
+function goHome(){
+  document.getElementById("newsView").style.display="none";
+  document.getElementById("home").style.display="block";
+}
+
+// POPUPS
+setTimeout(()=>document.getElementById("notify").style.display="block",3000);
+setTimeout(()=>document.getElementById("install").style.display="block",6000);
+function closePopup(id){document.getElementById(id).style.display="none";}
+
+// ADMIN
+if(location.search.includes("CHATGPTSEBNWAIHAI")){
+  alert("Admin Panel Activated");
+}
 </script>
 
 </body>
