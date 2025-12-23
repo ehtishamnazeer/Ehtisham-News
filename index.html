@@ -7,123 +7,123 @@
 
 <meta name="theme-color" content="#c9a23f">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ===== PWA MANIFEST (INLINE) ===== -->
+<link rel="manifest" href='data:application/json,{
+  "name":"Ehtisham News",
+  "short_name":"E-News",
+  "start_url":".",
+  "display":"standalone",
+  "background_color":"#ffffff",
+  "theme_color":"#c9a23f"
+}'>
 
 <style>
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
-  background:#f4f6f8;
+  background:#f4f4f4;
   color:#222;
 }
 h1,h2,h3{margin:0}
 a{text-decoration:none;color:inherit}
 
-/* SPLASH */
+/* ===== INTRO / SPLASH ===== */
 #splash{
-  position:fixed;inset:0;
+  position:fixed; inset:0;
   background:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
-  animation:hideSplash 2s forwards;
 }
-#splash .logo{
-  width:120px;height:120px;
-  border-radius:28px;
-  background:#c9a23f;
-  color:#fff;
-  font-size:48px;
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation:pop 1s ease;
+#splash .intro{
+  text-align:center;
+  animation:introIn 1.4s ease forwards;
 }
-@keyframes pop{
-  from{transform:scale(.6);opacity:0}
-  to{transform:scale(1);opacity:1}
+#splash .intro h1{
+  font-size:42px;
+  font-weight:700;
 }
-@keyframes hideSplash{
-  0%,85%{opacity:1}
-  100%{opacity:0;visibility:hidden}
+#splash .intro span{color:#c9a23f}
+@keyframes introIn{
+  from{opacity:0;transform:scale(.8)}
+  to{opacity:1;transform:scale(1)}
+}
+.hideSplash{
+  animation:introOut .8s ease forwards;
+}
+@keyframes introOut{
+  to{opacity:0;visibility:hidden}
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
 header{
   background:#fff;
+  padding:20px;
   text-align:center;
-  padding:18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05)
 }
 header span{color:#c9a23f}
-header p{margin-top:6px;font-size:14px;color:#666}
 
-/* CONTAINER */
+/* ===== CARDS ===== */
 .container{padding:16px}
-
-/* CARDS */
 .card{
   background:#fff;
-  border-radius:16px;
+  border-radius:18px;
   padding:18px;
-  margin-bottom:14px;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  margin-bottom:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
   animation:fadeUp .35s ease;
 }
 @keyframes fadeUp{
-  from{opacity:0;transform:translateY(12px)}
+  from{opacity:0;transform:translateY(14px)}
   to{opacity:1;transform:none}
 }
-.card button{
-  margin-top:10px;
+button{
   background:#c9a23f;
-  border:none;
   color:#fff;
+  border:none;
   padding:10px 18px;
-  border-radius:20px;
-  cursor:pointer;
+  border-radius:22px;
+  font-family:'Poppins';
   font-weight:500;
+  cursor:pointer;
 }
 
-/* PAGES */
+/* ===== PAGES ===== */
 #newsPage{display:none}
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 footer{
   background:#fff;
-  padding:14px;
+  padding:16px;
   text-align:center;
-  font-size:14px;
+  box-shadow:0 -2px 10px rgba(0,0,0,.05)
 }
-footer a{margin:0 6px;color:#c9a23f}
+footer a{margin:0 6px}
 
-/* NOTIFICATION POPUP */
-#notifyBox{
+/* ===== INSTALL / NOTIFY BOX ===== */
+.popup{
   position:fixed;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#222;
-  color:#fff;
-  padding:14px 18px;
-  border-radius:12px;
-  display:none;
-  z-index:999;
-  animation:fadeUp .3s ease;
+  bottom:18px; left:16px; right:16px;
+  z-index:1000;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
+<!-- INTRO -->
 <div id="splash">
-  <div class="logo">EN</div>
+  <div class="intro">
+    <h1>Ehtisham <span>News</span></h1>
+    <p>Gaming • Esports • Community</p>
+  </div>
 </div>
-
-<div id="notifyBox"></div>
 
 <header>
   <h1>Ehtisham <span>News</span></h1>
@@ -135,19 +135,19 @@ footer a{margin:0 6px;color:#c9a23f}
   <div class="card">
     <h2>🔥 Gaming</h2>
     <p>Latest gaming updates</p>
-    <button onclick="openNews('gaming')">Explore</button>
+    <button onclick="openNews('gaming')">Read More</button>
   </div>
 
   <div class="card">
     <h2>🏆 Esports</h2>
     <p>Tournaments & rankings</p>
-    <button onclick="openNews('esports')">Explore</button>
+    <button onclick="openNews('esports')">Read More</button>
   </div>
 
   <div class="card">
     <h2>👥 Community</h2>
     <p>Creators & community news</p>
-    <button onclick="openNews('community')">Explore</button>
+    <button onclick="openNews('community')">Read More</button>
   </div>
 </div>
 
@@ -166,7 +166,7 @@ footer a{margin:0 6px;color:#c9a23f}
   <a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
 </footer>
 
-<!-- FIREBASE -->
+<!-- ===== FIREBASE ===== -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -177,8 +177,15 @@ firebase.initializeApp({
   projectId:"ehtisham-news"
 });
 const db = firebase.firestore();
+</script>
 
-/* NAVIGATION */
+<script>
+// INTRO AUTO HIDE
+setTimeout(()=>{
+  document.getElementById('splash').classList.add('hideSplash');
+},2200);
+
+/* ===== NEWS ===== */
 function openNews(cat){
   home.style.display="none";
   newsPage.style.display="block";
@@ -192,13 +199,12 @@ function openNews(cat){
     .get()
     .then(snap=>{
       let html="";
-      snap.forEach(doc=>{
-        let n=doc.data();
+      snap.forEach(d=>{
+        let n=d.data();
         html+=`
           <div class="card">
             <h3>${n.title}</h3>
             <p>${n.content}</p>
-            <small>${n.date}</small>
           </div>`;
       });
       newsContent.innerHTML = html || "<p>No news available</p>";
@@ -210,19 +216,36 @@ function goHome(){
   home.style.display="block";
 }
 
-/* IN‑APP NOTIFICATIONS */
-db.collection("notifications")
-  .orderBy("time","desc")
-  .limit(1)
-  .onSnapshot(snap=>{
-    snap.forEach(doc=>{
-      let n=doc.data();
-      let box=document.getElementById("notifyBox");
-      box.innerHTML = `<strong>${n.title}</strong><br>${n.body}`;
-      box.style.display="block";
-      setTimeout(()=>box.style.display="none",5000);
+/* ===== NOTIFICATION POPUP ===== */
+if("Notification" in window){
+  Notification.requestPermission();
+  db.collection("notifications")
+    .orderBy("time","desc")
+    .limit(1)
+    .onSnapshot(s=>{
+      s.forEach(d=>{
+        let n=d.data();
+        if(Notification.permission==="granted"){
+          new Notification(n.title,{body:n.body});
+        }
+      });
     });
-  });
+}
+
+/* ===== INSTALL PROMPT ===== */
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt",e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  let box=document.createElement("div");
+  box.className="card popup";
+  box.innerHTML=`<h3>Install Ehtisham News</h3><button id="installBtn">Install</button>`;
+  document.body.appendChild(box);
+  document.getElementById("installBtn").onclick=()=>{
+    box.remove();
+    deferredPrompt.prompt();
+  };
+});
 </script>
 
 </body>
