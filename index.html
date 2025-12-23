@@ -6,152 +6,175 @@
 <title>Ehtisham News</title>
 
 <style>
-*{box-sizing:border-box;font-family:system-ui,-apple-system}
-body{margin:0;background:#f7f7f7;color:#222}
-header{text-align:center;padding:18px;background:#fff;border-bottom:1px solid #ddd}
-h1 span{color:#c9a23f}
-.tabs{display:flex;gap:10px;justify-content:center;margin:15px}
-.tab{padding:10px 16px;border-radius:20px;border:1px solid #c9a23f;color:#c9a23f;cursor:pointer}
-.tab.active{background:#c9a23f;color:#fff}
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#f5f5f5;
+}
+
+/* Splash */
+#splash{
+  position:fixed;
+  inset:0;
+  background:#000;
+  color:#d4af37;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  z-index:999;
+}
+.hide{display:none}
+
+/* Header */
+header{
+  background:#fff;
+  padding:20px;
+  text-align:center;
+}
+header h1{
+  margin:0;
+  font-size:30px;
+}
+header span{color:#d4af37}
+
+/* Alert Button */
+.alert-btn{
+  margin:15px auto;
+  display:block;
+  padding:12px 20px;
+  background:#d4af37;
+  border:none;
+  color:#fff;
+  border-radius:25px;
+  font-size:16px;
+}
+
+/* Cards */
 .container{padding:15px}
-.card{background:#fff;border-radius:14px;padding:15px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
-button{background:#c9a23f;color:#fff;border:none;padding:10px 16px;border-radius:20px;cursor:pointer}
-.hidden{display:none}
-footer{text-align:center;padding:15px;font-size:13px;color:#777}
+.card{
+  background:#fff;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:20px;
+  border:2px solid #d4af37;
+}
+.card h2{margin-top:0}
+.read{
+  display:inline-block;
+  margin-top:10px;
+  color:#d4af37;
+  font-weight:bold;
+}
 
-#alertBtn{position:fixed;top:12px;right:12px}
-
-.news-link{margin-top:10px;color:#c9a23f;font-weight:600;cursor:pointer}
-
-.contact a{display:block;margin:6px 0;color:#c9a23f;text-decoration:none}
+/* Contact */
+.contact{
+  background:#fff;
+  padding:20px;
+  text-align:center;
+}
+.contact a{
+  display:block;
+  color:#000;
+  margin:8px;
+}
 
 /* Admin */
-#adminPanel input{width:100%;padding:10px;margin:8px 0}
+#admin{
+  display:none;
+  padding:20px;
+}
+input,textarea{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+}
+button{
+  padding:10px;
+  background:#d4af37;
+  border:none;
+  color:white;
+  width:100%;
+}
 </style>
 </head>
 
 <body>
 
-<header id="logo">
-<h1>Ehtisham <span>News</span></h1>
-<p>Free Fire • Esports • Gaming Community</p>
+<div id="splash">Ehtisham News</div>
+
+<header>
+  <h1>Ehtisham <span>News</span></h1>
+  <p>Free Fire • Esports • Gaming Community</p>
 </header>
 
-<button id="alertBtn">Enable Alerts</button>
-
-<div class="tabs">
-<div class="tab active" onclick="showTab('gaming')">Gaming</div>
-<div class="tab" onclick="showTab('esports')">Esports</div>
-<div class="tab" onclick="showTab('community')">Community</div>
-</div>
-
-<div class="container" id="content"></div>
-
-<div class="container hidden" id="article"></div>
+<button class="alert-btn" onclick="enableAlerts()">Enable Alerts</button>
 
 <div class="container">
-<div class="card contact">
+
+<div class="card">
+  <h2>🔥 Gaming News</h2>
+  <p>Latest Free Fire updates and gaming news.</p>
+  <a class="read" href="news1.html" target="_blank">Read More</a>
+</div>
+
+<div class="card">
+  <h2>🏆 Esports World</h2>
+  <p>Tournaments, rankings and teams updates.</p>
+  <a class="read" href="news2.html" target="_blank">Read More</a>
+</div>
+
+<div class="card">
+  <h2>👥 Community News</h2>
+  <p>Community events & announcements.</p>
+  <a class="read" href="news3.html" target="_blank">Read More</a>
+</div>
+
+</div>
+
+<div class="contact">
 <h3>Contact Us</h3>
 <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
 <a href="https://www.facebook.com/share/16UChCgJTn/" target="_blank">Facebook</a>
 <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
 <a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank">TikTok</a>
 </div>
-</div>
 
-<footer>© 2025 Ehtisham News • Built for Mobile</footer>
-
-<!-- ADMIN PANEL -->
-<div class="container hidden" id="adminPanel">
-<div class="card">
-<h3>Admin Panel</h3>
-<input type="password" id="adminPass" placeholder="Admin Password">
+<!-- ADMIN -->
+<div id="admin">
+<h2>Admin Panel</h2>
+<input type="password" id="pass" placeholder="Password">
+<textarea placeholder="Post News..."></textarea>
 <button onclick="checkAdmin()">Login</button>
-<p id="adminMsg"></p>
-</div>
 </div>
 
 <script>
-const data={
-gaming:[
-{t:"GTA 6 update released",d:"New GTA 6 features revealed."},
-{t:"PUBG new season launched",d:"Royale Pass and maps updated."}
-],
-esports:[
-{t:"Free Fire World Cup",d:"Teams announced globally."}
-],
-community:[
-{t:"Community Tournament",d:"Join local FF events."}
-]
-};
+setTimeout(()=>document.getElementById('splash').classList.add('hide'),2000)
 
-let tap=0;
-
-function showTab(tab){
-document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-event.target.classList.add('active');
-render(tab);
+/* Alerts */
+function enableAlerts(){
+ if(Notification.permission!=="granted"){
+  Notification.requestPermission().then(p=>{
+    if(p==="granted"){
+      new Notification("Ehtisham News Alerts Enabled!");
+    }
+  })
+ }
 }
 
-function render(tab){
-const box=document.getElementById("content");
-box.innerHTML="";
-data[tab].forEach((n,i)=>{
-box.innerHTML+=`
-<div class="card">
-<h3>${n.t}</h3>
-<p>${n.d}</p>
-<div class="news-link" onclick="readMore('${tab}',${i})">Read More</div>
-</div>`;
-});
+/* Admin URL */
+if(window.location.pathname.includes("admin.html")){
+ document.getElementById("admin").style.display="block"
 }
 
-function readMore(tab,i){
-document.getElementById("content").classList.add("hidden");
-const art=document.getElementById("article");
-art.classList.remove("hidden");
-art.innerHTML=`
-<div class="card">
-<h2>${data[tab][i].t}</h2>
-<p>${data[tab][i].d} — Full detailed news shown here.</p>
-<hr>
-<h4>More News</h4>
-${data[tab].map((n,j)=>j!==i?`<div class="news-link" onclick="readMore('${tab}',${j})">${n.t}</div>`:"").join("")}
-<br><br>
-<button onclick="goBack()">Back</button>
-</div>`;
-}
-
-function goBack(){
-document.getElementById("article").classList.add("hidden");
-document.getElementById("content").classList.remove("hidden");
-}
-
-document.getElementById("alertBtn").onclick=()=>{
-Notification.requestPermission().then(p=>{
-if(p==="granted")new Notification("Ehtisham News Alerts Enabled");
-});
-};
-
-/* ADMIN SECRET TAP */
-document.getElementById("logo").addEventListener("click",()=>{
-tap++;
-setTimeout(()=>tap=0,800);
-if(tap===5){
-document.getElementById("adminPanel").classList.remove("hidden");
-window.scrollTo(0,document.body.scrollHeight);
-}
-});
-
+/* Admin Login */
 function checkAdmin(){
-if(document.getElementById("adminPass").value==="CHATGPTSEBNWAIHAI"){
-document.getElementById("adminMsg").innerText="Admin Access Granted";
-}else{
-document.getElementById("adminMsg").innerText="Wrong Password";
+ if(document.getElementById("pass").value==="CHATGPTSEBNWAIHAI"){
+  alert("Admin Access Granted");
+ }else{
+  alert("Wrong Password");
+ }
 }
-}
-
-render("gaming");
 </script>
 
 </body>
