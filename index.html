@@ -2,96 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ehtisham News • Gaming Updates</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Ehtisham News – Latest Game Updates, Esports World and Community News">
-
-<!-- PWA -->
-<link rel="manifest" href="data:application/json,{
-  &quot;name&quot;:&quot;Ehtisham News&quot;,
-  &quot;short_name&quot;:&quot;EhtishamNews&quot;,
-  &quot;start_url&quot;:&quot;.&quot;,
-  &quot;display&quot;:&quot;standalone&quot;,
-  &quot;background_color&quot;:&quot;#ffffff&quot;,
-  &quot;theme_color&quot;:&quot;#d4af37&quot;
-}">
+<title>Ehtisham News</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Arial}
-body{background:#fff;color:#222}
+:root{
+  --gold:#c9a227;
+  --light:#ffffff;
+  --bg:#f6f6f6;
+}
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{margin:0;background:var(--bg);color:#333}
 header{
-  background:linear-gradient(135deg,#fff,#fff8e1);
-  padding:16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:2px solid #d4af37;
-}
-.logo{font-size:22px;font-weight:700}
-.logo span{color:#d4af37}
-
-.btn{
-  padding:8px 14px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#d4af37;
-  color:#fff;
-  font-weight:600;
-}
-
-main{padding:20px}
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:16px;
-}
-.card{
   background:#fff;
-  border-radius:14px;
-  padding:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-  transition:.3s;
-}
-.card:hover{transform:translateY(-6px)}
-.card h3{margin-bottom:10px}
-.card p{opacity:.8;margin-bottom:12px}
-
-footer{
-  margin-top:30px;
   padding:20px;
   text-align:center;
-  background:#fff8e1;
-  border-top:2px solid #d4af37;
+  border-bottom:2px solid var(--gold)
 }
-
-.contact a{
-  margin:0 8px;
-  text-decoration:none;
-  color:#d4af37;
-  font-weight:600;
-}
-
-/* MODAL */
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  align-items:center;
+header h1{margin:0;color:#000}
+header span{color:var(--gold)}
+.tabs{
+  display:flex;
+  gap:10px;
   justify-content:center;
+  padding:15px;
 }
-.modal-content{
+.tabs button{
+  border:none;
+  padding:10px 16px;
+  border-radius:20px;
+  background:#fff;
+  border:1px solid var(--gold);
+  cursor:pointer;
+}
+.tabs button.active{background:var(--gold);color:#fff}
+.container{max-width:900px;margin:auto;padding:15px}
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,.08);
+  animation:fade .4s ease
+}
+.card h3{margin-top:0}
+.card button{
+  background:var(--gold);
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+}
+.empty{text-align:center;color:#777;margin-top:40px}
+
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+
+#articlePage{
+  display:none;
+  background:#fff;
+  min-height:100vh;
+  padding:20px;
+}
+#admin{
+  display:none;
   background:#fff;
   padding:20px;
-  width:90%;
-  max-width:420px;
-  border-radius:14px;
+  border-top:2px solid var(--gold)
 }
-input,textarea{
+input,select,textarea{
   width:100%;
-  margin:6px 0;
-  padding:8px;
+  padding:10px;
+  margin:8px 0;
+}
+footer{
+  text-align:center;
+  padding:20px;
+  color:#666;
 }
 </style>
 </head>
@@ -99,103 +85,108 @@ input,textarea{
 <body>
 
 <header>
-  <div class="logo">Ehtisham <span>News</span></div>
-  <div>
-    <button class="btn" onclick="enableNotifications()">Enable Alerts</button>
-    <button class="btn" onclick="showAdmin()">Admin</button>
-  </div>
+  <h1>Ehtisham <span>News</span></h1>
+  <small>Free Fire • Esports • Gaming Community</small>
 </header>
 
-<main>
-  <div class="cards">
-    <div class="card">
-      <h3>Game Updates</h3>
-      <p>Latest game related news & updates</p>
-      <button class="btn" onclick="openNews('game')">Read More</button>
-    </div>
-
-    <div class="card">
-      <h3>Esports World</h3>
-      <p>Tournaments, teams & esports updates</p>
-      <button class="btn" onclick="openNews('esports')">Read More</button>
-    </div>
-
-    <div class="card">
-      <h3>Community News</h3>
-      <p>Creators & gaming community updates</p>
-      <button class="btn" onclick="openNews('community')">Read More</button>
-    </div>
-  </div>
-</main>
-
-<footer>
-  <div class="contact">
-    <a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a>
-    <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
-    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
-  </div>
-  <p>© 2025 Ehtisham News</p>
-</footer>
-
-<!-- NEWS PAGE (NEW TAB) -->
-<script>
-const newsData = {
-  game: ["GTA 6 update released","PUBG new season launched"],
-  esports: [],
-  community: ["Top streamer reached 1M subs"]
-};
-
-function openNews(type){
-  let w = window.open("", "_blank");
-  let list = newsData[type];
-  let html = `
-  <title>${type.toUpperCase()} • Ehtisham News</title>
-  <body style="font-family:Segoe UI;padding:20px">
-  <h2>${type.toUpperCase()}</h2>
-  ${list.length===0
-    ? "<p>Stay tuned for updated news</p>"
-    : list.map(n=>"<div style='margin:10px 0;padding:12px;border:1px solid #d4af37;border-radius:10px'>"+n+"</div>").join("")
-  }
-  </body>`;
-  w.document.write(html);
-}
-</script>
-
-<!-- ADMIN -->
-<div class="modal" id="admin">
-  <div class="modal-content">
-    <h3>Admin Panel</h3>
-    <input id="type" placeholder="game / esports / community">
-    <textarea id="news" placeholder="News text"></textarea>
-    <button class="btn" onclick="addNews()">Add News</button>
-    <button class="btn" onclick="closeAdmin()">Close</button>
-  </div>
+<div class="tabs">
+  <button class="active" onclick="switchTab('game')">Game Updates</button>
+  <button onclick="switchTab('esports')">Esports World</button>
+  <button onclick="switchTab('community')">Community News</button>
 </div>
 
+<div class="container" id="newsContainer"></div>
+
+<!-- Article Page -->
+<div id="articlePage">
+  <button onclick="goBack()">← Back</button>
+  <h2 id="aTitle"></h2>
+  <p id="aContent"></p>
+</div>
+
+<!-- Admin Panel -->
+<div id="admin">
+  <h3>Admin Panel</h3>
+  <input id="nTitle" placeholder="News Title">
+  <textarea id="nContent" placeholder="News Content"></textarea>
+  <select id="nCat">
+    <option value="game">Game Updates</option>
+    <option value="esports">Esports World</option>
+    <option value="community">Community News</option>
+  </select>
+  <button onclick="addNews()">Add News</button>
+</div>
+
+<footer>
+  © 2025 Ehtisham News • Built for Mobile
+</footer>
+
 <script>
-function showAdmin(){document.getElementById("admin").style.display="flex"}
-function closeAdmin(){document.getElementById("admin").style.display="none"}
+let current='game'
+let data={
+  game:[],
+  esports:[],
+  community:[]
+}
+
+function switchTab(tab){
+  current=tab
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'))
+  event.target.classList.add('active')
+  render()
+}
+
+function render(){
+  const box=document.getElementById('newsContainer')
+  box.innerHTML=''
+  if(data[current].length===0){
+    box.innerHTML='<div class="empty">Stay tuned for updated news</div>'
+    return
+  }
+  data[current].forEach(n=>{
+    box.innerHTML+=`
+    <div class="card">
+      <h3>${n.title}</h3>
+      <p>${n.content.substring(0,70)}...</p>
+      <button onclick="openArticle('${n.title}','${n.content}')">Read More</button>
+    </div>`
+  })
+}
+
+function openArticle(t,c){
+  document.body.scrollTop=0
+  document.documentElement.scrollTop=0
+  document.getElementById('articlePage').style.display='block'
+  document.querySelector('.container').style.display='none'
+  document.querySelector('.tabs').style.display='none'
+  document.getElementById('aTitle').innerText=t
+  document.getElementById('aContent').innerText=c
+}
+
+function goBack(){
+  document.getElementById('articlePage').style.display='none'
+  document.querySelector('.container').style.display='block'
+  document.querySelector('.tabs').style.display='flex'
+}
 
 function addNews(){
-  let t=document.getElementById("type").value;
-  let n=document.getElementById("news").value;
-  if(newsData[t]){
-    newsData[t].push(n);
-    alert("News added");
-  }else alert("Wrong category");
+  data[nCat.value].push({title:nTitle.value,content:nContent.value})
+  nTitle.value=nContent.value=''
+  render()
 }
-</script>
 
-<!-- NOTIFICATIONS -->
-<script>
-function enableNotifications(){
-  if(!("Notification"in window)){alert("Not supported");return;}
-  Notification.requestPermission().then(p=>{
-    if(p==="granted"){
-      new Notification("Ehtisham News 🔔",{body:"Notifications enabled"});
-    }
-  });
+/* Secret Admin Access */
+document.addEventListener('keydown',e=>{
+  if(e.key==='@'){
+    admin.style.display='block'
+  }
+})
+
+/* Notifications */
+if("Notification"in window){
+  Notification.requestPermission()
 }
+render()
 </script>
 
 </body>
