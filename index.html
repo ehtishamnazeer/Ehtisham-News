@@ -63,16 +63,6 @@ header h1 span{color:#c9a23f}
 #adminPanel{display:none;padding:15px}
 input,textarea{width:100%;padding:8px;margin:6px 0}
 
-/* Popups */
-.popup{
- position:fixed;bottom:20px;left:50%;
- transform:translateX(-50%);
- background:#fff;padding:15px;
- border-radius:12px;
- box-shadow:0 10px 30px rgba(0,0,0,.2);
- display:none;z-index:999;
-}
-
 /* Contact */
 footer{background:#fff;padding:15px;text-align:center}
 footer a{margin:5px;display:inline-block}
@@ -90,115 +80,81 @@ footer a{margin:5px;display:inline-block}
 </header>
 
 <div class="container" id="home">
-<div class="card">
-<h2>🔥 Gaming</h2>
-<p>Latest Free Fire & gaming updates</p>
-<button onclick="openNews('Gaming')">Read More</button>
+  <div class="card">
+    <h2>🔥 Gaming</h2>
+    <p>Latest Free Fire & gaming updates</p>
+    <button onclick="openNews('gaming')">Read More</button>
+  </div>
+
+  <div class="card">
+    <h2>🏆 Esports</h2>
+    <p>Tournaments & world rankings</p>
+    <button onclick="openNews('esports')">Read More</button>
+  </div>
+
+  <div class="card">
+    <h2>👥 Community</h2>
+    <p>Creator & community updates</p>
+    <button onclick="openNews('community')">Read More</button>
+  </div>
 </div>
 
-<div class="card">
-<h2>🏆 Esports</h2>
-<p>Tournaments & world rankings</p>
-<button onclick="openNews('Esports')">Read More</button>
-</div>
-
-<div class="card">
-<h2>👥 Community</h2>
-<p>Creator & community updates</p>
-<button onclick="openNews('Community')">Read More</button>
-</div>
-</div>
-
-<!-- News -->
+<!-- News Page -->
 <div class="container" id="newsPage">
-<h2 id="newsTitle"></h2>
-<div id="newsContent"></div>
-<button onclick="goHome()">⬅ Back</button>
-</div>
-
-<!-- Admin -->
-<div id="adminPanel">
-<h2>Admin Panel</h2>
-<input id="adminTitle" placeholder="News title">
-<textarea id="adminText" placeholder="News content"></textarea>
-<button onclick="addNews()">Add News</button>
-<div id="adminList"></div>
-</div>
-
-<!-- Install Popup -->
-<div class="popup" id="installPopup">
-<b>Install Ehtisham News?</b><br><br>
-<button onclick="installApp()">Install</button>
-<button onclick="closeInstall()">Later</button>
-</div>
-
-<!-- Notification Popup -->
-<div class="popup" id="notiPopup">
-<b>Enable Notifications?</b><br><br>
-<button onclick="enableNoti()">Allow</button>
+  <h2 id="newsTitle"></h2>
+  <div id="newsContent"></div>
+  <button onclick="goHome()">⬅ Back</button>
 </div>
 
 <footer>
-<h3>Contact Us</h3>
-<a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
-<a href="https://www.facebook.com/share/16UChCgJTn/">Facebook</a> |
-<a href="https://www.instagram.com/ehtisham_nazeer">Instagram</a> |
-<a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
+  <h3>Contact Us</h3>
+  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
+  <a href="https://www.facebook.com/share/16UChCgJTn/">Facebook</a> |
+  <a href="https://www.instagram.com/ehtisham_nazeer">Instagram</a> |
+  <a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
 </footer>
 
-<script>
-/* Splash fix */
-window.onload=()=>document.getElementById("splash").classList.add("hide")
+<!-- ================= FIREBASE STEP 3 (CORRECT WAY) ================= -->
 
-/* Data */
-let newsData={Gaming:[],Esports:[],Community:[]}
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
+    authDomain: "ehtisham-news.firebaseapp.com",
+    projectId: "ehtisham-news",
+    storageBucket: "ehtisham-news.firebasestorage.app",
+    messagingSenderId: "52980900534",
+    appId: "1:52980900534:web:3595bef67929dd1c727c17"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+</script>
+
+<script>
+/* Splash FIX */
+window.onload = () => {
+  document.getElementById("splash").classList.add("hide");
+};
 
 /* Navigation */
-function openNews(type){
- document.getElementById("home").style.display="none"
- document.getElementById("newsPage").style.display="block"
- document.getElementById("newsTitle").innerText=type
- document.getElementById("newsContent").innerHTML=
- newsData[type].map(n=>`<p>${n}</p>`).join("")||"No news yet"
+function openNews(cat){
+  document.getElementById("home").style.display="none";
+  document.getElementById("newsPage").style.display="block";
+  document.getElementById("newsTitle").innerText = cat.toUpperCase();
+  document.getElementById("newsContent").innerHTML =
+    "<p>Firebase se news yahan load hogi…</p>";
 }
+
 function goHome(){
- location.reload()
-}
-
-/* Admin */
-if(location.hash==="#admin"){
- let pass=prompt("Admin Password")
- if(pass==="CHATGPTSEBNWAIHAI"){
-  document.getElementById("home").style.display="none"
-  document.getElementById("adminPanel").style.display="block"
- }
-}
-function addNews(){
- let t=adminTitle.value
- let c=adminText.value
- newsData.Gaming.push(`<b>${t}</b><br>${c}`)
- adminTitle.value=adminText.value=""
- alert("Added")
-}
-
-/* Install */
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt",e=>{
- e.preventDefault();deferredPrompt=e;
- document.getElementById("installPopup").style.display="block"
-})
-function installApp(){
- deferredPrompt.prompt()
-}
-function closeInstall(){
- installPopup.style.display="none"
-}
-
-/* Notifications */
-setTimeout(()=>notiPopup.style.display="block",3000)
-function enableNoti(){
- Notification.requestPermission()
- notiPopup.style.display="none"
+  document.getElementById("newsPage").style.display="none";
+  document.getElementById("home").style.display="block";
 }
 </script>
 
