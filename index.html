@@ -7,105 +7,112 @@
 
 <meta name="theme-color" content="#c9a23f">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-<link rel="manifest" href='data:application/json,{
-  "name":"Ehtisham News",
-  "short_name":"E-News",
-  "start_url":".",
-  "display":"standalone",
-  "background_color":"#ffffff",
-  "theme_color":"#c9a23f"
-}'>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins,Arial;
+  font-family:'Poppins',sans-serif;
   background:#f4f4f4;
   color:#222;
 }
 a{text-decoration:none;color:inherit}
 
-header{
-  background:#fff;
-  padding:20px;
-  text-align:center;
-  box-shadow:0 4px 10px rgba(0,0,0,.05)
-}
-header span{color:#c9a23f}
-
-.container{padding:16px}
-.card{
-  background:#fff;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:14px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-  transition:.3s;
-}
-.card:hover{transform:translateY(-3px)}
-button{
-  background:#c9a23f;
-  color:#fff;
-  border:none;
-  padding:10px 18px;
-  border-radius:20px;
-  cursor:pointer;
-  font-family:inherit;
-}
-
-#newsPage,#singleNews{display:none}
-
-.fade{animation:fade .35s ease}
-@keyframes fade{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1}
-}
-
-/* Splash */
+/* SPLASH */
 #splash{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
+  animation:hideSplash 2.6s forwards;
 }
 #splash h1{
-  font-size:40px;
-  color:#c9a23f;
-  animation:zoom 1.2s ease;
+  font-size:38px;
+  letter-spacing:1px;
+  animation:logoAnim 1.6s ease;
 }
-@keyframes zoom{
-  from{opacity:0;transform:scale(.6)}
-  to{opacity:1}
+#splash span{color:#c9a23f}
+@keyframes logoAnim{
+  0%{opacity:0;transform:scale(.7)}
+  100%{opacity:1;transform:scale(1)}
 }
-
-/* Install */
-.installBox{
-  position:fixed;
-  bottom:20px;
-  left:15px;
-  right:15px;
-  z-index:999;
+@keyframes hideSplash{
+  0%,80%{opacity:1}
+  100%{opacity:0;visibility:hidden}
 }
 
+/* HEADER */
+header{
+  background:#fff;
+  padding:20px;
+  text-align:center;
+}
+header h1 span{color:#c9a23f}
+header p{margin:5px 0 0;color:#555}
+
+/* CONTAINER */
+.container{padding:16px;max-width:900px;margin:auto}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  animation:fadeUp .4s ease;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
+.card h3{margin:0 0 8px}
+
+/* BUTTON */
+.btn{
+  display:inline-block;
+  margin-top:10px;
+  background:#c9a23f;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:30px;
+  font-size:14px;
+  border:none;
+  cursor:pointer;
+}
+
+/* PAGES */
+#newsPage{display:none}
+
+/* FOOTER */
 footer{
   background:#fff;
-  padding:15px;
+  padding:18px;
   text-align:center;
+  margin-top:20px;
   font-size:14px;
+}
+footer a{margin:0 6px;color:#333}
+
+/* INSTALL POPUP */
+.installBox{
+  position:fixed;
+  bottom:18px;
+  left:16px;
+  right:16px;
+  z-index:1000;
 }
 </style>
 </head>
 
 <body>
 
+<!-- SPLASH -->
 <div id="splash">
-  <h1>Ehtisham News</h1>
+  <h1>Ehtisham <span>News</span></h1>
 </div>
 
 <header>
@@ -113,34 +120,34 @@ footer{
   <p>Gaming • Esports • Community</p>
 </header>
 
-<div class="container fade" id="home">
-  <div class="card" onclick="openCategory('gaming')">
-    <h2>🔥 Gaming</h2>
+<!-- HOME -->
+<div class="container" id="home">
+
+  <div class="card">
+    <h3>🔥 Gaming</h3>
     <p>Latest gaming updates</p>
+    <button class="btn" onclick="openCategory('gaming')">Read</button>
   </div>
-  <div class="card" onclick="openCategory('esports')">
-    <h2>🏆 Esports</h2>
+
+  <div class="card">
+    <h3>🏆 Esports</h3>
     <p>Tournaments & rankings</p>
+    <button class="btn" onclick="openCategory('esports')">Read</button>
   </div>
-  <div class="card" onclick="openCategory('community')">
-    <h2>👥 Community</h2>
+
+  <div class="card">
+    <h3>👥 Community</h3>
     <p>Creators & community news</p>
+    <button class="btn" onclick="openCategory('community')">Read</button>
   </div>
+
 </div>
 
-<div class="container fade" id="newsPage">
+<!-- NEWS PAGE -->
+<div class="container" id="newsPage">
   <h2 id="catTitle"></h2>
-  <div id="newsList">Loading...</div>
-  <button onclick="goHome()">⬅ Back</button>
-</div>
-
-<div class="container fade" id="singleNews">
-  <h2 id="snTitle"></h2>
-  <p id="snContent"></p>
-  <button onclick="shareNews()">🔗 Share</button>
-  <h3>Other News</h3>
-  <div id="otherNews"></div>
-  <button onclick="goHome()">⬅ Back</button>
+  <div id="newsList"></div>
+  <button class="btn" onclick="goHome()">← Back</button>
 </div>
 
 <footer>
@@ -150,6 +157,7 @@ footer{
   <a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
 </footer>
 
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -159,71 +167,51 @@ firebase.initializeApp({
   authDomain:"ehtisham-news.firebaseapp.com",
   projectId:"ehtisham-news"
 });
-const db=firebase.firestore();
+const db = firebase.firestore();
+</script>
 
-setTimeout(()=>splash.style.display="none",1500);
+<script>
+const home = document.getElementById("home");
+const newsPage = document.getElementById("newsPage");
+const newsList = document.getElementById("newsList");
+const catTitle = document.getElementById("catTitle");
 
-function goHome(){
-  newsPage.style.display="none";
-  singleNews.style.display="none";
-  home.style.display="block";
-}
-
+/* CATEGORY OPEN */
 function openCategory(cat){
   home.style.display="none";
-  singleNews.style.display="none";
   newsPage.style.display="block";
-  catTitle.innerText=cat.toUpperCase();
+  catTitle.innerText = cat.toUpperCase();
   newsList.innerHTML="Loading...";
 
   db.collection("news")
     .where("category","==",cat)
     .orderBy("date","desc")
     .get()
-    .then(s=>{
-      let h="";
-      s.forEach(d=>{
-        let n=d.data();
-        h+=`<div class="card" onclick="openNews('${d.id}')">
-              <h3>${n.title}</h3>
-              <p>${n.content.slice(0,80)}...</p>
-            </div>`;
+    .then(snap=>{
+      let html="";
+      snap.forEach(doc=>{
+        let n=doc.data();
+        html+=`
+          <div class="card">
+            <h3>${n.title}</h3>
+            <p>${n.content}</p>
+          </div>`;
       });
-      newsList.innerHTML=h||"No news found";
+      newsList.innerHTML = html || "<p>No news found</p>";
     });
 }
 
-function openNews(id){
+function goHome(){
   newsPage.style.display="none";
-  singleNews.style.display="block";
-
-  db.collection("news").doc(id).get().then(d=>{
-    let n=d.data();
-    snTitle.innerText=n.title;
-    snContent.innerText=n.content;
-  });
-
-  db.collection("news").limit(4).get().then(s=>{
-    let h="";
-    s.forEach(d=>{
-      let n=d.data();
-      h+=`<div class="card" onclick="openNews('${d.id}')">${n.title}</div>`;
-    });
-    otherNews.innerHTML=h;
-  });
+  home.style.display="block";
 }
 
-function shareNews(){
-  if(navigator.share){
-    navigator.share({title:snTitle.innerText,text:snTitle.innerText});
-  }
-}
-
-/* Notifications */
-if("Notification"in window){
+/* NOTIFICATIONS */
+if("Notification" in window){
   Notification.requestPermission();
   db.collection("notifications")
-    .orderBy("time","desc").limit(1)
+    .orderBy("time","desc")
+    .limit(1)
     .onSnapshot(s=>{
       s.forEach(d=>{
         let n=d.data();
@@ -232,19 +220,21 @@ if("Notification"in window){
     });
 }
 
-/* Install popup */
+/* INSTALL PROMPT */
 let deferredPrompt;
 window.addEventListener("beforeinstallprompt",e=>{
   e.preventDefault();
   deferredPrompt=e;
+
   let box=document.createElement("div");
   box.className="card installBox";
-  box.innerHTML=`<h3>Install App</h3><button id="ib">Install</button>`;
+  box.innerHTML=`<h3>Install Ehtisham News</h3><button class="btn">Install</button>`;
   document.body.appendChild(box);
-  ib.onclick=()=>{
+
+  box.querySelector("button").onclick=()=>{
     box.remove();
     deferredPrompt.prompt();
-  }
+  };
 });
 </script>
 
