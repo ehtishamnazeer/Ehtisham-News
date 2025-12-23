@@ -5,119 +5,130 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Ehtisham News | Elite Gaming</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --gold: #c9a23f;
-  --bg: #0a0a0a;
-  --card-bg: rgba(255, 255, 255, 0.03);
+  --bg: #080808;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.1);
 }
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body {
   margin: 0; font-family: 'Inter', sans-serif;
   background: var(--bg); color: #fff; min-height: 100vh;
-  overflow-x: hidden;
+  display: flex; flex-direction: column;
 }
 
-/* --- SUPER PRO FF CHARACTER SPLASH --- */
+/* --- SUPER UNIQUE INTRO --- */
 #splash {
   position: fixed; inset: 0; background: #000;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  z-index: 10000; transition: opacity 1s ease;
-}
-
-/* Free Fire Character Shadow Animation */
-.ff-character {
-  width: 180px; height: 250px;
-  background: url('https://pngimg.com/uploads/free_fire/free_fire_PNG45.png') no-repeat center/contain;
-  filter: drop-shadow(0 0 20px var(--gold)) brightness(0.2);
-  animation: charGlow 2.5s infinite ease-in-out;
-  margin-bottom: 20px;
+  z-index: 10000; opacity: 1; transition: opacity 0.8s ease;
 }
 
 #splash h1 {
-  font-family: 'Orbitron', sans-serif; font-size: 2.2rem;
-  margin: 0; letter-spacing: 4px; color: #fff;
+  font-family: 'Orbitron', sans-serif; font-size: 2.5rem;
+  letter-spacing: 5px; color: #fff; margin: 0;
+  text-shadow: 0 0 30px rgba(201, 162, 63, 0.3);
 }
 #splash h1 span { color: var(--gold); }
 
-@keyframes charGlow {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--gold)) brightness(0.2); }
-  50% { transform: scale(1.05); filter: drop-shadow(0 0 30px var(--gold)) brightness(0.6); }
+.loader-bar {
+  width: 150px; height: 2px; background: rgba(255,255,255,0.1);
+  margin-top: 30px; position: relative; overflow: hidden;
+}
+.loader-progress {
+  width: 60%; height: 100%; background: var(--gold);
+  position: absolute; left: -100%;
+  animation: loadMove 1.5s infinite linear;
 }
 
-/* --- PREMIUM UI COMPONENTS --- */
+@keyframes loadMove { 0% { left: -100%; } 100% { left: 100%; } }
+
+/* --- HEADER --- */
 header {
-  padding: 30px 20px; text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 40px 20px; text-align: left; max-width: 800px; margin: 0 auto; width: 100%;
 }
-header h2 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; }
+header h2 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 2px; margin: 0; }
 header h2 span { color: var(--gold); }
+header p { font-size: 0.7rem; color: #555; letter-spacing: 3px; margin-top: 5px; font-weight: 700; }
 
-.container { padding: 20px; max-width: 600px; margin: 0 auto; }
+/* --- CONTENT --- */
+main { flex: 1; }
+.container { padding: 0 20px 40px; max-width: 800px; margin: 0 auto; }
 
 .card {
-  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 20px; padding: 25px; margin-bottom: 20px;
-  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative; overflow: hidden;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 24px; padding: 25px; margin-bottom: 20px;
+  transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  backdrop-filter: blur(10px);
 }
-.card:active { transform: scale(0.97); background: rgba(255,255,255,0.06); }
+.card:active { transform: scale(0.97); border-color: var(--gold); }
+.card h3 { margin: 0 0 10px; font-size: 1.2rem; color: #fff; font-weight: 700; }
+.card p { margin: 0; font-size: 0.9rem; color: #999; line-height: 1.6; }
 
-.card h3 { font-family: 'Orbitron'; font-size: 1.1rem; margin: 0 0 10px; color: var(--gold); }
-.card p { font-size: 0.9rem; color: #888; line-height: 1.6; margin: 0; }
-
-/* --- PROFESSIONAL SOCIAL BOX --- */
+/* --- FOOTER & SOCIALS --- */
 .footer-box {
-  background: #000; border-top: 1px solid rgba(255,255,255,0.1);
-  padding: 40px 20px; margin-top: 40px; text-align: center;
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid var(--border);
+  padding: 50px 20px; text-align: center;
 }
-.social-row {
-  display: flex; justify-content: center; gap: 25px; margin: 25px 0;
+
+.social-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 15px; max-width: 400px; margin: 30px auto;
 }
+
 .social-link {
   display: flex; flex-direction: column; align-items: center;
   text-decoration: none; transition: 0.3s;
 }
-.social-link img { width: 40px; height: 40px; margin-bottom: 8px; }
-.social-link span { font-size: 10px; font-weight: 700; color: #666; letter-spacing: 1px; }
+.social-link img { width: 42px; height: 42px; margin-bottom: 10px; }
+.social-link span { font-size: 9px; font-weight: 700; color: #555; }
 .social-link:hover span { color: var(--gold); }
 
-/* --- PAGE TRANSITIONS --- */
-.page { display: none; animation: pageFade 0.6s ease; }
-@keyframes pageFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.page { display: none; animation: slideUp 0.5s ease-out; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+/* --- NOTIF & INSTALL --- */
+#installToast {
+  position: fixed; bottom: 20px; left: 20px; right: 20px;
+  background: #fff; color: #000; padding: 18px; border-radius: 20px;
+  display: none; justify-content: space-between; align-items: center;
+  z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
 </style>
 </head>
 <body>
 
 <div id="splash">
-  <div class="ff-character"></div>
   <h1>EHTISHAM <span>NEWS</span></h1>
-  <div style="width: 100px; height: 2px; background: #222; margin-top: 20px; position: relative; overflow: hidden;">
-    <div style="width: 50%; height: 100%; background: var(--gold); position: absolute; animation: load 2s infinite;"></div>
-  </div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
 </div>
 
 <header>
   <h2 onclick="location.reload()">EHTISHAM <span>NEWS</span></h2>
+  <p>GAMING • ESPORTS • UPDATES</p>
 </header>
 
 <main>
   <div id="home" class="page" style="display:block;">
     <div class="container">
       <div class="card" onclick="openCategory('gaming')">
-        <h3>GAMING INTEL</h3>
-        <p>Latest patch updates, leaks, and pro-settings.</p>
+        <h3>🔥 Gaming Intel</h3>
+        <p>Latest patch notes, leaks, and pro-settings.</p>
       </div>
       <div class="card" onclick="openCategory('esports')">
-        <h3>PRO CIRCUIT</h3>
-        <p>Tournament standings and elite player stats.</p>
+        <h3>🏆 Pro Circuit</h3>
+        <p>Tournament standings and player stats.</p>
       </div>
       <div class="card" onclick="openCategory('community')">
-        <h3>COMMUNITY</h3>
-        <p>Events and fan-led discussions.</p>
+        <h3>👥 Community</h3>
+        <p>Fan-led discussions and local events.</p>
       </div>
     </div>
   </div>
@@ -126,14 +137,14 @@ header h2 span { color: var(--gold); }
     <div class="container">
       <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size: 1.2rem;"></h2>
       <div id="newsItems"></div>
-      <button onclick="goHome()" style="background:none; color:#666; border:1px solid #333; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:700; margin-top:20px;">BACK TO BASE</button>
+      <button onclick="goHome()" style="background:none; color:#666; border:1px solid #333; padding:10px 20px; border-radius:12px; cursor:pointer; font-weight:700; margin-top:20px;">BACK TO BASE</button>
     </div>
   </div>
 </main>
 
 <div class="footer-box">
-  <h4 style="font-family:'Orbitron'; font-size: 0.9rem; letter-spacing: 2px; color: #444;">CONNECT WITH COMMAND</h4>
-  <div class="social-row">
+  <h4 style="font-family:'Orbitron'; font-size: 0.8rem; letter-spacing: 3px; color: #333;">CONNECT WITH ME</h4>
+  <div class="social-grid">
     <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-link">
       <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA">
       <span>WHATSAPP</span>
@@ -151,7 +162,12 @@ header h2 span { color: var(--gold); }
       <span>TIKTOK</span>
     </a>
   </div>
-  <p style="font-size: 10px; color: #222; margin-top: 30px;">© EHTISHAM NEWS 2025 | ALL RIGHTS RESERVED</p>
+  <p style="font-size: 9px; color: #222; margin-top: 20px;">© EHTISHAM NEWS 2025 | ALL RIGHTS RESERVED</p>
+</div>
+
+<div id="installToast">
+  <span style="font-weight:700; font-size:14px;">Install App?</span>
+  <button id="btnInstall" style="background:#000; color:#fff; border:none; padding:10px 20px; border-radius:12px; font-weight:700;">INSTALL</button>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -165,26 +181,26 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-// Splash Exit Logic
+// Splash Handler - Animation ab stuck nahi hogi
 window.addEventListener('load', () => {
   setTimeout(() => {
     const s = document.getElementById('splash');
     s.style.opacity = '0';
-    setTimeout(() => s.remove(), 1000);
-  }, 3500);
+    setTimeout(() => s.remove(), 800);
+  }, 3000);
 });
 
 function openCategory(cat) {
   document.getElementById('home').style.display = 'none';
   document.getElementById('newsList').style.display = 'block';
-  document.getElementById('catTitle').innerText = cat.toUpperCase() + " FEED";
+  document.getElementById('catTitle').innerText = cat.toUpperCase();
   
   db.collection("news").where("category","==",cat).orderBy("date","desc").get().then(snap => {
     let html = "";
     snap.forEach(d => {
       html += `<div class="card"><h3>${d.data().title}</h3><p>${d.data().content.substring(0,100)}...</p></div>`;
     });
-    document.getElementById("newsItems").innerHTML = html || "No data available in sector.";
+    document.getElementById("newsItems").innerHTML = html || "Updating news...";
   });
 }
 
@@ -193,7 +209,16 @@ function goHome() {
   document.getElementById('home').style.display = 'block';
 }
 
-@keyframes load { 0% { left: -100%; } 100% { left: 100%; } }
+// PWA Install
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('installToast').style.display = 'flex';
+});
+document.getElementById('btnInstall').onclick = () => {
+  document.getElementById('installToast').style.display = 'none';
+  deferredPrompt.prompt();
+};
 </script>
 
 </body>
