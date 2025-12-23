@@ -3,93 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ehtisham News</title>
+<title>Ehtisham News | Gaming Portal</title>
 
 <meta name="theme-color" content="#c9a23f">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Poppins,system-ui;
-  background:#f4f4f4;
-  color:#222;
-}
-a{text-decoration:none;color:inherit}
-
-/* SPLASH */
-#splash{
-  position:fixed;inset:0;
-  background:#fff;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-  animation:hideSplash 2.5s forwards;
-}
-#splash h1{
-  font-size:42px;
-  animation:fadeUp 1.2s ease;
-}
-#splash span{color:#c9a23f}
-@keyframes hideSplash{
-  0%,80%{opacity:1}
-  100%{opacity:0;visibility:hidden}
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(25px)}
-  to{opacity:1;transform:none}
+:root {
+  --gold: #c9a23f;
+  --dark: #121212;
+  --glass: rgba(255, 255, 255, 0.9);
 }
 
-/* HEADER */
-header{
-  background:#fff;
-  padding:22px;
-  text-align:center;
-}
-header span{color:#c9a23f}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-/* CARDS */
-.container{padding:16px}
-.card{
-  background:#fff;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
-  animation:fadeUp .35s ease;
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f0f2f5;
+  color: #1a1a1a;
+  overflow-x: hidden;
 }
-button{
-  background:#c9a23f;
-  color:#fff;
-  border:none;
-  padding:10px 18px;
-  border-radius:22px;
-  cursor:pointer;
+
+/* --- PREMIUM INTRO SPLASH --- */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #1e1e1e, #000);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+#splash.fade-out { opacity: 0; visibility: hidden; }
+
+#splash h1 {
+  font-size: 3rem;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -1px;
+  animation: logoIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#splash h1 span { color: var(--gold); }
+
+#splash p {
+  color: #888;
   margin-top: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  opacity: 0;
+  animation: fadeIn 1s 0.8s forwards;
 }
 
-/* PAGES */
-#home,#newsList,#newsView{display:none}
-
-/* FOOTER */
-footer{
-  background:#fff;
-  padding:16px;
-  text-align:center;
-  margin-top: 20px;
+@keyframes logoIn {
+  from { opacity: 0; transform: scale(0.8) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
-footer a{margin:0 10px; font-size: 14px;}
 
-/* INSTALL BOX */
-.installBox{
-  position:fixed;
-  bottom:20px;left:15px;right:15px;
-  z-index:999;
+/* --- HEADER --- */
+header {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 900;
 }
+
+header h2 { margin: 0; font-size: 1.5rem; }
+header h2 span { color: var(--gold); }
+header p { margin: 5px 0 0; font-size: 0.75rem; color: #777; font-weight: 600; }
+
+/* --- CONTAINERS & ANIMATIONS --- */
+.container { 
+  padding: 20px; 
+  max-width: 600px; 
+  margin: 0 auto;
+  animation: pageIn 0.5s ease-out;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* --- GLASS CARDS --- */
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: transform 0.2s;
+}
+
+.card:active { transform: scale(0.98); }
+
+.card h3 { margin: 0 0 10px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+
+/* --- BUTTONS --- */
+button {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(201, 162, 63, 0.3);
+  transition: 0.3s;
+}
+
+button:hover { transform: translateY(-2px); }
+
+/* --- FOOTER --- */
+footer {
+  padding: 40px 20px;
+  text-align: center;
+  background: #fff;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+}
+
+footer a {
+  display: inline-block;
+  margin: 5px 10px;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* --- INSTALL TOAST --- */
+.installBox {
+  position: fixed;
+  bottom: 30px; left: 20px; right: 20px;
+  background: #000;
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 9999;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp { from { transform: translateY(100px); } to { transform: translateY(0); } }
+
+#home, #newsList, #newsView { display: none; }
 </style>
 </head>
 
@@ -101,45 +173,48 @@ footer a{margin:0 10px; font-size: 14px;}
 </div>
 
 <header>
-  <h2>Ehtisham <span>News</span></h2>
-  <p>Gaming • Esports • Community</p>
+  <h2 onclick="goHome()">Ehtisham <span>News</span></h2>
+  <p>GAMING • ESPORTS • COMMUNITY</p>
 </header>
 
 <div class="container" id="home">
-  <div class="card">
+  <div class="card" onclick="openCategory('gaming')">
     <h3>🔥 Gaming</h3>
-    <button onclick="openCategory('gaming')">Read</button>
+    <p>Read the latest updates in the world of gaming.</p>
+    <button>Explore</button>
   </div>
-  <div class="card">
+  <div class="card" onclick="openCategory('esports')">
     <h3>🏆 Esports</h3>
-    <button onclick="openCategory('esports')">Read</button>
+    <p>Tournament results and pro-player news.</p>
+    <button>Explore</button>
   </div>
-  <div class="card">
+  <div class="card" onclick="openCategory('community')">
     <h3>👥 Community</h3>
-    <button onclick="openCategory('community')">Read</button>
+    <p>Stay connected with your fellow gamers.</p>
+    <button>Explore</button>
   </div>
 </div>
 
 <div class="container" id="newsList">
-  <h3 id="catTitle"></h3>
-  <div id="newsItems">Loading...</div>
-  <button onclick="goHome()">⬅ Back</button>
+  <h3 id="catTitle" style="color:var(--gold)"></h3>
+  <div id="newsItems"></div>
+  <button onclick="goHome()" style="margin-top:20px; background:#444;">⬅ Back</button>
 </div>
 
 <div class="container" id="newsView">
-  <h3 id="viewTitle"></h3>
-  <p id="viewContent"></p>
-  <hr>
-  <h4>Other News</h4>
+  <h2 id="viewTitle"></h2>
+  <p id="viewContent" style="line-height:1.8; color:#444; font-size: 1.05rem;"></p>
+  <hr style="border:0; border-top:1px solid #ddd; margin: 30px 0;">
+  <h4>Recommended News</h4>
   <div id="otherNews"></div>
-  <button onclick="goBack()">⬅ Back</button>
+  <button onclick="goBack()" style="background:#444;">⬅ Back to List</button>
 </div>
 
 <footer>
-  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
-  <a href="https://www.facebook.com/share/16UChCgJTn/">Facebook</a> |
-  <a href="https://www.instagram.com/ehtisham_nazeer">Instagram</a> |
-  <a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
+  <a href="https://whatsapp.com">WhatsApp</a> |
+  <a href="https://facebook.com">Facebook</a> |
+  <a href="https://instagram.com">Instagram</a>
+  <p style="font-size: 0.7rem; color:#aaa; margin-top:20px;">&copy; 2024 Ehtisham News. All Rights Reserved.</p>
 </footer>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -147,111 +222,113 @@ footer a{margin:0 10px; font-size: 14px;}
 
 <script>
 // Firebase Config
-const firebaseConfig = {
-  apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
-  authDomain: "ehtisham-news.firebaseapp.com",
-  projectId: "ehtisham-news"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp({
+  apiKey:"AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
+  authDomain:"ehtisham-news.firebaseapp.com",
+  projectId:"ehtisham-news"
+});
 const db = firebase.firestore();
 
-// Elements Reference
+// Pages
 const home = document.getElementById("home");
 const newsList = document.getElementById("newsList");
 const newsView = document.getElementById("newsView");
-const newsItems = document.getElementById("newsItems");
-const viewTitle = document.getElementById("viewTitle");
-const viewContent = document.getElementById("viewContent");
-const otherNews = document.getElementById("otherNews");
 
-// Pehli screen dikhayen
-home.style.display = "block";
+// --- SPLASH LOGIC ---
+window.onload = () => {
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('fade-out');
+    home.style.display = "block";
+  }, 2500);
+};
 
-// Category kholne ka function
-function openCategory(cat){
+// --- DATA LOGIC ---
+function openCategory(cat) {
   home.style.display = "none";
   newsView.style.display = "none";
   newsList.style.display = "block";
   document.getElementById("catTitle").innerText = cat.toUpperCase();
-  newsItems.innerHTML = "Loading...";
+  const box = document.getElementById("newsItems");
+  box.innerHTML = "<p>Scanning database...</p>";
 
   db.collection("news")
-    .where("category", "==", cat)
-    .orderBy("date", "desc")
+    .where("category","==",cat)
+    .orderBy("date","desc")
     .get()
     .then(snap => {
-      if(snap.empty) {
-        newsItems.innerHTML = "No news found in this category.";
-        return;
-      }
+      if(snap.empty){ box.innerHTML = "No data found."; return; }
       let html = "";
       snap.forEach(d => {
         let n = d.data();
-        html += `
-          <div class="card" onclick="openNews('${d.id}','${cat}')" style="cursor:pointer">
-            <h4>${n.title}</h4>
-            <p>${n.content ? n.content.substring(0, 80) : ''}...</p>
-          </div>`;
+        html += `<div class="card" onclick="openNews('${d.id}','${cat}')">
+          <h4 style="margin:0">${n.title}</h4>
+          <p style="font-size:0.85rem; color:#666">${n.content.substring(0,80)}...</p>
+        </div>`;
       });
-      newsItems.innerHTML = html;
-    })
-    .catch(err => {
-      console.error(err);
-      newsItems.innerHTML = "Error loading news. Check if Index is created in Firebase.";
+      box.innerHTML = html;
     });
 }
 
-// Single News kholne ka function
-function openNews(id, cat){
+function openNews(id, cat) {
   newsList.style.display = "none";
   newsView.style.display = "block";
   window.scrollTo(0,0);
 
   db.collection("news").doc(id).get().then(d => {
-    if(d.exists) {
-      let n = d.data();
-      viewTitle.innerText = n.title;
-      viewContent.innerText = n.content;
-    }
+    let n = d.data();
+    document.getElementById("viewTitle").innerText = n.title;
+    document.getElementById("viewContent").innerText = n.content;
   });
 
-  // Niche 'Other News' dikhane ke liye
-  db.collection("news")
-    .where("category", "==", cat)
-    .limit(4)
-    .get()
-    .then(s => {
-      let h = "";
-      s.forEach(doc => {
-        if(doc.id !== id) {
-          let data = doc.data();
-          h += `<div class="card" onclick="openNews('${doc.id}','${cat}')" style="cursor:pointer">
-                  <h5>${data.title}</h5>
-                </div>`;
+  db.collection("news").where("category","==",cat).limit(3).get().then(s => {
+    let h = "";
+    s.forEach(d => { if(d.id !== id) h += `<div class="card" onclick="openNews('${d.id}','${cat}')"><h5>${d.data().title}</h5></div>`; });
+    document.getElementById("otherNews").innerHTML = h;
+  });
+}
+
+function goHome() { 
+  newsList.style.display = "none"; 
+  newsView.style.display = "none"; 
+  home.style.display = "block"; 
+}
+function goBack() { 
+  newsView.style.display = "none"; 
+  newsList.style.display = "block"; 
+}
+
+// --- PWA & NOTIFICATIONS ---
+if ("Notification" in window) {
+  if (Notification.permission !== "granted") {
+    setTimeout(() => { Notification.requestPermission(); }, 5000);
+  }
+  
+  db.collection("notifications").orderBy("time","desc").limit(1)
+    .onSnapshot(s => {
+      s.docChanges().forEach(change => {
+        if (change.type === "added") {
+          let n = change.doc.data();
+          new Notification(n.title, { body: n.body, icon: 'https://cdn-icons-png.flaticon.com/512/1042/1042680.png' });
         }
       });
-      otherNews.innerHTML = h;
     });
 }
 
-// Navigation functions
-function goHome(){
-  newsList.style.display = "none";
-  newsView.style.display = "none";
-  home.style.display = "block";
-}
-
-function goBack(){
-  newsView.style.display = "none";
-  newsList.style.display = "block";
-}
-
-/* NOTIFICATIONS */
-if("Notification" in window && Notification.permission !== "denied"){
-  Notification.requestPermission();
-}
+// --- SMART INSTALL TOAST ---
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const box = document.createElement("div");
+  box.className = "installBox";
+  box.innerHTML = `<span>Add to Home Screen?</span><button id="installBtn">Install</button>`;
+  document.body.appendChild(box);
+  
+  document.getElementById("installBtn").onclick = () => {
+    box.remove();
+    deferredPrompt.prompt();
+  };
+});
 </script>
 
 </body>
