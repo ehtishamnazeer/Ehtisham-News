@@ -5,225 +5,200 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ehtisham News</title>
 
+<!-- PWA -->
+<link rel="manifest" href="data:application/json,{
+  &quot;name&quot;:&quot;Ehtisham News&quot;,
+  &quot;short_name&quot;:&quot;E-News&quot;,
+  &quot;start_url&quot;:&quot;.&quot;,
+  &quot;display&quot;:&quot;standalone&quot;,
+  &quot;background_color&quot;:&quot;#ffffff&quot;,
+  &quot;theme_color&quot;:&quot;#c9a23f&quot;
+}">
+<meta name="theme-color" content="#c9a23f">
+
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f7f7f7;
-  color:#222;
-}
+body{margin:0;font-family:Arial;background:#f6f6f6}
+h1,h2{margin:0}
+a{text-decoration:none;color:inherit}
 
-/* SPLASH */
+/* Splash */
 #splash{
-  position:fixed;
-  inset:0;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+ position:fixed;inset:0;
+ background:#fff;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ z-index:9999;
 }
-#splash.hide{display:none;}
-.loader{
-  font-size:24px;
-  font-weight:bold;
-  color:#c9a23f;
-  animation:pulse 1s infinite;
-}
-@keyframes pulse{
-  0%{opacity:.3}
-  50%{opacity:1}
-  100%{opacity:.3}
-}
+#splash.hide{display:none}
+.loader{font-size:24px;font-weight:bold;color:#c9a23f}
 
-/* HEADER */
-header{
-  text-align:center;
-  padding:20px;
-  background:#fff;
-}
+/* Header */
+header{text-align:center;padding:20px;background:#fff}
 header h1 span{color:#c9a23f}
 
-/* CARDS */
+/* Cards */
 .container{padding:15px}
 .card{
-  background:#fff;
-  border-radius:15px;
-  padding:20px;
-  margin-bottom:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,.05);
+ background:#fff;
+ border-radius:16px;
+ padding:20px;
+ margin-bottom:15px;
+ box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
-.card h2{margin:10px 0}
-.badge{
-  display:inline-block;
-  padding:5px 12px;
-  border:1px solid #c9a23f;
-  border-radius:20px;
-  color:#c9a23f;
-  font-size:13px;
-}
-
-/* BUTTON */
-.btn{
-  display:inline-block;
-  margin-top:10px;
-  padding:10px 18px;
-  background:#c9a23f;
-  color:#fff;
-  border-radius:25px;
-  text-decoration:none;
-  cursor:pointer;
+.card button{
+ margin-top:10px;
+ background:#c9a23f;
+ color:#fff;
+ border:none;
+ padding:10px 16px;
+ border-radius:20px;
+ cursor:pointer;
 }
 
-/* NEWS VIEW */
-#newsView{display:none}
+/* News Page */
+#newsPage{display:none}
 
-/* CONTACT */
-footer{
-  background:#fff;
-  padding:20px;
-  text-align:center;
-  margin-top:30px;
-}
-footer a{
-  margin:0 8px;
-  text-decoration:none;
-  color:#c9a23f;
-}
+/* Admin */
+#adminPanel{display:none;padding:15px}
+input,textarea{width:100%;padding:8px;margin:6px 0}
 
-/* POPUPS */
+/* Popups */
 .popup{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#222;
-  color:#fff;
-  padding:15px 20px;
-  border-radius:12px;
-  display:none;
-  z-index:999;
+ position:fixed;bottom:20px;left:50%;
+ transform:translateX(-50%);
+ background:#fff;padding:15px;
+ border-radius:12px;
+ box-shadow:0 10px 30px rgba(0,0,0,.2);
+ display:none;z-index:999;
 }
-.popup button{
-  margin-left:10px;
-  background:#c9a23f;
-  border:none;
-  padding:5px 10px;
-  color:#fff;
-  border-radius:8px;
-}
+
+/* Contact */
+footer{background:#fff;padding:15px;text-align:center}
+footer a{margin:5px;display:inline-block}
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
+<!-- Splash -->
 <div id="splash"><div class="loader">Ehtisham News</div></div>
 
-<!-- APP -->
-<div id="app" style="display:none">
-
 <header>
-  <h1>Ehtisham <span>News</span></h1>
-  <p>Free Fire • Esports • Gaming Community</p>
+<h1>Ehtisham <span>News</span></h1>
+<p>Free Fire • Esports • Gaming Community</p>
 </header>
 
 <div class="container" id="home">
-
-  <div class="card">
-    <span class="badge">🔥 Gaming</span>
-    <h2>Gaming News</h2>
-    <p>Latest Free Fire & gaming updates.</p>
-    <div class="btn" onclick="openNews('gaming')">Read More</div>
-  </div>
-
-  <div class="card">
-    <span class="badge">🏆 Esports</span>
-    <h2>Esports World</h2>
-    <p>Tournaments, teams & rankings.</p>
-    <div class="btn" onclick="openNews('esports')">Read More</div>
-  </div>
-
-  <div class="card">
-    <span class="badge">👥 Community</span>
-    <h2>Community News</h2>
-    <p>Creator & community updates.</p>
-    <div class="btn" onclick="openNews('community')">Read More</div>
-  </div>
-
+<div class="card">
+<h2>🔥 Gaming</h2>
+<p>Latest Free Fire & gaming updates</p>
+<button onclick="openNews('Gaming')">Read More</button>
 </div>
 
-<!-- NEWS PAGE -->
-<div class="container" id="newsView">
-  <div class="card">
-    <h2 id="newsTitle"></h2>
-    <p id="newsText"></p>
-    <hr>
-    <p><b>More News:</b></p>
-    <div class="btn" onclick="openNews('gaming')">Gaming</div>
-    <div class="btn" onclick="openNews('esports')">Esports</div>
-    <div class="btn" onclick="openNews('community')">Community</div>
-    <br><br>
-    <div class="btn" onclick="goHome()">Back</div>
-  </div>
+<div class="card">
+<h2>🏆 Esports</h2>
+<p>Tournaments & world rankings</p>
+<button onclick="openNews('Esports')">Read More</button>
+</div>
+
+<div class="card">
+<h2>👥 Community</h2>
+<p>Creator & community updates</p>
+<button onclick="openNews('Community')">Read More</button>
+</div>
+</div>
+
+<!-- News -->
+<div class="container" id="newsPage">
+<h2 id="newsTitle"></h2>
+<div id="newsContent"></div>
+<button onclick="goHome()">⬅ Back</button>
+</div>
+
+<!-- Admin -->
+<div id="adminPanel">
+<h2>Admin Panel</h2>
+<input id="adminTitle" placeholder="News title">
+<textarea id="adminText" placeholder="News content"></textarea>
+<button onclick="addNews()">Add News</button>
+<div id="adminList"></div>
+</div>
+
+<!-- Install Popup -->
+<div class="popup" id="installPopup">
+<b>Install Ehtisham News?</b><br><br>
+<button onclick="installApp()">Install</button>
+<button onclick="closeInstall()">Later</button>
+</div>
+
+<!-- Notification Popup -->
+<div class="popup" id="notiPopup">
+<b>Enable Notifications?</b><br><br>
+<button onclick="enableNoti()">Allow</button>
 </div>
 
 <footer>
-  <h3>Contact Us</h3>
-  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
-  <a href="https://www.facebook.com/share/16UChCgJTn/" target="_blank">Facebook</a>
-  <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
-  <a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank">TikTok</a>
-  <p>© 2025 Ehtisham News</p>
+<h3>Contact Us</h3>
+<a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
+<a href="https://www.facebook.com/share/16UChCgJTn/">Facebook</a> |
+<a href="https://www.instagram.com/ehtisham_nazeer">Instagram</a> |
+<a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
 </footer>
 
-</div>
-
-<!-- POPUPS -->
-<div class="popup" id="notify">
-  Enable notifications?
-  <button onclick="closePopup('notify')">OK</button>
-</div>
-
-<div class="popup" id="install">
-  Install Ehtisham News App?
-  <button onclick="closePopup('install')">Install</button>
-</div>
-
 <script>
-// SPLASH FIX
-setTimeout(()=>{
-  document.getElementById("splash").classList.add("hide");
-  document.getElementById("app").style.display="block";
-},1500);
+/* Splash fix */
+window.onload=()=>document.getElementById("splash").classList.add("hide")
 
-// NEWS
+/* Data */
+let newsData={Gaming:[],Esports:[],Community:[]}
+
+/* Navigation */
 function openNews(type){
-  document.getElementById("home").style.display="none";
-  document.getElementById("newsView").style.display="block";
-
-  const data={
-    gaming:"Gaming news detail here...",
-    esports:"Esports news detail here...",
-    community:"Community news detail here..."
-  };
-  document.getElementById("newsTitle").innerText=type.toUpperCase()+" NEWS";
-  document.getElementById("newsText").innerText=data[type];
+ document.getElementById("home").style.display="none"
+ document.getElementById("newsPage").style.display="block"
+ document.getElementById("newsTitle").innerText=type
+ document.getElementById("newsContent").innerHTML=
+ newsData[type].map(n=>`<p>${n}</p>`).join("")||"No news yet"
 }
-
 function goHome(){
-  document.getElementById("newsView").style.display="none";
-  document.getElementById("home").style.display="block";
+ location.reload()
 }
 
-// POPUPS
-setTimeout(()=>document.getElementById("notify").style.display="block",3000);
-setTimeout(()=>document.getElementById("install").style.display="block",6000);
-function closePopup(id){document.getElementById(id).style.display="none";}
+/* Admin */
+if(location.hash==="#admin"){
+ let pass=prompt("Admin Password")
+ if(pass==="CHATGPTSEBNWAIHAI"){
+  document.getElementById("home").style.display="none"
+  document.getElementById("adminPanel").style.display="block"
+ }
+}
+function addNews(){
+ let t=adminTitle.value
+ let c=adminText.value
+ newsData.Gaming.push(`<b>${t}</b><br>${c}`)
+ adminTitle.value=adminText.value=""
+ alert("Added")
+}
 
-// ADMIN
-if(location.search.includes("CHATGPTSEBNWAIHAI")){
-  alert("Admin Panel Activated");
+/* Install */
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt",e=>{
+ e.preventDefault();deferredPrompt=e;
+ document.getElementById("installPopup").style.display="block"
+})
+function installApp(){
+ deferredPrompt.prompt()
+}
+function closeInstall(){
+ installPopup.style.display="none"
+}
+
+/* Notifications */
+setTimeout(()=>notiPopup.style.display="block",3000)
+function enableNoti(){
+ Notification.requestPermission()
+ notiPopup.style.display="none"
 }
 </script>
 
