@@ -7,246 +7,127 @@
 
 <style>
 :root{
-  --gold:#c9a23f;
-  --bg:#f7f7f7;
-  --card:#ffffff;
-  --text:#111;
+  --gold:#c9a24d;
+  --light:#ffffff;
+  --dark:#111;
+  --gray:#f3f3f3;
 }
 
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
 
 body{
   margin:0;
-  background:var(--bg);
-  color:var(--text);
+  background:var(--gray);
+  color:var(--dark);
 }
 
-/* HEADER */
 header{
-  padding:20px;
+  background:var(--light);
+  padding:14px;
   text-align:center;
-  background:#fff;
+  font-weight:bold;
+  font-size:20px;
+  color:var(--gold);
   border-bottom:2px solid var(--gold);
 }
 
-header h1{
-  margin:0;
-  font-size:26px;
-}
-header h1 span{color:var(--gold)}
-
-header p{
-  margin:5px 0 0;
-  font-size:14px;
-  color:#555;
-}
-
-/* TABS */
 .tabs{
   display:flex;
-  gap:10px;
-  padding:15px;
-  justify-content:center;
+  justify-content:space-around;
+  background:#fff;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 .tabs button{
-  padding:10px 16px;
-  border-radius:25px;
-  border:2px solid var(--gold);
-  background:#fff;
-  color:#000;
+  flex:1;
+  padding:12px;
+  background:none;
+  border:none;
+  font-weight:bold;
   cursor:pointer;
 }
 
 .tabs button.active{
-  background:var(--gold);
-  color:#fff;
+  color:var(--gold);
+  border-bottom:3px solid var(--gold);
 }
 
-/* CONTENT */
 .section{
   display:none;
   padding:15px;
 }
 
-.section.active{
-  display:block;
-}
+.section.active{display:block;}
 
-/* CARD */
 .card{
-  background:var(--card);
-  border-radius:15px;
+  background:#fff;
+  border-radius:10px;
   padding:15px;
-  margin-bottom:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,.05);
+  margin-bottom:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,.05);
 }
 
-.card h3{margin:0 0 8px}
-.card p{margin:0 0 12px;color:#555}
+.card h3{
+  margin:0 0 8px;
+}
 
-.card button{
+.read-btn{
+  display:inline-block;
   padding:8px 14px;
-  border:none;
-  border-radius:20px;
   background:var(--gold);
   color:#fff;
-  cursor:pointer;
+  border-radius:6px;
+  text-decoration:none;
+  font-size:14px;
 }
 
-/* EMPTY */
 .empty{
   text-align:center;
+  padding:40px;
   color:#777;
-  margin-top:40px;
-}
-
-/* ARTICLE VIEW */
-#articleView{
-  display:none;
-  padding:20px;
-}
-
-#articleView h2{margin-top:0}
-#backBtn{
-  margin-bottom:15px;
-  background:#000;
-}
-
-/* ADMIN */
-#admin{
-  display:none;
-  padding:15px;
-}
-
-input,textarea{
-  width:100%;
-  padding:10px;
-  margin-bottom:10px;
-}
-
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:20px;
-  font-size:13px;
-  color:#666;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Ehtisham <span>News</span></h1>
-  <p>Free Fire • Esports • Gaming Community</p>
-</header>
+<header>Ehtisham News</header>
 
 <div class="tabs">
-  <button class="active" onclick="openTab('game')">Game Updates</button>
-  <button onclick="openTab('esports')">Esports World</button>
-  <button onclick="openTab('community')">Community News</button>
+  <button class="active" onclick="openTab('games')">Game News</button>
+  <button onclick="openTab('esports')">Esports</button>
+  <button onclick="openTab('community')">Community</button>
 </div>
 
-<!-- GAME -->
-<div id="game" class="section active"></div>
+<!-- GAME NEWS -->
+<div id="games" class="section active">
+  <div class="card">
+    <h3>New Game Update Released</h3>
+    <p>Latest patch brings performance improvements.</p>
+    <a class="read-btn" href="article.html">Read Now</a>
+  </div>
+</div>
 
 <!-- ESPORTS -->
-<div id="esports" class="section"></div>
+<div id="esports" class="section">
+  <div class="empty">Stay tuned for updated news</div>
+</div>
 
 <!-- COMMUNITY -->
-<div id="community" class="section"></div>
-
-<!-- ARTICLE -->
-<div id="articleView">
-  <button id="backBtn" class="card button" onclick="goBack()">← Back</button>
-  <h2 id="articleTitle"></h2>
-  <p id="articleContent"></p>
+<div id="community" class="section">
+  <div class="empty">Stay tuned for updated news</div>
 </div>
-
-<!-- ADMIN (HIDDEN) -->
-<div id="admin">
-  <h3>Admin Panel</h3>
-  <input id="titleInput" placeholder="News Title">
-  <textarea id="contentInput" placeholder="News Content"></textarea>
-  <select id="category">
-    <option value="game">Game</option>
-    <option value="esports">Esports</option>
-    <option value="community">Community</option>
-  </select>
-  <button onclick="addNews()">Add News</button>
-</div>
-
-<footer>
-  © 2025 Ehtisham News • Built for Mobile
-</footer>
 
 <script>
-let data={
-  game:[],
-  esports:[],
-  community:[]
-};
-
 function openTab(tab){
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+
   document.getElementById(tab).classList.add('active');
-  render(tab);
+  event.target.classList.add('active');
 }
-
-function render(tab){
-  let box=document.getElementById(tab);
-  box.innerHTML="";
-  if(data[tab].length===0){
-    box.innerHTML='<p class="empty">Stay tuned for updated news</p>';
-    return;
-  }
-  data[tab].forEach(n=>{
-    box.innerHTML+=`
-    <div class="card">
-      <h3>${n.title}</h3>
-      <p>${n.content.slice(0,60)}...</p>
-      <button onclick="openArticle('${n.title}','${n.content}')">Read Now</button>
-    </div>`;
-  });
-}
-
-function openArticle(title,content){
-  document.querySelectorAll('.section').forEach(s=>s.style.display='none');
-  document.getElementById('articleView').style.display='block';
-  document.getElementById('articleTitle').innerText=title;
-  document.getElementById('articleContent').innerText=content;
-}
-
-function goBack(){
-  document.getElementById('articleView').style.display='none';
-  document.querySelectorAll('.section').forEach(s=>s.style.display='block');
-}
-
-function addNews(){
-  let t=titleInput.value;
-  let c=contentInput.value;
-  let cat=category.value;
-  if(!t||!c) return alert("Fill all fields");
-  data[cat].push({title:t,content:c});
-  titleInput.value="";
-  contentInput.value="";
-  render(cat);
-}
-
-/* ADMIN ACCESS (SECRET) */
-document.addEventListener("keydown",e=>{
-  if(e.ctrlKey && e.key==="A"){
-    let pass=prompt("Admin Password?");
-    if(pass==="1234"){
-      admin.style.display="block";
-      alert("Admin Enabled");
-    }
-  }
-});
 </script>
 
 </body>
