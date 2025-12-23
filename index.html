@@ -6,184 +6,166 @@
 <title>Ehtisham News</title>
 
 <style>
-:root{
-  --gold:#d4af37;
-  --white:#ffffff;
-  --dark:#111;
-}
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-
-body{
-  margin:0;
-  background:#f7f7f7;
-  color:#111;
-}
+:root{--gold:#d4af37}
+*{box-sizing:border-box;font-family:Arial}
+body{margin:0;background:#f7f7f7;color:#111}
 
 /* HEADER */
 header{
   background:linear-gradient(135deg,var(--gold),#b8962e);
-  color:white;
-  padding:16px;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
+  color:#fff;padding:14px;text-align:center;font-size:20px;font-weight:bold;
+  position:sticky;top:0;z-index:10
+}
+header button{
+  position:absolute;right:10px;top:10px;
+  background:#fff;color:#111;border:none;border-radius:20px;padding:6px 10px;
+  cursor:pointer;font-size:12px
 }
 
 /* LAYOUT */
-.app{
-  display:flex;
-  min-height:100vh;
-}
-
-/* VERTICAL TABS */
+.app{display:flex;min-height:100vh}
 .tabs{
-  width:110px;
-  background:white;
-  border-right:2px solid var(--gold);
-  display:flex;
-  flex-direction:column;
+  width:90px;background:#fff;border-right:2px solid var(--gold);
+  display:flex;flex-direction:column
 }
-
 .tabs button{
-  border:none;
-  background:none;
-  padding:18px 10px;
-  cursor:pointer;
-  font-weight:bold;
-  color:#444;
-  border-bottom:1px solid #eee;
+  padding:16px;border:none;background:none;cursor:pointer;font-weight:bold
 }
+.tabs button.active{background:var(--gold);color:#fff}
 
-.tabs button.active{
-  background:var(--gold);
-  color:white;
-}
-
-/* CONTENT */
-.content{
-  flex:1;
-  padding:16px;
-}
-
+.content{flex:1;padding:14px}
 .card{
-  background:white;
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:14px;
-  box-shadow:0 4px 10px rgba(0,0,0,.08);
+  background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.08)
 }
+.read{background:var(--gold);color:#fff;border:none;padding:6px 12px;border-radius:16px;cursor:pointer}
 
-.card h3{
-  margin:0 0 6px 0;
-}
+/* ARTICLE */
+#article{display:none}
+.back{color:var(--gold);cursor:pointer;font-weight:bold;margin-bottom:10px}
 
-.read{
-  display:inline-block;
-  margin-top:10px;
-  color:white;
-  background:var(--gold);
-  padding:8px 14px;
-  border-radius:20px;
-  text-decoration:none;
-  font-size:14px;
+/* ADMIN */
+#admin{
+  display:none;background:#fff;border-top:3px solid var(--gold);padding:12px
 }
-
-/* ARTICLE VIEW */
-#articleView{
-  display:none;
+#admin input,#admin textarea,#admin select{
+  width:100%;margin:6px 0;padding:8px
 }
-
-.back{
-  margin-bottom:12px;
-  display:inline-block;
-  cursor:pointer;
-  color:var(--gold);
-  font-weight:bold;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  .tabs{width:90px}
-  header{font-size:18px}
-}
+#admin button{background:var(--gold);border:none;padding:8px 12px;color:#fff;cursor:pointer}
 </style>
 </head>
 
 <body>
 
-<header>Ehtisham News</header>
+<header>
+  Ehtisham News
+  <button onclick="enableAlerts()">Enable Alerts</button>
+</header>
 
 <div class="app">
-
   <!-- TABS -->
   <div class="tabs">
-    <button class="active" onclick="openTab('game')">Game</button>
-    <button onclick="openTab('esports')">Esports</button>
-    <button onclick="openTab('community')">Community</button>
+    <button class="active" onclick="openTab('game',this)">Game</button>
+    <button onclick="openTab('esports',this)">Esports</button>
+    <button onclick="openTab('community',this)">Community</button>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-
-    <!-- LIST VIEW -->
-    <div id="listView">
-
+    <div id="list">
       <div id="game" class="tab">
         <div class="card">
-          <h3>New Game Update Released</h3>
-          <p>Latest patch with bug fixes and features.</p>
-          <a class="read" onclick="openArticle('Game Update','Full details of the latest game update...')">Read Now</a>
+          <h3>New Game Update</h3>
+          <p>Latest patch released.</p>
+          <button class="read" onclick="openArticle('New Game Update','Full game update details...')">Read</button>
         </div>
       </div>
 
       <div id="esports" class="tab" style="display:none">
-        <div class="card">
-          <h3>Stay Tuned</h3>
-          <p>Updated esports news coming soon.</p>
-        </div>
+        <div class="card">Stay tuned for updated news</div>
       </div>
 
       <div id="community" class="tab" style="display:none">
-        <div class="card">
-          <h3>Community Event</h3>
-          <p>Join the upcoming community tournament.</p>
-          <a class="read" onclick="openArticle('Community Event','Details about community event...')">Read Now</a>
-        </div>
+        <div class="card">Stay tuned for updated news</div>
       </div>
-
     </div>
 
     <!-- ARTICLE VIEW -->
-    <div id="articleView">
-      <div class="back" onclick="goBack()">← Back</div>
+    <div id="article">
+      <div class="back" onclick="back()">← Back</div>
       <div class="card">
-        <h2 id="articleTitle"></h2>
-        <p id="articleContent"></p>
+        <h2 id="aTitle"></h2>
+        <p id="aBody"></p>
       </div>
     </div>
+  </div>
+</div>
 
+<!-- ADMIN PANEL -->
+<div id="admin">
+  <h3>Admin Panel</h3>
+  <input id="pin" placeholder="Enter Admin PIN">
+  <button onclick="login()">Login</button>
+
+  <div id="adminForm" style="display:none">
+    <select id="cat">
+      <option value="game">Game</option>
+      <option value="esports">Esports</option>
+      <option value="community">Community</option>
+    </select>
+    <input id="title" placeholder="News title">
+    <textarea id="body" placeholder="News content"></textarea>
+    <button onclick="addNews()">Add News</button>
   </div>
 </div>
 
 <script>
-function openTab(tab){
+/* TABS */
+function openTab(id,btn){
   document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
-  document.getElementById(tab).style.display='block';
-
+  document.getElementById(id).style.display='block';
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
+  btn.classList.add('active');
 }
 
-function openArticle(title,content){
-  document.getElementById('listView').style.display='none';
-  document.getElementById('articleView').style.display='block';
-  document.getElementById('articleTitle').innerText=title;
-  document.getElementById('articleContent').innerText=content;
+/* ARTICLE */
+function openArticle(t,b){
+  list.style.display='none'; article.style.display='block';
+  aTitle.innerText=t; aBody.innerText=b;
+}
+function back(){
+  article.style.display='none'; list.style.display='block';
 }
 
-function goBack(){
-  document.getElementById('articleView').style.display='none';
-  document.getElementById('listView').style.display='block';
+/* NOTIFICATIONS */
+function enableAlerts(){
+  if(!("Notification" in window)){alert("Not supported");return}
+  Notification.requestPermission().then(p=>{
+    if(p==="granted") new Notification("Ehtisham News",{body:"Alerts enabled"});
+  });
+}
+
+/* ADMIN */
+document.addEventListener("keydown",e=>{
+  if(e.key==="A" && e.shiftKey) admin.style.display='block'; // Shift + A
+});
+function login(){
+  if(pin.value==="1234"){adminForm.style.display='block'}
+  else alert("Wrong PIN");
+}
+function addNews(){
+  const c=document.getElementById(cat.value);
+  c.innerHTML=`
+  <div class="card">
+    <h3>${title.value}</h3>
+    <p>${body.value.substring(0,60)}...</p>
+    <button class="read" onclick="openArticle('${title.value}','${body.value}')">Read</button>
+  </div>`+c.innerHTML;
+
+  if(Notification.permission==="granted"){
+    new Notification("New News Added",{body:title.value});
+  }
+  title.value=""; body.value="";
 }
 </script>
 
