@@ -16,7 +16,7 @@
   --glass-border: rgba(255, 255, 255, 0.08);
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body {
   margin: 0;
@@ -26,9 +26,11 @@ body {
   background-attachment: fixed;
   color: #e0e0e0;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* --- SUPER PROFESSIONAL THERMAL INTRO --- */
+/* --- SPLASH --- */
 #splash {
   position: fixed;
   inset: 0;
@@ -38,77 +40,23 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 10000;
-  overflow: hidden;
 }
-
-/* Glow Effect */
-#splash::before {
-  content: '';
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: var(--gold);
-  filter: blur(120px);
-  opacity: 0.15;
-  animation: pulse 3s infinite;
-}
-
-#splash h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #fff;
-  margin: 0;
-  letter-spacing: -1px;
-  z-index: 2;
-  text-align: center;
-}
-
-#splash h1 span { color: var(--gold); text-shadow: 0 0 20px var(--gold-glow); }
-
-#splash .loader {
-  width: 40px;
-  height: 2px;
-  background: rgba(255,255,255,0.1);
-  margin-top: 20px;
-  position: relative;
-  overflow: hidden;
-}
-
-#splash .loader::after {
-  content: '';
-  position: absolute;
-  width: 40%;
-  height: 100%;
-  background: var(--gold);
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading { 0% { left: -50%; } 100% { left: 100%; } }
-@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.2); opacity: 0.25; } }
 
 /* --- HEADER --- */
 header {
   padding: 30px 20px;
-  text-align: left;
   max-width: 800px;
+  width: 100%;
   margin: 0 auto;
 }
 
-header h2 { 
-  margin: 0; 
-  font-size: 1.8rem; 
-  font-weight: 800; 
-  font-family: 'Inter', sans-serif;
-}
-
+header h2 { margin: 0; font-size: 1.8rem; font-weight: 800; font-family: 'Inter'; cursor: pointer; }
 header h2 span { color: var(--gold); }
 
-/* --- GLASS UI CARDS --- */
-.container { 
-  padding: 0 20px 40px; 
-  max-width: 800px; 
-  margin: 0 auto;
-}
+/* --- MAIN CONTENT AREA --- */
+main { flex: 1; }
+
+.container { padding: 0 20px 40px; max-width: 800px; margin: 0 auto; }
 
 .card {
   background: var(--glass);
@@ -118,68 +66,45 @@ header h2 span { color: var(--gold); }
   padding: 24px;
   margin-bottom: 20px;
   border: 1px solid var(--glass-border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-  transition: 0.5s;
-}
-
-.card:hover::after { left: 100%; }
-.card:active { transform: scale(0.97); background: rgba(255,255,255,0.05); }
-
-.card h3 { 
-  margin: 0 0 8px; 
-  font-size: 1.2rem; 
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-}
-
-.card p { margin: 0; font-size: 0.9rem; color: #aaa; font-weight: 300; line-height: 1.6; }
-
-/* --- NAVIGATION PILLS --- */
-.nav-btn {
-  background: var(--gold);
-  color: #000;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 0.9rem;
+  transition: 0.3s;
   cursor: pointer;
-  margin-top: 15px;
-  display: inline-block;
 }
 
-/* --- FOOTER --- */
+.card:active { transform: scale(0.97); }
+
+/* --- FOOTER (FIXED) --- */
 footer {
-  margin-top: 50px;
+  margin-top: auto;
   padding: 40px 20px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.8);
   text-align: center;
+  z-index: 100; /* Taake links clickable hon */
+  position: relative;
 }
 
-footer a {
+.social-links { margin-bottom: 15px; }
+.social-links a {
   color: var(--gold);
   text-decoration: none;
-  font-size: 0.85rem;
-  margin: 0 10px;
-  opacity: 0.8;
+  font-size: 0.9rem;
+  margin: 0 12px;
   font-weight: 600;
+  display: inline-block; /* Click area behtar karne ke liye */
+  padding: 5px;
 }
 
-/* --- PAGE SWITCHING --- */
-.page { display: none; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.contact-info {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 10px;
+}
 
-/* INSTALL TOAST */
+/* --- PAGES --- */
+.page { display: none; animation: slideUp 0.6s ease; }
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- NOTIFICATION & INSTALL POPUPS --- */
 #installToast {
   position: fixed;
   bottom: 25px; left: 20px; right: 20px;
@@ -187,11 +112,11 @@ footer a {
   color: #000;
   padding: 18px;
   border-radius: 16px;
-  display: none;
+  display: none; /* JS control karega */
   justify-content: space-between;
   align-items: center;
   z-index: 9999;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
 </style>
 </head>
@@ -200,69 +125,64 @@ footer a {
 
 <div id="splash">
   <h1>Ehtisham <span>News</span></h1>
-  <p style="color:#666; font-size: 12px; margin-top: 5px; font-weight: 600;">LOADING EXPERIENCE</p>
-  <div class="loader"></div>
+  <div style="width:40px; height:2px; background:var(--gold); margin-top:20px;"></div>
 </div>
 
 <header>
-  <h2 onclick="location.reload()">Ehtisham <span>News</span></h2>
-  <div style="width: 30px; height: 3px; background: var(--gold); margin-top: 8px;"></div>
+  <h2 onclick="goHome()">Ehtisham <span>News</span></h2>
 </header>
 
-<div id="home" class="page" style="display: block;">
-  <div class="container">
-    <div class="card" onclick="openCategory('gaming')">
-      <div style="font-size: 24px; margin-bottom: 10px;">🔥</div>
-      <h3>Gaming News</h3>
-      <p>Latest AAA titles, patch notes, and leaks.</p>
+<main>
+    <div id="home" class="page" style="display: block;">
+      <div class="container">
+        <div class="card" onclick="openCategory('gaming')">
+          <h3>🔥 Gaming News</h3>
+          <p>Latest AAA titles and leaks.</p>
+        </div>
+        <div class="card" onclick="openCategory('esports')">
+          <h3>🏆 Esports</h3>
+          <p>Pro tournament updates.</p>
+        </div>
+        <div class="card" onclick="openCategory('community')">
+          <h3>👥 Community</h3>
+          <p>Connect with gamers.</p>
+        </div>
+      </div>
     </div>
-    
-    <div class="card" onclick="openCategory('esports')">
-      <div style="font-size: 24px; margin-bottom: 10px;">🏆</div>
-      <h3>Esports</h3>
-      <p>Live tournament scores and roster changes.</p>
-    </div>
-    
-    <div class="card" onclick="openCategory('community')">
-      <div style="font-size: 24px; margin-bottom: 10px;">👥</div>
-      <h3>Community</h3>
-      <p>Connect with local gamers and events.</p>
-    </div>
-  </div>
-</div>
 
-<div id="newsList" class="page">
-  <div class="container">
-    <h2 id="catTitle" style="color:var(--gold); font-family: 'Inter';"></h2>
-    <div id="newsItems"></div>
-    <button class="nav-btn" style="background:#222; color:#fff;" onclick="goHome()">⬅ BACK</button>
-  </div>
-</div>
-
-<div id="newsView" class="page">
-  <div class="container">
-    <div class="card" style="background:none; border:none; padding:0;">
-      <h2 id="viewTitle" style="font-size: 2rem; line-height: 1.2; margin-bottom: 20px;"></h2>
-      <p id="viewContent" style="color:#ccc; font-size: 1.1rem; line-height: 1.8;"></p>
+    <div id="newsList" class="page">
+      <div class="container">
+        <h2 id="catTitle" style="color:var(--gold)"></h2>
+        <div id="newsItems"></div>
+        <button onclick="goHome()" style="background:#222; color:#fff; border:none; padding:10px 20px; border-radius:10px; margin-top:20px;">⬅ BACK</button>
+      </div>
     </div>
-    <hr style="border:0; border-top:1px solid var(--glass-border); margin:40px 0;">
-    <h4 style="font-family:'Inter'">MORE STORIES</h4>
-    <div id="otherNews"></div>
-    <button class="nav-btn" onclick="goBack()">⬅ BACK TO LIST</button>
-  </div>
-</div>
 
-<div id="installToast">
-  <span style="font-weight:700; font-size:14px;">Install Ehtisham News App?</span>
-  <button onclick="doInstall()" style="background:#000; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:700;">Install</button>
-</div>
+    <div id="newsView" class="page">
+      <div class="container">
+        <h2 id="viewTitle"></h2>
+        <p id="viewContent" style="line-height:1.8; color:#ccc;"></p>
+        <button onclick="goBack()" style="background:var(--gold); border:none; padding:10px 20px; border-radius:10px;">⬅ BACK</button>
+      </div>
+    </div>
+</main>
 
 <footer>
-  <a href="#">WHATSAPP</a>
-  <a href="#">INSTAGRAM</a>
-  <a href="#">FACEBOOK</a>
-  <p style="font-size:10px; color:#444; margin-top:20px;">DESIGNED FOR THE NEXT GEN</p>
+  <div class="social-links">
+    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
+    <a href="https://www.facebook.com/share/16UChCgJTn/" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank">TikTok</a>
+  </div>
+  <div class="contact-info">
+    Contact Us: <a href="mailto:support@ehtishamnews.com" style="color:#888; margin:0;">support@ehtishamnews.com</a>
+  </div>
 </footer>
+
+<div id="installToast">
+  <span style="font-weight:700;">Install Ehtisham News?</span>
+  <button id="btnInstall" style="background:#000; color:#fff; border:none; padding:8px 15px; border-radius:8px;">Install</button>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -278,81 +198,65 @@ const db = firebase.firestore();
 // Splash Exit
 window.addEventListener('load', () => {
   setTimeout(() => {
-    const s = document.getElementById('splash');
-    s.style.transition = '0.8s';
-    s.style.opacity = '0';
-    setTimeout(() => s.remove(), 800);
-  }, 3000);
+    document.getElementById('splash').style.opacity = '0';
+    setTimeout(() => document.getElementById('splash').remove(), 600);
+  }, 2000);
 });
 
-function switchPage(pageId) {
+// Navigation
+function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-  document.getElementById(pageId).style.display = 'block';
+  document.getElementById(id).style.display = 'block';
   window.scrollTo(0,0);
 }
 
 function openCategory(cat) {
-  switchPage('newsList');
+  showPage('newsList');
   document.getElementById("catTitle").innerText = cat.toUpperCase();
-  const box = document.getElementById("newsItems");
-  box.innerHTML = "<div class='card'><p>Syncing with server...</p></div>";
-
   db.collection("news").where("category","==",cat).orderBy("date","desc").get()
     .then(snap => {
-      if(snap.empty){ box.innerHTML = "<p>No intel found.</p>"; return; }
       let html = "";
       snap.forEach(d => {
-        let n = d.data();
-        html += `<div class="card" onclick="openNews('${d.id}','${cat}')">
-          <h3>${n.title}</h3>
-          <p>${n.content.substring(0,90)}...</p>
-        </div>`;
+        html += `<div class="card" onclick="openNews('${d.id}','${cat}')"><h3>${d.data().title}</h3><p>${d.data().content.substring(0,80)}...</p></div>`;
       });
-      box.innerHTML = html;
+      document.getElementById("newsItems").innerHTML = html || "No News Found.";
     });
 }
 
 function openNews(id, cat) {
-  switchPage('newsView');
+  showPage('newsView');
   db.collection("news").doc(id).get().then(d => {
-    let n = d.data();
-    document.getElementById("viewTitle").innerText = n.title;
-    document.getElementById("viewContent").innerText = n.content;
-  });
-
-  db.collection("news").where("category","==",cat).limit(3).get().then(s => {
-    let h = "";
-    s.forEach(d => { if(d.id !== id) h += `<div class="card" onclick="openNews('${d.id}','${cat}')"><h3>${d.data().title}</h3></div>`; });
-    document.getElementById("otherNews").innerHTML = h;
+    document.getElementById("viewTitle").innerText = d.data().title;
+    document.getElementById("viewContent").innerText = d.data().content;
   });
 }
 
-function goHome() { switchPage('home'); }
-function goBack() { switchPage('newsList'); }
+function goHome() { showPage('home'); }
+function goBack() { showPage('newsList'); }
 
-// Notifications
-if ("Notification" in window) {
-  Notification.requestPermission();
-  db.collection("notifications").orderBy("time","desc").limit(1).onSnapshot(s => {
-    s.docChanges().forEach(change => {
-      if (change.type === "added") {
-        let n = change.doc.data();
-        new Notification(n.title, { body: n.body });
-      }
-    });
-  });
-}
+/* --- WHY POPUPS DON'T SHOW --- */
+// 1. Notifications: Sirf HTTPS par kaam karti hain.
+// 2. Install Prompt: Iske liye 'Manifest' file zaroori hai.
 
-// Install Prompt
-let defP;
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault(); defP = e;
-  document.getElementById("installToast").style.display = "flex";
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installToast').style.display = 'flex';
 });
-function doInstall() {
-  document.getElementById("installToast").style.display = "none";
-  defP.prompt();
+
+document.getElementById('btnInstall').onclick = () => {
+  document.getElementById('installToast').style.display = 'none';
+  deferredPrompt.prompt();
+};
+
+// Notification Logic
+if ("Notification" in window) {
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
 }
 </script>
+
 </body>
 </html>
