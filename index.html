@@ -6,216 +6,152 @@
 <title>Ehtisham News</title>
 
 <style>
-:root{--gold:#d4af37}
-*{box-sizing:border-box;font-family:Arial}
-body{margin:0;background:#f5f5f5;color:#111}
+*{box-sizing:border-box;font-family:system-ui,-apple-system}
+body{margin:0;background:#f7f7f7;color:#222}
+header{text-align:center;padding:18px;background:#fff;border-bottom:1px solid #ddd}
+h1 span{color:#c9a23f}
+.tabs{display:flex;gap:10px;justify-content:center;margin:15px}
+.tab{padding:10px 16px;border-radius:20px;border:1px solid #c9a23f;color:#c9a23f;cursor:pointer}
+.tab.active{background:#c9a23f;color:#fff}
+.container{padding:15px}
+.card{background:#fff;border-radius:14px;padding:15px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+button{background:#c9a23f;color:#fff;border:none;padding:10px 16px;border-radius:20px;cursor:pointer}
+.hidden{display:none}
+footer{text-align:center;padding:15px;font-size:13px;color:#777}
 
-/* SPLASH */
-#splash{
-  position:fixed;inset:0;background:#111;display:flex;
-  align-items:center;justify-content:center;color:var(--gold);
-  font-size:28px;font-weight:bold;z-index:1000;
-  animation:fadeout 1.5s forwards;animation-delay:1.5s
-}
-@keyframes fadeout{to{opacity:0;visibility:hidden}}
+#alertBtn{position:fixed;top:12px;right:12px}
 
-/* HEADER */
-header{
-  background:linear-gradient(135deg,var(--gold),#b8962e);
-  color:white;padding:14px;text-align:center;
-  font-size:20px;font-weight:bold;position:sticky;top:0
-}
-header button{
-  position:absolute;right:10px;top:10px;
-  border:none;border-radius:20px;padding:6px 10px;
-  background:white;cursor:pointer;font-size:12px
-}
+.news-link{margin-top:10px;color:#c9a23f;font-weight:600;cursor:pointer}
 
-/* LAYOUT */
-.app{display:flex;min-height:100vh}
-.tabs{
-  width:90px;background:white;border-right:2px solid var(--gold);
-  display:flex;flex-direction:column
-}
-.tabs button{
-  border:none;background:none;padding:16px;
-  font-weight:bold;cursor:pointer
-}
-.tabs button.active{background:var(--gold);color:white}
+.contact a{display:block;margin:6px 0;color:#c9a23f;text-decoration:none}
 
-.content{flex:1;padding:14px}
-
-/* CARDS */
-.card{
-  background:white;border-radius:12px;padding:14px;
-  margin-bottom:12px;box-shadow:0 4px 10px rgba(0,0,0,.08)
-}
-.read{
-  background:var(--gold);color:white;border:none;
-  padding:6px 12px;border-radius:16px;cursor:pointer
-}
-
-/* ARTICLE */
-#article{display:none}
-.back{color:var(--gold);font-weight:bold;cursor:pointer;margin-bottom:10px}
-
-/* CONTACT */
-.contact a{
-  display:block;margin:10px 0;text-decoration:none;
-  background:var(--gold);color:white;
-  padding:12px;border-radius:20px;text-align:center
-}
-
-/* ADMIN */
-#admin{
-  display:none;background:white;padding:14px;
-  border-top:3px solid var(--gold)
-}
-#admin input,#admin textarea,#admin select{
-  width:100%;margin:6px 0;padding:8px
-}
-#admin button{
-  background:var(--gold);border:none;
-  color:white;padding:8px 12px;cursor:pointer
-}
+/* Admin */
+#adminPanel input{width:100%;padding:10px;margin:8px 0}
 </style>
 </head>
 
 <body>
 
-<div id="splash">Ehtisham News</div>
-
-<header>
-  Ehtisham News
-  <button onclick="enableAlerts()">Alerts</button>
+<header id="logo">
+<h1>Ehtisham <span>News</span></h1>
+<p>Free Fire • Esports • Gaming Community</p>
 </header>
 
-<div class="app">
+<button id="alertBtn">Enable Alerts</button>
 
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="active" onclick="openTab('game',this)">Game</button>
-    <button onclick="openTab('esports',this)">Esports</button>
-    <button onclick="openTab('community',this)">Community</button>
-    <button onclick="openTab('contact',this)">Contact</button>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="content">
-
-    <div id="list">
-
-      <div id="game" class="tab">
-        <div class="card">
-          <h3>New Game Update</h3>
-          <p>Latest patch released.</p>
-          <button class="read"
-            onclick="openArticle('New Game Update','Full game update details here...')">
-            Read
-          </button>
-        </div>
-      </div>
-
-      <div id="esports" class="tab" style="display:none">
-        <div class="card">Stay tuned for updated news</div>
-      </div>
-
-      <div id="community" class="tab" style="display:none">
-        <div class="card">Stay tuned for updated news</div>
-      </div>
-
-      <!-- CONTACT -->
-      <div id="contact" class="tab contact" style="display:none">
-        <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
-        <a href="https://www.facebook.com/share/16UChCgJTn/" target="_blank">Facebook</a>
-        <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
-        <a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank">TikTok</a>
-      </div>
-
-    </div>
-
-    <!-- ARTICLE VIEW -->
-    <div id="article">
-      <div class="back" onclick="back()">← Back</div>
-      <div class="card">
-        <h2 id="aTitle"></h2>
-        <p id="aBody"></p>
-      </div>
-    </div>
-
-  </div>
+<div class="tabs">
+<div class="tab active" onclick="showTab('gaming')">Gaming</div>
+<div class="tab" onclick="showTab('esports')">Esports</div>
+<div class="tab" onclick="showTab('community')">Community</div>
 </div>
 
-<!-- ADMIN PANEL -->
-<div id="admin">
-  <h3>Admin Panel</h3>
-  <input id="pin" placeholder="Enter PIN">
-  <button onclick="login()">Login</button>
+<div class="container" id="content"></div>
 
-  <div id="adminForm" style="display:none">
-    <select id="cat">
-      <option value="game">Game</option>
-      <option value="esports">Esports</option>
-      <option value="community">Community</option>
-    </select>
-    <input id="title" placeholder="News title">
-    <textarea id="body" placeholder="News content"></textarea>
-    <button onclick="addNews()">Add News</button>
-  </div>
+<div class="container hidden" id="article"></div>
+
+<div class="container">
+<div class="card contact">
+<h3>Contact Us</h3>
+<a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
+<a href="https://www.facebook.com/share/16UChCgJTn/" target="_blank">Facebook</a>
+<a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
+<a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank">TikTok</a>
+</div>
+</div>
+
+<footer>© 2025 Ehtisham News • Built for Mobile</footer>
+
+<!-- ADMIN PANEL -->
+<div class="container hidden" id="adminPanel">
+<div class="card">
+<h3>Admin Panel</h3>
+<input type="password" id="adminPass" placeholder="Admin Password">
+<button onclick="checkAdmin()">Login</button>
+<p id="adminMsg"></p>
+</div>
 </div>
 
 <script>
-function openTab(id,btn){
-  document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
-  document.getElementById(id).style.display='block';
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+const data={
+gaming:[
+{t:"GTA 6 update released",d:"New GTA 6 features revealed."},
+{t:"PUBG new season launched",d:"Royale Pass and maps updated."}
+],
+esports:[
+{t:"Free Fire World Cup",d:"Teams announced globally."}
+],
+community:[
+{t:"Community Tournament",d:"Join local FF events."}
+]
+};
+
+let tap=0;
+
+function showTab(tab){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+event.target.classList.add('active');
+render(tab);
 }
 
-function openArticle(t,b){
-  list.style.display='none';
-  article.style.display='block';
-  aTitle.innerText=t;
-  aBody.innerText=b;
-}
-function back(){
-  article.style.display='none';
-  list.style.display='block';
-}
-
-/* NOTIFICATIONS */
-function enableAlerts(){
-  if(!("Notification" in window)) return;
-  Notification.requestPermission().then(p=>{
-    if(p==="granted") new Notification("Ehtisham News",{body:"Alerts Enabled"});
-  });
-}
-
-/* ADMIN */
-document.addEventListener("keydown",e=>{
-  if(e.shiftKey && e.key==="A") admin.style.display='block';
+function render(tab){
+const box=document.getElementById("content");
+box.innerHTML="";
+data[tab].forEach((n,i)=>{
+box.innerHTML+=`
+<div class="card">
+<h3>${n.t}</h3>
+<p>${n.d}</p>
+<div class="news-link" onclick="readMore('${tab}',${i})">Read More</div>
+</div>`;
 });
-function login(){
-  if(pin.value==="1234") adminForm.style.display='block';
-  else alert("Wrong PIN");
 }
-function addNews(){
-  const c=document.getElementById(cat.value);
-  c.innerHTML=`
-  <div class="card">
-    <h3>${title.value}</h3>
-    <p>${body.value.substring(0,60)}...</p>
-    <button class="read"
-      onclick="openArticle('${title.value}','${body.value}')">
-      Read
-    </button>
-  </div>` + c.innerHTML;
 
-  if(Notification.permission==="granted"){
-    new Notification("New News",{body:title.value});
-  }
-  title.value="";body.value="";
+function readMore(tab,i){
+document.getElementById("content").classList.add("hidden");
+const art=document.getElementById("article");
+art.classList.remove("hidden");
+art.innerHTML=`
+<div class="card">
+<h2>${data[tab][i].t}</h2>
+<p>${data[tab][i].d} — Full detailed news shown here.</p>
+<hr>
+<h4>More News</h4>
+${data[tab].map((n,j)=>j!==i?`<div class="news-link" onclick="readMore('${tab}',${j})">${n.t}</div>`:"").join("")}
+<br><br>
+<button onclick="goBack()">Back</button>
+</div>`;
 }
+
+function goBack(){
+document.getElementById("article").classList.add("hidden");
+document.getElementById("content").classList.remove("hidden");
+}
+
+document.getElementById("alertBtn").onclick=()=>{
+Notification.requestPermission().then(p=>{
+if(p==="granted")new Notification("Ehtisham News Alerts Enabled");
+});
+};
+
+/* ADMIN SECRET TAP */
+document.getElementById("logo").addEventListener("click",()=>{
+tap++;
+setTimeout(()=>tap=0,800);
+if(tap===5){
+document.getElementById("adminPanel").classList.remove("hidden");
+window.scrollTo(0,document.body.scrollHeight);
+}
+});
+
+function checkAdmin(){
+if(document.getElementById("adminPass").value==="CHATGPTSEBNWAIHAI"){
+document.getElementById("adminMsg").innerText="Admin Access Granted";
+}else{
+document.getElementById("adminMsg").innerText="Wrong Password";
+}
+}
+
+render("gaming");
 </script>
 
 </body>
