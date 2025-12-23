@@ -7,76 +7,129 @@
 
 <style>
 :root{
-  --gold:#c9a227;
-  --light:#ffffff;
-  --bg:#f6f6f6;
+  --gold:#c9a23f;
+  --bg:#f7f7f7;
+  --card:#ffffff;
+  --text:#111;
 }
+
 *{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{margin:0;background:var(--bg);color:#333}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* HEADER */
 header{
-  background:#fff;
   padding:20px;
   text-align:center;
-  border-bottom:2px solid var(--gold)
+  background:#fff;
+  border-bottom:2px solid var(--gold);
 }
-header h1{margin:0;color:#000}
-header span{color:var(--gold)}
+
+header h1{
+  margin:0;
+  font-size:26px;
+}
+header h1 span{color:var(--gold)}
+
+header p{
+  margin:5px 0 0;
+  font-size:14px;
+  color:#555;
+}
+
+/* TABS */
 .tabs{
   display:flex;
   gap:10px;
-  justify-content:center;
   padding:15px;
+  justify-content:center;
 }
+
 .tabs button{
-  border:none;
   padding:10px 16px;
-  border-radius:20px;
+  border-radius:25px;
+  border:2px solid var(--gold);
   background:#fff;
-  border:1px solid var(--gold);
+  color:#000;
   cursor:pointer;
 }
-.tabs button.active{background:var(--gold);color:#fff}
-.container{max-width:900px;margin:auto;padding:15px}
-.card{
-  background:#fff;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,.08);
-  animation:fade .4s ease
-}
-.card h3{margin-top:0}
-.card button{
+
+.tabs button.active{
   background:var(--gold);
   color:#fff;
-  border:none;
-  padding:8px 14px;
-  border-radius:6px;
 }
-.empty{text-align:center;color:#777;margin-top:40px}
 
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
-
-#articlePage{
+/* CONTENT */
+.section{
   display:none;
-  background:#fff;
-  min-height:100vh;
+  padding:15px;
+}
+
+.section.active{
+  display:block;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
+}
+
+.card h3{margin:0 0 8px}
+.card p{margin:0 0 12px;color:#555}
+
+.card button{
+  padding:8px 14px;
+  border:none;
+  border-radius:20px;
+  background:var(--gold);
+  color:#fff;
+  cursor:pointer;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  color:#777;
+  margin-top:40px;
+}
+
+/* ARTICLE VIEW */
+#articleView{
+  display:none;
   padding:20px;
 }
+
+#articleView h2{margin-top:0}
+#backBtn{
+  margin-bottom:15px;
+  background:#000;
+}
+
+/* ADMIN */
 #admin{
   display:none;
-  background:#fff;
-  padding:20px;
-  border-top:2px solid var(--gold)
+  padding:15px;
 }
-input,select,textarea{
+
+input,textarea{
   width:100%;
   padding:10px;
-  margin:8px 0;
+  margin-bottom:10px;
 }
+
+/* FOOTER */
 footer{
   text-align:center;
   padding:20px;
+  font-size:13px;
   color:#666;
 }
 </style>
@@ -86,33 +139,40 @@ footer{
 
 <header>
   <h1>Ehtisham <span>News</span></h1>
-  <small>Free Fire • Esports • Gaming Community</small>
+  <p>Free Fire • Esports • Gaming Community</p>
 </header>
 
 <div class="tabs">
-  <button class="active" onclick="switchTab('game')">Game Updates</button>
-  <button onclick="switchTab('esports')">Esports World</button>
-  <button onclick="switchTab('community')">Community News</button>
+  <button class="active" onclick="openTab('game')">Game Updates</button>
+  <button onclick="openTab('esports')">Esports World</button>
+  <button onclick="openTab('community')">Community News</button>
 </div>
 
-<div class="container" id="newsContainer"></div>
+<!-- GAME -->
+<div id="game" class="section active"></div>
 
-<!-- Article Page -->
-<div id="articlePage">
-  <button onclick="goBack()">← Back</button>
-  <h2 id="aTitle"></h2>
-  <p id="aContent"></p>
+<!-- ESPORTS -->
+<div id="esports" class="section"></div>
+
+<!-- COMMUNITY -->
+<div id="community" class="section"></div>
+
+<!-- ARTICLE -->
+<div id="articleView">
+  <button id="backBtn" class="card button" onclick="goBack()">← Back</button>
+  <h2 id="articleTitle"></h2>
+  <p id="articleContent"></p>
 </div>
 
-<!-- Admin Panel -->
+<!-- ADMIN (HIDDEN) -->
 <div id="admin">
   <h3>Admin Panel</h3>
-  <input id="nTitle" placeholder="News Title">
-  <textarea id="nContent" placeholder="News Content"></textarea>
-  <select id="nCat">
-    <option value="game">Game Updates</option>
-    <option value="esports">Esports World</option>
-    <option value="community">Community News</option>
+  <input id="titleInput" placeholder="News Title">
+  <textarea id="contentInput" placeholder="News Content"></textarea>
+  <select id="category">
+    <option value="game">Game</option>
+    <option value="esports">Esports</option>
+    <option value="community">Community</option>
   </select>
   <button onclick="addNews()">Add News</button>
 </div>
@@ -122,71 +182,71 @@ footer{
 </footer>
 
 <script>
-let current='game'
 let data={
   game:[],
   esports:[],
   community:[]
+};
+
+function openTab(tab){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  render(tab);
 }
 
-function switchTab(tab){
-  current=tab
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'))
-  event.target.classList.add('active')
-  render()
-}
-
-function render(){
-  const box=document.getElementById('newsContainer')
-  box.innerHTML=''
-  if(data[current].length===0){
-    box.innerHTML='<div class="empty">Stay tuned for updated news</div>'
-    return
+function render(tab){
+  let box=document.getElementById(tab);
+  box.innerHTML="";
+  if(data[tab].length===0){
+    box.innerHTML='<p class="empty">Stay tuned for updated news</p>';
+    return;
   }
-  data[current].forEach(n=>{
+  data[tab].forEach(n=>{
     box.innerHTML+=`
     <div class="card">
       <h3>${n.title}</h3>
-      <p>${n.content.substring(0,70)}...</p>
-      <button onclick="openArticle('${n.title}','${n.content}')">Read More</button>
-    </div>`
-  })
+      <p>${n.content.slice(0,60)}...</p>
+      <button onclick="openArticle('${n.title}','${n.content}')">Read Now</button>
+    </div>`;
+  });
 }
 
-function openArticle(t,c){
-  document.body.scrollTop=0
-  document.documentElement.scrollTop=0
-  document.getElementById('articlePage').style.display='block'
-  document.querySelector('.container').style.display='none'
-  document.querySelector('.tabs').style.display='none'
-  document.getElementById('aTitle').innerText=t
-  document.getElementById('aContent').innerText=c
+function openArticle(title,content){
+  document.querySelectorAll('.section').forEach(s=>s.style.display='none');
+  document.getElementById('articleView').style.display='block';
+  document.getElementById('articleTitle').innerText=title;
+  document.getElementById('articleContent').innerText=content;
 }
 
 function goBack(){
-  document.getElementById('articlePage').style.display='none'
-  document.querySelector('.container').style.display='block'
-  document.querySelector('.tabs').style.display='flex'
+  document.getElementById('articleView').style.display='none';
+  document.querySelectorAll('.section').forEach(s=>s.style.display='block');
 }
 
 function addNews(){
-  data[nCat.value].push({title:nTitle.value,content:nContent.value})
-  nTitle.value=nContent.value=''
-  render()
+  let t=titleInput.value;
+  let c=contentInput.value;
+  let cat=category.value;
+  if(!t||!c) return alert("Fill all fields");
+  data[cat].push({title:t,content:c});
+  titleInput.value="";
+  contentInput.value="";
+  render(cat);
 }
 
-/* Secret Admin Access */
-document.addEventListener('keydown',e=>{
-  if(e.key==='@'){
-    admin.style.display='block'
+/* ADMIN ACCESS (SECRET) */
+document.addEventListener("keydown",e=>{
+  if(e.ctrlKey && e.key==="A"){
+    let pass=prompt("Admin Password?");
+    if(pass==="1234"){
+      admin.style.display="block";
+      alert("Admin Enabled");
+    }
   }
-})
-
-/* Notifications */
-if("Notification"in window){
-  Notification.requestPermission()
-}
-render()
+});
 </script>
 
 </body>
