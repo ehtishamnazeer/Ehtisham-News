@@ -5,20 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ehtisham News</title>
 
-<!-- PWA -->
-<link rel="manifest" href="data:application/json,{
-  &quot;name&quot;:&quot;Ehtisham News&quot;,
-  &quot;short_name&quot;:&quot;E-News&quot;,
-  &quot;start_url&quot;:&quot;.&quot;,
-  &quot;display&quot;:&quot;standalone&quot;,
-  &quot;background_color&quot;:&quot;#ffffff&quot;,
-  &quot;theme_color&quot;:&quot;#c9a23f&quot;
-}">
 <meta name="theme-color" content="#c9a23f">
 
 <style>
 body{margin:0;font-family:Arial;background:#f6f6f6}
-h1,h2{margin:0}
+h1,h2,h3{margin:0}
 a{text-decoration:none;color:inherit}
 
 /* Splash */
@@ -35,7 +26,7 @@ a{text-decoration:none;color:inherit}
 
 /* Header */
 header{text-align:center;padding:20px;background:#fff}
-header h1 span{color:#c9a23f}
+header span{color:#c9a23f}
 
 /* Cards */
 .container{padding:15px}
@@ -56,50 +47,49 @@ header h1 span{color:#c9a23f}
  cursor:pointer;
 }
 
-/* News Page */
+/* News */
 #newsPage{display:none}
 
-/* Admin */
-#adminPanel{display:none;padding:15px}
-input,textarea{width:100%;padding:8px;margin:6px 0}
-
-/* Contact */
+/* Footer */
 footer{background:#fff;padding:15px;text-align:center}
-footer a{margin:5px;display:inline-block}
+footer a{margin:5px}
 </style>
 </head>
 
 <body>
 
 <!-- Splash -->
-<div id="splash"><div class="loader">Ehtisham News</div></div>
+<div id="splash">
+  <div class="loader">Ehtisham News</div>
+</div>
 
 <header>
-<h1>Ehtisham <span>News</span></h1>
-<p>Free Fire • Esports • Gaming Community</p>
+  <h1>Ehtisham <span>News</span></h1>
+  <p>Gaming • Esports • Community</p>
 </header>
 
+<!-- HOME -->
 <div class="container" id="home">
   <div class="card">
     <h2>🔥 Gaming</h2>
-    <p>Latest Free Fire & gaming updates</p>
+    <p>Latest gaming updates</p>
     <button onclick="openNews('gaming')">Read More</button>
   </div>
 
   <div class="card">
     <h2>🏆 Esports</h2>
-    <p>Tournaments & world rankings</p>
+    <p>Tournaments & rankings</p>
     <button onclick="openNews('esports')">Read More</button>
   </div>
 
   <div class="card">
     <h2>👥 Community</h2>
-    <p>Creator & community updates</p>
+    <p>Creators & community news</p>
     <button onclick="openNews('community')">Read More</button>
   </div>
 </div>
 
-<!-- News Page -->
+<!-- NEWS PAGE -->
 <div class="container" id="newsPage">
   <h2 id="newsTitle"></h2>
   <div id="newsContent"></div>
@@ -108,6 +98,69 @@ footer a{margin:5px;display:inline-block}
 
 <footer>
   <h3>Contact Us</h3>
+  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
+  <a href="https://www.facebook.com/share/16UChCgJTn/">Facebook</a> |
+  <a href="https://www.instagram.com/ehtisham_nazeer">Instagram</a> |
+  <a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
+</footer>
+
+<!-- ================= FIREBASE ================= -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
+  authDomain: "ehtisham-news.firebaseapp.com",
+  projectId: "ehtisham-news",
+  storageBucket: "ehtisham-news.firebasestorage.app",
+  messagingSenderId: "52980900534",
+  appId: "1:52980900534:web:3595bef67929dd1c727c17"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
+
+<script>
+// Splash FIX
+window.onload = ()=>{
+  document.getElementById("splash").classList.add("hide");
+};
+
+// Load news
+function openNews(category){
+  home.style.display="none";
+  newsPage.style.display="block";
+  newsTitle.innerText = category.toUpperCase();
+  newsContent.innerHTML="Loading...";
+
+  db.collection("news")
+    .where("category","==",category)
+    .orderBy("date","desc")
+    .onSnapshot(snap=>{
+      let html="";
+      snap.forEach(doc=>{
+        let n=doc.data();
+        html+=`
+          <div class="card">
+            <h3>${n.title}</h3>
+            <p>${n.content}</p>
+            <small>${n.date}</small>
+          </div>`;
+      });
+      newsContent.innerHTML = html || "<p>No news yet</p>";
+    });
+}
+
+function goHome(){
+  newsPage.style.display="none";
+  home.style.display="block";
+}
+</script>
+
+</body>
+</html>  <h3>Contact Us</h3>
   <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
   <a href="https://www.facebook.com/share/16UChCgJTn/">Facebook</a> |
   <a href="https://www.instagram.com/ehtisham_nazeer">Instagram</a> |
