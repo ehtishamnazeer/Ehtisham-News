@@ -7,29 +7,20 @@
 
 <meta name="theme-color" content="#c9a23f">
 
-<!-- ===== PWA MANIFEST (INLINE) ===== -->
-<link rel="manifest" href='data:application/json,{
-  "name":"Ehtisham News",
-  "short_name":"E-News",
-  "start_url":".",
-  "display":"standalone",
-  "background_color":"#ffffff",
-  "theme_color":"#c9a23f",
-  "icons":[
-    {
-      "src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22512%22 height=%22512%22><rect width=%22512%22 height=%22512%22 fill=%22%23c9a23f%22/><text x=%2250%25%22 y=%2255%25%22 font-size=%22220%22 fill=%22white%22 text-anchor=%22middle%22 font-family=%22Arial%22>EN</text></svg>",
-      "sizes":"512x512",
-      "type":"image/svg+xml"
-    }
-  ]
-}'>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-body{margin:0;font-family:Arial;background:#f6f6f6}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#f4f6f8;
+  color:#222;
+}
 h1,h2,h3{margin:0}
 a{text-decoration:none;color:inherit}
 
-/* ===== SPLASH (PLAY STORE STYLE) ===== */
+/* SPLASH */
 #splash{
   position:fixed;inset:0;
   background:#fff;
@@ -37,70 +28,90 @@ a{text-decoration:none;color:inherit}
   align-items:center;
   justify-content:center;
   z-index:9999;
-  animation:splashOut 2s ease forwards;
+  animation:hideSplash 2s forwards;
 }
 #splash .logo{
-  width:110px;height:110px;
-  border-radius:26px;
+  width:120px;height:120px;
+  border-radius:28px;
   background:#c9a23f;
   color:#fff;
   font-size:48px;
+  font-weight:600;
   display:flex;
   align-items:center;
   justify-content:center;
-  animation:pop 1.2s ease;
+  animation:pop 1s ease;
 }
 @keyframes pop{
-  0%{transform:scale(.5);opacity:0}
-  70%{transform:scale(1.1);opacity:1}
-  100%{transform:scale(1)}
+  from{transform:scale(.6);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
-@keyframes splashOut{
-  0%{opacity:1}
-  85%{opacity:1}
+@keyframes hideSplash{
+  0%,85%{opacity:1}
   100%{opacity:0;visibility:hidden}
 }
 
-/* ===== HEADER ===== */
-header{text-align:center;padding:20px;background:#fff}
+/* HEADER */
+header{
+  background:#fff;
+  text-align:center;
+  padding:18px;
+}
 header span{color:#c9a23f}
+header p{margin-top:6px;font-size:14px;color:#666}
 
-/* ===== CARDS ===== */
-.container{padding:15px}
+/* CONTAINER */
+.container{padding:16px}
+
+/* CARDS */
 .card{
   background:#fff;
   border-radius:16px;
-  padding:20px;
-  margin-bottom:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,.08);
-  animation:fadeUp .4s ease;
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  animation:fadeUp .35s ease;
 }
 @keyframes fadeUp{
-  from{opacity:0;transform:translateY(15px)}
+  from{opacity:0;transform:translateY(12px)}
   to{opacity:1;transform:none}
 }
-button{
+.card button{
+  margin-top:10px;
   background:#c9a23f;
-  color:#fff;
   border:none;
-  padding:10px 16px;
+  color:#fff;
+  padding:10px 18px;
   border-radius:20px;
   cursor:pointer;
-  margin-top:10px;
+  font-weight:500;
 }
 
-/* ===== PAGES ===== */
-#newsPage,#adminPanel{display:none}
+/* PAGES */
+#newsPage{display:none}
 
-/* ===== FOOTER ===== */
-footer{background:#fff;padding:15px;text-align:center}
-footer a{margin:5px}
+/* FOOTER */
+footer{
+  background:#fff;
+  padding:14px;
+  text-align:center;
+  font-size:14px;
+}
+footer a{margin:0 6px;color:#c9a23f}
 
-/* ===== INSTALL POPUP ===== */
-.installBox{
+/* NOTIFICATION POPUP */
+#notifyBox{
   position:fixed;
-  bottom:20px;left:15px;right:15px;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#222;
+  color:#fff;
+  padding:14px 18px;
+  border-radius:12px;
+  display:none;
   z-index:999;
+  animation:fadeUp .3s ease;
 }
 </style>
 </head>
@@ -112,6 +123,8 @@ footer a{margin:5px}
   <div class="logo">EN</div>
 </div>
 
+<div id="notifyBox"></div>
+
 <header>
   <h1>Ehtisham <span>News</span></h1>
   <p>Gaming • Esports • Community</p>
@@ -122,24 +135,19 @@ footer a{margin:5px}
   <div class="card">
     <h2>🔥 Gaming</h2>
     <p>Latest gaming updates</p>
-    <button onclick="openNews('gaming')">Read More</button>
+    <button onclick="openNews('gaming')">Explore</button>
   </div>
 
   <div class="card">
     <h2>🏆 Esports</h2>
     <p>Tournaments & rankings</p>
-    <button onclick="openNews('esports')">Read More</button>
+    <button onclick="openNews('esports')">Explore</button>
   </div>
 
   <div class="card">
     <h2>👥 Community</h2>
     <p>Creators & community news</p>
-    <button onclick="openNews('community')">Read More</button>
-  </div>
-
-  <div class="card">
-    <h3>🔐 Admin</h3>
-    <button onclick="openAdmin()">Open Admin Panel</button>
+    <button onclick="openNews('community')">Explore</button>
   </div>
 </div>
 
@@ -150,31 +158,6 @@ footer a{margin:5px}
   <button onclick="goHome()">⬅ Back</button>
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="container" id="adminPanel">
-  <h2>Admin Panel</h2>
-
-  <input id="aTitle" placeholder="News title">
-  <textarea id="aContent" placeholder="News content"></textarea>
-  <select id="aCategory">
-    <option value="gaming">Gaming</option>
-    <option value="esports">Esports</option>
-    <option value="community">Community</option>
-  </select>
-  <button onclick="addNews()">Add News</button>
-
-  <hr>
-
-  <h3>🔔 Send Notification</h3>
-  <input id="nTitle" placeholder="Notification title">
-  <input id="nBody" placeholder="Notification message">
-  <button onclick="sendNotification()">Send Notification</button>
-
-  <br><br>
-  <button onclick="goHome()">⬅ Back</button>
-</div>
-
-<!-- FOOTER -->
 <footer>
   <h3>Contact Us</h3>
   <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
@@ -183,7 +166,7 @@ footer a{margin:5px}
   <a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
 </footer>
 
-<!-- ===== FIREBASE ===== -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -194,86 +177,52 @@ firebase.initializeApp({
   projectId:"ehtisham-news"
 });
 const db = firebase.firestore();
-</script>
 
-<script>
-/* ===== NAVIGATION ===== */
+/* NAVIGATION */
 function openNews(cat){
   home.style.display="none";
   newsPage.style.display="block";
-  newsTitle.innerText=cat.toUpperCase();
-  newsContent.innerHTML="Loading...";
+  newsTitle.innerText = cat.toUpperCase();
+  newsContent.innerHTML = "<p>Loading...</p>";
   window.scrollTo(0,0);
 
-  db.collection("news").where("category","==",cat)
-  .onSnapshot(s=>{
-    let h="";
-    s.forEach(d=>{
-      let n=d.data();
-      h+=`<div class="card"><h3>${n.title}</h3><p>${n.content}</p></div>`;
+  db.collection("news")
+    .where("category","==",cat)
+    .orderBy("date","desc")
+    .get()
+    .then(snap=>{
+      let html="";
+      snap.forEach(doc=>{
+        let n=doc.data();
+        html+=`
+          <div class="card">
+            <h3>${n.title}</h3>
+            <p>${n.content}</p>
+            <small>${n.date}</small>
+          </div>`;
+      });
+      newsContent.innerHTML = html || "<p>No news available</p>";
     });
-    newsContent.innerHTML=h||"<p>No news found</p>";
-  });
 }
-function openAdmin(){
-  home.style.display="none";
-  adminPanel.style.display="block";
-}
+
 function goHome(){
   newsPage.style.display="none";
-  adminPanel.style.display="none";
   home.style.display="block";
 }
 
-/* ===== ADMIN ADD NEWS ===== */
-function addNews(){
-  db.collection("news").add({
-    title:aTitle.value,
-    content:aContent.value,
-    category:aCategory.value,
-    date:new Date().toLocaleString()
-  });
-  aTitle.value="";aContent.value="";
-}
-
-/* ===== ADMIN → NOTIFICATION SEND (IN‑APP) ===== */
-function sendNotification(){
-  db.collection("notifications").add({
-    title:nTitle.value,
-    body:nBody.value,
-    time:Date.now()
-  });
-  nTitle.value="";nBody.value="";
-}
-
-/* ===== RECEIVE NOTIFICATIONS ===== */
-if("Notification"in window){
-  Notification.requestPermission();
-  db.collection("notifications")
-    .orderBy("time","desc")
-    .limit(1)
-    .onSnapshot(s=>{
-      s.forEach(d=>{
-        let n=d.data();
-        new Notification(n.title,{body:n.body});
-      });
+/* IN‑APP NOTIFICATIONS */
+db.collection("notifications")
+  .orderBy("time","desc")
+  .limit(1)
+  .onSnapshot(snap=>{
+    snap.forEach(doc=>{
+      let n=doc.data();
+      let box=document.getElementById("notifyBox");
+      box.innerHTML = `<strong>${n.title}</strong><br>${n.body}`;
+      box.style.display="block";
+      setTimeout(()=>box.style.display="none",5000);
     });
-}
-
-/* ===== INSTALL POPUP ===== */
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt",e=>{
-  e.preventDefault();
-  deferredPrompt=e;
-  let box=document.createElement("div");
-  box.className="card installBox";
-  box.innerHTML=`<h3>Install Ehtisham News</h3><button id="ib">Install</button>`;
-  document.body.appendChild(box);
-  ib.onclick=()=>{
-    box.remove();
-    deferredPrompt.prompt();
-  }
-});
+  });
 </script>
 
 </body>
