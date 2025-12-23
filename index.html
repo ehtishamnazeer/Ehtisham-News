@@ -1,158 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ehtisham News</title>
 
 <style>
 :root{
   --primary:#d4a017;
-  --dark:#111;
-  --light:#f5f5f5;
+  --bg:#f6f7f9;
   --card:#ffffff;
+  --text:#222;
+  --muted:#777;
+  --radius:16px;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: "Segoe UI", sans-serif;
-}
-
+*{box-sizing:border-box}
 body{
-  background:linear-gradient(#fafafa,#f0f0f0);
-  color:#222;
+  margin:0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
 /* Header */
 header{
   text-align:center;
-  padding:30px 15px;
+  padding:24px 16px;
 }
-
 header h1{
-  font-size:30px;
+  margin:0;
+  font-size:28px;
 }
-header span{
-  color:var(--primary);
-}
+header span{color:var(--primary)}
 header p{
   margin-top:6px;
-  opacity:.7;
+  color:var(--muted);
 }
 
 /* Cards */
 .cards{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
   gap:20px;
   padding:20px;
-  max-width:1100px;
-  margin:auto;
 }
-
 .card{
   background:var(--card);
-  border-radius:16px;
+  border-radius:var(--radius);
   padding:20px;
   box-shadow:0 10px 30px rgba(0,0,0,.08);
-  transition:.4s ease;
-}
-.card:hover{
-  transform:translateY(-6px);
-}
-
-.card h3{
-  margin:10px 0;
-}
-
-.card p{
-  opacity:.75;
-  font-size:14px;
-}
-
-.btn{
-  display:inline-block;
-  margin-top:15px;
-  padding:10px 22px;
-  background:var(--primary);
-  color:#fff;
-  border-radius:25px;
-  text-decoration:none;
-  cursor:pointer;
   transition:.3s;
 }
-.btn:hover{
-  opacity:.85;
+.card:hover{transform:translateY(-6px)}
+.card h3{margin:10px 0}
+.card p{color:var(--muted);font-size:14px}
+.card button{
+  margin-top:14px;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  padding:10px 18px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* Tabs */
+.tabs{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  padding:10px;
+}
+.tabs button{
+  border:none;
+  padding:10px 18px;
+  border-radius:999px;
+  background:#eaeaea;
+  cursor:pointer;
+  font-weight:600;
+}
+.tabs button.active{
+  background:var(--primary);
+  color:#fff;
 }
 
 /* Sections */
-section{
-  max-width:1100px;
-  margin:40px auto;
-  padding:0 20px;
-}
-
-.section-box{
-  background:#fff;
-  border-radius:16px;
+.section{
+  max-width:900px;
+  margin:20px auto;
+  background:var(--card);
+  border-radius:var(--radius);
   padding:20px;
-  margin-top:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,.06);
-  animation:fade .6s ease;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  display:none;
+  animation:fade .4s ease;
 }
-
-.news-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:15px;
-  margin-top:15px;
-}
+.section.active{display:block}
 
 .news{
-  background:#fafafa;
-  padding:15px;
+  padding:14px;
   border-radius:12px;
+  background:#f1f2f4;
+  margin-bottom:12px;
 }
 
 .empty{
-  opacity:.6;
-  padding:15px;
-  background:#f7f7f7;
-  border-radius:12px;
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
 }
 
 @keyframes fade{
-  from{opacity:0; transform:translateY(10px)}
-  to{opacity:1; transform:none}
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
 }
 
 /* Contact */
 .contact{
-  background:#fff;
   max-width:900px;
-  margin:50px auto;
-  padding:30px;
-  border-radius:20px;
+  margin:30px auto;
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:24px;
   text-align:center;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
-
-.socials a{
+.contact a{
   display:inline-block;
-  margin:10px;
-  padding:10px 20px;
-  border-radius:30px;
-  background:#000;
+  margin:8px;
+  padding:10px 18px;
+  background:#111;
   color:#fff;
   text-decoration:none;
+  border-radius:999px;
 }
 
+/* Footer */
 footer{
   text-align:center;
   padding:20px;
-  opacity:.6;
+  color:var(--muted);
   font-size:14px;
 }
 </style>
@@ -169,68 +157,92 @@ footer{
 <div class="cards">
   <div class="card">
     <h3>Latest Game Updates</h3>
-    <p>Free Fire updates, events & features.</p>
-    <div class="btn" onclick="openTab('game')">Read More</div>
+    <p>Free Fire updates, events & features</p>
+    <button onclick="openTab('games')">Read More</button>
   </div>
 
   <div class="card">
     <h3>Esports World</h3>
-    <p>Tournaments, rankings & results.</p>
-    <div class="btn" onclick="openTab('esports')">Explore</div>
+    <p>Tournaments, rankings & results</p>
+    <button onclick="openTab('esports')">Explore</button>
   </div>
 
   <div class="card">
     <h3>Community News</h3>
-    <p>Creators, giveaways & events.</p>
-    <div class="btn" onclick="openTab('community')">View</div>
+    <p>Creators, events & giveaways</p>
+    <button onclick="openTab('community')">View</button>
   </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="active" onclick="openTab('games')">Game Updates</button>
+  <button onclick="openTab('esports')">Esports World</button>
+  <button onclick="openTab('community')">Community News</button>
 </div>
 
 <!-- SECTIONS -->
-<section id="game" class="section-box">
-  <h2>🎮 Game Updates</h2>
-  <div class="news-grid">
-    <!-- Example News -->
-    <div class="news">🔥 New FF Event launching soon</div>
-    <div class="news">🎁 Free rewards coming this week</div>
-  </div>
-</section>
-
-<section id="esports" class="section-box">
-  <h2>🏆 Esports World</h2>
-  <div class="empty">
-    Stay tuned 🚀 No esports news yet.
-  </div>
-</section>
-
-<section id="community" class="section-box">
-  <h2>👥 Community News</h2>
-  <div class="empty">
-    Community events & creator news coming soon.
-  </div>
-</section>
+<div id="games" class="section active"></div>
+<div id="esports" class="section"></div>
+<div id="community" class="section"></div>
 
 <!-- CONTACT -->
 <div class="contact">
-  <h2>📞 Contact Us</h2>
+  <h3>📞 Contact Us</h3>
   <p>Follow & connect with Ehtisham News</p>
-  <div class="socials">
-    <a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a>
-    <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
-    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
-  </div>
+  <a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a>
+  <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
+  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp Channel</a>
 </div>
 
 <footer>
-© 2025 Ehtisham News • Professional Gaming Platform
+  © 2025 Ehtisham News • Professional Gaming Platform
 </footer>
 
 <script>
-function openTab(id){
-  document.getElementById(id).scrollIntoView({
-    behavior:"smooth"
+/* NEWS DATA (yahin se add karna) */
+const data = {
+  games: [
+    {title:"Free Fire New Update", desc:"New characters & ranked changes announced."},
+    {title:"Upcoming Event", desc:"Winter Rush event coming soon."}
+  ],
+  esports: [
+    /* empty for now */
+  ],
+  community: [
+    {title:"Creator Meetup", desc:"Community meetup planned next month."}
+  ]
+};
+
+function render(section){
+  const box=document.getElementById(section);
+  box.innerHTML="";
+  if(data[section].length===0){
+    box.innerHTML=`<div class="empty">🚀 Stay tuned for updated news</div>`;
+    return;
+  }
+  data[section].forEach(n=>{
+    box.innerHTML+=`
+      <div class="news">
+        <h4>${n.title}</h4>
+        <p>${n.desc}</p>
+      </div>`;
   });
 }
+
+function openTab(tab){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+
+  document.querySelector(`.tabs button[onclick="openTab('${tab}')"]`)?.classList.add('active');
+  document.getElementById(tab).classList.add('active');
+
+  render(tab);
+  document.getElementById(tab).scrollIntoView({behavior:'smooth'});
+}
+
+/* initial load */
+render('games');
 </script>
 
 </body>
