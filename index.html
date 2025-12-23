@@ -5,143 +5,141 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ehtisham News</title>
 
+<!-- SEO -->
+<meta name="description" content="Game Updates, Esports World & Community News – Ehtisham News">
+<meta name="keywords" content="gaming news, esports, free fire updates, gaming community">
+<meta name="author" content="Ehtisham News">
+
 <style>
 :root{
-  --primary:#d4a017;
-  --bg:#f6f7f9;
+  --primary:#f4b400;
+  --bg:#f7f7f7;
   --card:#ffffff;
   --text:#222;
   --muted:#777;
-  --radius:16px;
 }
 
-*{box-sizing:border-box}
+*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+
 body{
   margin:0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background:var(--bg);
   color:var(--text);
 }
 
-/* Header */
 header{
   text-align:center;
-  padding:24px 16px;
+  padding:30px 15px;
 }
+
 header h1{
   margin:0;
   font-size:28px;
 }
 header span{color:var(--primary)}
+
 header p{
   margin-top:6px;
   color:var(--muted);
+  font-size:14px;
 }
 
-/* Cards */
+/* CARDS */
 .cards{
   display:grid;
-  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:20px;
   padding:20px;
+  max-width:1100px;
+  margin:auto;
 }
+
 .card{
   background:var(--card);
-  border-radius:var(--radius);
-  padding:20px;
+  border-radius:16px;
+  padding:22px;
   box-shadow:0 10px 30px rgba(0,0,0,.08);
-  transition:.3s;
+  transition:.35s ease;
 }
-.card:hover{transform:translateY(-6px)}
-.card h3{margin:10px 0}
+
+.card:hover{
+  transform:translateY(-6px);
+}
+
+.card h3{margin:0 0 8px}
 .card p{color:var(--muted);font-size:14px}
+
 .card button{
   margin-top:14px;
-  background:var(--primary);
-  color:#fff;
   border:none;
   padding:10px 18px;
-  border-radius:999px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-/* Tabs */
-.tabs{
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  padding:10px;
-}
-.tabs button{
-  border:none;
-  padding:10px 18px;
-  border-radius:999px;
-  background:#eaeaea;
-  cursor:pointer;
-  font-weight:600;
-}
-.tabs button.active{
   background:var(--primary);
-  color:#fff;
+  color:#000;
+  border-radius:999px;
+  font-weight:600;
+  cursor:pointer;
 }
 
-/* Sections */
-.section{
-  max-width:900px;
-  margin:20px auto;
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:20px;
+/* CONTENT AREA */
+.content{
+  max-width:1100px;
+  margin:10px auto 30px;
+  padding:0 20px;
+}
+
+.news-box{
+  background:#fff;
+  border-radius:16px;
+  padding:25px;
   box-shadow:0 10px 30px rgba(0,0,0,.08);
-  display:none;
   animation:fade .4s ease;
-}
-.section.active{display:block}
-
-.news{
-  padding:14px;
-  border-radius:12px;
-  background:#f1f2f4;
-  margin-bottom:12px;
-}
-
-.empty{
-  text-align:center;
-  color:var(--muted);
-  padding:30px;
 }
 
 @keyframes fade{
   from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:none}
+  to{opacity:1}
 }
 
-/* Contact */
+.news-item{
+  padding:14px 0;
+  border-bottom:1px solid #eee;
+}
+
+.news-item:last-child{border:none}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  font-size:15px;
+}
+
+/* CONTACT */
 .contact{
-  max-width:900px;
+  max-width:1100px;
   margin:30px auto;
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:24px;
+  padding:25px;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
   text-align:center;
 }
+
 .contact a{
   display:inline-block;
   margin:8px;
   padding:10px 18px;
   background:#111;
   color:#fff;
-  text-decoration:none;
   border-radius:999px;
+  text-decoration:none;
+  font-size:14px;
 }
 
-/* Footer */
 footer{
   text-align:center;
   padding:20px;
   color:var(--muted);
-  font-size:14px;
+  font-size:13px;
 }
 </style>
 </head>
@@ -153,96 +151,78 @@ footer{
   <p>Game Updates • Esports • Community</p>
 </header>
 
-<!-- TOP CARDS -->
-<div class="cards">
+<!-- YELLOW SECTION (ONLY ONE) -->
+<section class="cards">
   <div class="card">
     <h3>Latest Game Updates</h3>
     <p>Free Fire updates, events & features</p>
-    <button onclick="openTab('games')">Read More</button>
+    <button onclick="showTab('games')">Read More</button>
   </div>
 
   <div class="card">
     <h3>Esports World</h3>
     <p>Tournaments, rankings & results</p>
-    <button onclick="openTab('esports')">Explore</button>
+    <button onclick="showTab('esports')">Explore</button>
   </div>
 
   <div class="card">
     <h3>Community News</h3>
     <p>Creators, events & giveaways</p>
-    <button onclick="openTab('community')">View</button>
+    <button onclick="showTab('community')">View</button>
   </div>
-</div>
+</section>
 
-<!-- TABS -->
-<div class="tabs">
-  <button class="active" onclick="openTab('games')">Game Updates</button>
-  <button onclick="openTab('esports')">Esports World</button>
-  <button onclick="openTab('community')">Community News</button>
-</div>
-
-<!-- SECTIONS -->
-<div id="games" class="section active"></div>
-<div id="esports" class="section"></div>
-<div id="community" class="section"></div>
+<!-- CONTENT -->
+<section class="content">
+  <div id="news" class="news-box"></div>
+</section>
 
 <!-- CONTACT -->
-<div class="contact">
+<section class="contact">
   <h3>📞 Contact Us</h3>
   <p>Follow & connect with Ehtisham News</p>
   <a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a>
   <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
   <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp Channel</a>
-</div>
+</section>
 
 <footer>
   © 2025 Ehtisham News • Professional Gaming Platform
 </footer>
 
 <script>
-/* NEWS DATA (yahin se add karna) */
+/* ===== NEWS DATA (yahin se add/remove karna hai) ===== */
 const data = {
-  games: [
-    {title:"Free Fire New Update", desc:"New characters & ranked changes announced."},
-    {title:"Upcoming Event", desc:"Winter Rush event coming soon."}
+  games:[
+    {title:"Free Fire Winter Update Released"},
+    {title:"New Character Skills Revealed"}
   ],
-  esports: [
-    /* empty for now */
-  ],
-  community: [
-    {title:"Creator Meetup", desc:"Community meetup planned next month."}
+  esports:[], // empty = stay tuned
+  community:[
+    {title:"Community Giveaway Coming Soon"}
   ]
 };
 
-function render(section){
-  const box=document.getElementById(section);
+function showTab(type){
+  const box=document.getElementById("news");
   box.innerHTML="";
-  if(data[section].length===0){
-    box.innerHTML=`<div class="empty">🚀 Stay tuned for updated news</div>`;
+
+  if(!data[type] || data[type].length===0){
+    box.innerHTML=`<p class="empty">🚀 Stay tuned for updated news</p>`;
     return;
   }
-  data[section].forEach(n=>{
+
+  data[type].forEach(n=>{
     box.innerHTML+=`
-      <div class="news">
-        <h4>${n.title}</h4>
-        <p>${n.desc}</p>
-      </div>`;
+      <div class="news-item">
+        <strong>${n.title}</strong>
+      </div>
+    `;
   });
 }
 
-function openTab(tab){
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-
-  document.querySelector(`.tabs button[onclick="openTab('${tab}')"]`)?.classList.add('active');
-  document.getElementById(tab).classList.add('active');
-
-  render(tab);
-  document.getElementById(tab).scrollIntoView({behavior:'smooth'});
-}
-
-/* initial load */
-render('games');
+/* Default load */
+showTab("games");
 </script>
 
 </body>
