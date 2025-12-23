@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel – Ehtisham News</title>
+
+<style>
+body{font-family:Arial;background:#f4f4f4;margin:0}
+.container{max-width:500px;margin:auto;padding:20px}
+.card{background:#fff;padding:20px;border-radius:12px;margin-bottom:15px}
+input,textarea,select,button{
+  width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ccc
+}
+button{background:#c9a23f;color:#fff;border:none;cursor:pointer}
+button.logout{background:#444}
+h2{text-align:center}
+.newsItem{border-bottom:1px solid #ddd;padding:8px 0}
+.newsItem button{background:red;margin-top:5px}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN -->
+<div class="card" id="loginBox">
+  <h2>Admin Login</h2>
+  <input type="email" id="email" placeholder="Admin Email">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="card" id="adminBox" style="display:none">
+  <h2>Admin Panel</h2>
+
+  <input id="title" placeholder="News Title">
+  <select id="category">
+    <option value="gaming">Gaming</option>
+    <option value="esports">Esports</option>
+    <option value="community">Community</option>
+  </select>
+  <textarea id="content" placeholder="News Content"></textarea>
+  <button onclick="addNews()">Add News</button>
+
+  <h3>All News</h3>
+  <div id="newsList"></div>
+
+  <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
+  authDomain: "ehtisham-news.firebaseapp.com",
+  projectId: "ehtisham-news",
+  storageBucket: "ehtisham-news.firebasestorage.app",
+  messagingSenderId: "52980900534",
+  appId: "1:52980900534:web:3595bef67929dd1c727c17"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+/* Auth */
+auth.onAuthStateChanged(user=>{
+  if(user){
+    loginBox.style.display="none";
+    adminBox.style.display="block";
+    loadNews();
+  }
+});
+
+function login(){
+  auth.signInWithEmailAndPassword(
+    email.value,
+    password.value
+  ).catch(e=>alert(e.message));
+}
+
+function logout(){
+  auth.signOut();
+  location.reload();
+}
+
+/* Firestore */
+function addNews(){
+  db.collection("news").add({
+    title:title.value,
+    category:category.value,
+    content:content.value,
+    date:new Date().toLocaleString()
+  });
+  title.value=""; content.value="";
+}
+
+function loadNews(){
+  db.collection("news").orderBy("date","desc")
+  .onSnapshot(snap=>{
+    newsList.innerHTML="";
+    snap.forEach(doc=>{
+      let d=doc.data();
+      newsList.innerHTML+=`
+        <div class="newsItem">
+          <b>${d.title}</b> (${d.category})
+          <button onclick="delNews('${doc.id}')">Delete</button>
+        </div>`;
+    });
+  });
+}
+
+function delNews(id){
+  db.collection("news").doc(id).delete();
+}
+</script>
+
+</body>
+</html>
