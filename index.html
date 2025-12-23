@@ -69,6 +69,7 @@ button{
   padding:10px 18px;
   border-radius:22px;
   cursor:pointer;
+  margin-top: 10px;
 }
 
 /* PAGES */
@@ -79,8 +80,9 @@ footer{
   background:#fff;
   padding:16px;
   text-align:center;
+  margin-top: 20px;
 }
-footer a{margin:6px}
+footer a{margin:0 10px; font-size: 14px;}
 
 /* INSTALL BOX */
 .installBox{
@@ -103,7 +105,6 @@ footer a{margin:6px}
   <p>Gaming • Esports • Community</p>
 </header>
 
-<!-- HOME -->
 <div class="container" id="home">
   <div class="card">
     <h3>🔥 Gaming</h3>
@@ -119,14 +120,12 @@ footer a{margin:6px}
   </div>
 </div>
 
-<!-- NEWS LIST -->
 <div class="container" id="newsList">
   <h3 id="catTitle"></h3>
   <div id="newsItems">Loading...</div>
   <button onclick="goHome()">⬅ Back</button>
 </div>
 
-<!-- SINGLE NEWS -->
 <div class="container" id="newsView">
   <h3 id="viewTitle"></h3>
   <p id="viewContent"></p>
@@ -147,105 +146,112 @@ footer a{margin:6px}
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-firebase.initializeApp({
-  apiKey:"AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
-  authDomain:"ehtisham-news.firebaseapp.com",
-  projectId:"ehtisham-news"
-});
-const db=firebase.firestore();
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
+  authDomain: "ehtisham-news.firebaseapp.com",
+  projectId: "ehtisham-news"
+};
 
-const home=document.getElementById("home");
-const newsList=document.getElementById("newsList");
-const newsView=document.getElementById("newsView");
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-home.style.display="block";
+// Elements Reference
+const home = document.getElementById("home");
+const newsList = document.getElementById("newsList");
+const newsView = document.getElementById("newsView");
+const newsItems = document.getElementById("newsItems");
+const viewTitle = document.getElementById("viewTitle");
+const viewContent = document.getElementById("viewContent");
+const otherNews = document.getElementById("otherNews");
 
+// Pehli screen dikhayen
+home.style.display = "block";
+
+// Category kholne ka function
 function openCategory(cat){
-  home.style.display="none";
-  newsView.style.display="none";
-  newsList.style.display="block";
-  document.getElementById("catTitle").innerText=cat.toUpperCase();
-  const box=document.getElementById("newsItems");
-  box.innerHTML="Loading...";
+  home.style.display = "none";
+  newsView.style.display = "none";
+  newsList.style.display = "block";
+  document.getElementById("catTitle").innerText = cat.toUpperCase();
+  newsItems.innerHTML = "Loading...";
 
   db.collection("news")
-    .where("category","==",cat)
-    .orderBy("date","desc")
+    .where("category", "==", cat)
+    .orderBy("date", "desc")
     .get()
-    .then(snap=>{
-      if(snap.empty){box.innerHTML="No news found";return;}
-      let html="";
-      snap.forEach(d=>{
-        let n=d.data();
-        html+=`<div class="card" onclick="openNews('${d.id}','${cat}')">
-          <h4>${n.title}</h4>
-          <p>${n.content.substring(0,80)}...</p>
-        </div>`;
+    .then(snap => {
+      if(snap.empty) {
+        newsItems.innerHTML = "No news found in this category.";
+        return;
+      }
+      let html = "";
+      snap.forEach(d => {
+        let n = d.data();
+        html += `
+          <div class="card" onclick="openNews('${d.id}','${cat}')" style="cursor:pointer">
+            <h4>${n.title}</h4>
+            <p>${n.content ? n.content.substring(0, 80) : ''}...</p>
+          </div>`;
       });
-      box.innerHTML=html;
+      newsItems.innerHTML = html;
+    })
+    .catch(err => {
+      console.error(err);
+      newsItems.innerHTML = "Error loading news. Check if Index is created in Firebase.";
     });
 }
 
-function openNews(id,cat){
-  newsList.style.display="none";
-  newsView.style.display="block";
+// Single News kholne ka function
+function openNews(id, cat){
+  newsList.style.display = "none";
+  newsView.style.display = "block";
+  window.scrollTo(0,0);
 
-  db.collection("news").doc(id).get().then(d=>{
-    let n=d.data();
-    viewTitle.innerText=n.title;
-    viewContent.innerText=n.content;
+  db.collection("news").doc(id).get().then(d => {
+    if(d.exists) {
+      let n = d.data();
+      viewTitle.innerText = n.title;
+      viewContent.innerText = n.content;
+    }
   });
 
+  // Niche 'Other News' dikhane ke liye
   db.collection("news")
-    .where("category","==",cat)
-    .limit(3)
+    .where("category", "==", cat)
+    .limit(4)
     .get()
-    .then(s=>{
-      let h="";
-      s.forEach(d=>{
-        let n=d.data();
-        h+=`<div class="card"><h5>${n.title}</h5></div>`;
+    .then(s => {
+      let h = "";
+      s.forEach(doc => {
+        if(doc.id !== id) {
+          let data = doc.data();
+          h += `<div class="card" onclick="openNews('${doc.id}','${cat}')" style="cursor:pointer">
+                  <h5>${data.title}</h5>
+                </div>`;
+        }
       });
-      otherNews.innerHTML=h;
+      otherNews.innerHTML = h;
     });
 }
 
+// Navigation functions
 function goHome(){
-  newsList.style.display="none";
-  newsView.style.display="none";
-  home.style.display="block";
+  newsList.style.display = "none";
+  newsView.style.display = "none";
+  home.style.display = "block";
 }
+
 function goBack(){
-  newsView.style.display="none";
-  newsList.style.display="block";
+  newsView.style.display = "none";
+  newsList.style.display = "block";
 }
 
 /* NOTIFICATIONS */
-if("Notification"in window){
+if("Notification" in window && Notification.permission !== "denied"){
   Notification.requestPermission();
-  db.collection("notifications").orderBy("time","desc").limit(1)
-    .onSnapshot(s=>{
-      s.forEach(d=>{
-        let n=d.data();
-        new Notification(n.title,{body:n.body});
-      });
-    });
 }
-
-/* INSTALL POPUP */
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt",e=>{
-  e.preventDefault();
-  deferredPrompt=e;
-  let box=document.createElement("div");
-  box.className="card installBox";
-  box.innerHTML=`<h3>Install App</h3><button>Install</button>`;
-  document.body.appendChild(box);
-  box.querySelector("button").onclick=()=>{
-    box.remove();
-    deferredPrompt.prompt();
-  };
-});
 </script>
 
 </body>
