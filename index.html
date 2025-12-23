@@ -7,13 +7,13 @@
 
 <meta name="theme-color" content="#c9a23f">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
+  font-family:Poppins,system-ui;
   background:#f4f4f4;
   color:#222;
 }
@@ -24,130 +24,116 @@ a{text-decoration:none;color:inherit}
   position:fixed;inset:0;
   background:#fff;
   display:flex;
-  align-items:center;
+  flex-direction:column;
   justify-content:center;
+  align-items:center;
   z-index:9999;
-  animation:hideSplash 2.6s forwards;
+  animation:hideSplash 2.5s forwards;
 }
 #splash h1{
-  font-size:38px;
-  letter-spacing:1px;
-  animation:logoAnim 1.6s ease;
+  font-size:42px;
+  animation:fadeUp 1.2s ease;
 }
 #splash span{color:#c9a23f}
-@keyframes logoAnim{
-  0%{opacity:0;transform:scale(.7)}
-  100%{opacity:1;transform:scale(1)}
-}
 @keyframes hideSplash{
   0%,80%{opacity:1}
   100%{opacity:0;visibility:hidden}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:none}
 }
 
 /* HEADER */
 header{
   background:#fff;
-  padding:20px;
+  padding:22px;
   text-align:center;
 }
-header h1 span{color:#c9a23f}
-header p{margin:5px 0 0;color:#555}
+header span{color:#c9a23f}
 
-/* CONTAINER */
-.container{padding:16px;max-width:900px;margin:auto}
-
-/* CARD */
+/* CARDS */
+.container{padding:16px}
 .card{
   background:#fff;
-  border-radius:16px;
+  border-radius:18px;
   padding:18px;
   margin-bottom:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-  animation:fadeUp .4s ease;
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+  animation:fadeUp .35s ease;
 }
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:none}
-}
-.card h3{margin:0 0 8px}
-
-/* BUTTON */
-.btn{
-  display:inline-block;
-  margin-top:10px;
+button{
   background:#c9a23f;
   color:#fff;
-  padding:10px 18px;
-  border-radius:30px;
-  font-size:14px;
   border:none;
+  padding:10px 18px;
+  border-radius:22px;
   cursor:pointer;
 }
 
 /* PAGES */
-#newsPage{display:none}
+#home,#newsList,#newsView{display:none}
 
 /* FOOTER */
 footer{
   background:#fff;
-  padding:18px;
+  padding:16px;
   text-align:center;
-  margin-top:20px;
-  font-size:14px;
 }
-footer a{margin:0 6px;color:#333}
+footer a{margin:6px}
 
-/* INSTALL POPUP */
+/* INSTALL BOX */
 .installBox{
   position:fixed;
-  bottom:18px;
-  left:16px;
-  right:16px;
-  z-index:1000;
+  bottom:20px;left:15px;right:15px;
+  z-index:999;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
   <h1>Ehtisham <span>News</span></h1>
+  <p>Gaming • Esports • Community</p>
 </div>
 
 <header>
-  <h1>Ehtisham <span>News</span></h1>
+  <h2>Ehtisham <span>News</span></h2>
   <p>Gaming • Esports • Community</p>
 </header>
 
 <!-- HOME -->
 <div class="container" id="home">
-
   <div class="card">
     <h3>🔥 Gaming</h3>
-    <p>Latest gaming updates</p>
-    <button class="btn" onclick="openCategory('gaming')">Read</button>
+    <button onclick="openCategory('gaming')">Read</button>
   </div>
-
   <div class="card">
     <h3>🏆 Esports</h3>
-    <p>Tournaments & rankings</p>
-    <button class="btn" onclick="openCategory('esports')">Read</button>
+    <button onclick="openCategory('esports')">Read</button>
   </div>
-
   <div class="card">
     <h3>👥 Community</h3>
-    <p>Creators & community news</p>
-    <button class="btn" onclick="openCategory('community')">Read</button>
+    <button onclick="openCategory('community')">Read</button>
   </div>
-
 </div>
 
-<!-- NEWS PAGE -->
-<div class="container" id="newsPage">
-  <h2 id="catTitle"></h2>
-  <div id="newsList"></div>
-  <button class="btn" onclick="goHome()">← Back</button>
+<!-- NEWS LIST -->
+<div class="container" id="newsList">
+  <h3 id="catTitle"></h3>
+  <div id="newsItems">Loading...</div>
+  <button onclick="goHome()">⬅ Back</button>
+</div>
+
+<!-- SINGLE NEWS -->
+<div class="container" id="newsView">
+  <h3 id="viewTitle"></h3>
+  <p id="viewContent"></p>
+  <hr>
+  <h4>Other News</h4>
+  <div id="otherNews"></div>
+  <button onclick="goBack()">⬅ Back</button>
 </div>
 
 <footer>
@@ -157,7 +143,6 @@ footer a{margin:0 6px;color:#333}
   <a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
 </footer>
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -167,51 +152,78 @@ firebase.initializeApp({
   authDomain:"ehtisham-news.firebaseapp.com",
   projectId:"ehtisham-news"
 });
-const db = firebase.firestore();
-</script>
+const db=firebase.firestore();
 
-<script>
-const home = document.getElementById("home");
-const newsPage = document.getElementById("newsPage");
-const newsList = document.getElementById("newsList");
-const catTitle = document.getElementById("catTitle");
+const home=document.getElementById("home");
+const newsList=document.getElementById("newsList");
+const newsView=document.getElementById("newsView");
 
-/* CATEGORY OPEN */
+home.style.display="block";
+
 function openCategory(cat){
   home.style.display="none";
-  newsPage.style.display="block";
-  catTitle.innerText = cat.toUpperCase();
-  newsList.innerHTML="Loading...";
+  newsView.style.display="none";
+  newsList.style.display="block";
+  document.getElementById("catTitle").innerText=cat.toUpperCase();
+  const box=document.getElementById("newsItems");
+  box.innerHTML="Loading...";
 
   db.collection("news")
     .where("category","==",cat)
     .orderBy("date","desc")
     .get()
     .then(snap=>{
+      if(snap.empty){box.innerHTML="No news found";return;}
       let html="";
-      snap.forEach(doc=>{
-        let n=doc.data();
-        html+=`
-          <div class="card">
-            <h3>${n.title}</h3>
-            <p>${n.content}</p>
-          </div>`;
+      snap.forEach(d=>{
+        let n=d.data();
+        html+=`<div class="card" onclick="openNews('${d.id}','${cat}')">
+          <h4>${n.title}</h4>
+          <p>${n.content.substring(0,80)}...</p>
+        </div>`;
       });
-      newsList.innerHTML = html || "<p>No news found</p>";
+      box.innerHTML=html;
+    });
+}
+
+function openNews(id,cat){
+  newsList.style.display="none";
+  newsView.style.display="block";
+
+  db.collection("news").doc(id).get().then(d=>{
+    let n=d.data();
+    viewTitle.innerText=n.title;
+    viewContent.innerText=n.content;
+  });
+
+  db.collection("news")
+    .where("category","==",cat)
+    .limit(3)
+    .get()
+    .then(s=>{
+      let h="";
+      s.forEach(d=>{
+        let n=d.data();
+        h+=`<div class="card"><h5>${n.title}</h5></div>`;
+      });
+      otherNews.innerHTML=h;
     });
 }
 
 function goHome(){
-  newsPage.style.display="none";
+  newsList.style.display="none";
+  newsView.style.display="none";
   home.style.display="block";
+}
+function goBack(){
+  newsView.style.display="none";
+  newsList.style.display="block";
 }
 
 /* NOTIFICATIONS */
-if("Notification" in window){
+if("Notification"in window){
   Notification.requestPermission();
-  db.collection("notifications")
-    .orderBy("time","desc")
-    .limit(1)
+  db.collection("notifications").orderBy("time","desc").limit(1)
     .onSnapshot(s=>{
       s.forEach(d=>{
         let n=d.data();
@@ -220,17 +232,15 @@ if("Notification" in window){
     });
 }
 
-/* INSTALL PROMPT */
+/* INSTALL POPUP */
 let deferredPrompt;
 window.addEventListener("beforeinstallprompt",e=>{
   e.preventDefault();
   deferredPrompt=e;
-
   let box=document.createElement("div");
   box.className="card installBox";
-  box.innerHTML=`<h3>Install Ehtisham News</h3><button class="btn">Install</button>`;
+  box.innerHTML=`<h3>Install App</h3><button>Install</button>`;
   document.body.appendChild(box);
-
   box.querySelector("button").onclick=()=>{
     box.remove();
     deferredPrompt.prompt();
