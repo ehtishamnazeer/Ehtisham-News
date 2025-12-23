@@ -6,58 +6,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#f4f4f4;
-}
-header{
-  background:#c9a23f;
-  color:#fff;
-  padding:15px;
-  text-align:center;
-}
-.container{
-  padding:15px;
-}
-.card{
-  background:#fff;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
-}
-input, textarea, select{
-  width:100%;
-  padding:10px;
-  margin:6px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-size:14px;
-}
-button{
-  background:#c9a23f;
-  color:#fff;
-  border:none;
-  padding:12px;
-  border-radius:10px;
-  width:100%;
-  font-size:16px;
-  cursor:pointer;
-}
-button:hover{opacity:.9}
-.status{
-  text-align:center;
-  margin-top:10px;
-  font-weight:bold;
-}
-.news-item{
-  border-bottom:1px solid #eee;
-  padding:8px 0;
-}
-.news-item small{
-  color:#777;
-}
+body{margin:0;font-family:Arial;background:#f4f4f4}
+header{background:#c9a23f;color:#fff;padding:15px;text-align:center}
+.container{padding:15px}
+.card{background:#fff;padding:15px;border-radius:12px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ccc}
+button{background:#c9a23f;color:#fff;border:none;padding:12px;border-radius:10px;width:100%;cursor:pointer}
+button.danger{background:#e74c3c}
+button.small{width:auto;padding:6px 10px;border-radius:6px}
+.status{text-align:center;margin-top:10px;font-weight:bold}
+.news-item{border-bottom:1px solid #eee;padding:8px 0}
+.news-item small{color:#777}
+.flex{display:flex;gap:8px;flex-wrap:wrap}
 </style>
 </head>
 
@@ -65,7 +25,7 @@ button:hover{opacity:.9}
 
 <header>
   <h2>Admin Panel</h2>
-  <p>Add News → Firestore</p>
+  <p>Publish • Delete • Notify</p>
 </header>
 
 <div class="container">
@@ -73,21 +33,23 @@ button:hover{opacity:.9}
   <!-- ADD NEWS -->
   <div class="card">
     <h3>Add News</h3>
-
-    <input type="text" id="title" placeholder="News Title">
-
+    <input id="title" placeholder="News Title">
     <textarea id="content" rows="4" placeholder="News Content"></textarea>
-
     <select id="category">
       <option value="">Select Category</option>
       <option value="gaming">Gaming</option>
       <option value="esports">Esports</option>
       <option value="community">Community</option>
     </select>
-
     <button onclick="addNews()">Publish News</button>
-
     <div class="status" id="status"></div>
+  </div>
+
+  <!-- SEND NOTIFICATION -->
+  <div class="card">
+    <h3>Send Notification (In‑App)</h3>
+    <input id="notifyText" placeholder="Notification text">
+    <button onclick="sendNotification()">Send Notification</button>
   </div>
 
   <!-- NEWS LIST -->
@@ -98,20 +60,15 @@ button:hover{opacity:.9}
 
 </div>
 
-<!-- FIREBASE -->
+<!-- FIREBASE (Firestore ONLY) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  orderBy,
-  onSnapshot
+  getFirestore, collection, addDoc, serverTimestamp,
+  query, orderBy, onSnapshot, deleteDoc, doc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* 🔴 APNI FIREBASE CONFIG YAHA PASTE KARO */
+/* 🔴 APNI CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
   authDomain: "ehtisham-news.firebaseapp.com",
@@ -124,58 +81,66 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* ADD NEWS FUNCTION */
-window.addNews = async function(){
-  const title = document.getElementById("title").value.trim();
-  const content = document.getElementById("content").value.trim();
-  const category = document.getElementById("category").value;
-  const statusBox = document.getElementById("status");
-
+/* ADD NEWS */
+window.addNews = async ()=>{
+  const title = titleEl.value.trim();
+  const content = contentEl.value.trim();
+  const category = categoryEl.value;
   if(!title || !content || !category){
-    statusBox.style.color="red";
-    statusBox.innerText="⚠️ Please fill all fields";
-    return;
+    statusEl.style.color="red"; statusEl.innerText="Fill all fields"; return;
   }
-
-  try{
-    await addDoc(collection(db,"news"),{
-      title: title,
-      content: content,
-      category: category,
-      status: "published",
-      createdAt: serverTimestamp()
-    });
-
-    statusBox.style.color="green";
-    statusBox.innerText="✅ News Published Successfully";
-
-    document.getElementById("title").value="";
-    document.getElementById("content").value="";
-    document.getElementById("category").value="";
-
-  }catch(e){
-    statusBox.style.color="red";
-    statusBox.innerText="❌ Error adding news";
-    console.error(e);
-  }
+  await addDoc(collection(db,"news"),{
+    title, content, category,
+    status:"published",
+    createdAt: serverTimestamp()
+  });
+  statusEl.style.color="green"; statusEl.innerText="Published";
+  titleEl.value=""; contentEl.value=""; categoryEl.value="";
 };
 
-/* LOAD NEWS LIST */
+/* SEND NOTIFICATION (In‑App) */
+window.sendNotification = async ()=>{
+  const text = notifyText.value.trim();
+  if(!text) return alert("Write notification");
+  await addDoc(collection(db,"notifications"),{
+    text, createdAt: serverTimestamp()
+  });
+  notifyText.value="";
+  alert("Notification Sent");
+};
+
+/* LIST + DELETE NEWS */
 const q = query(collection(db,"news"), orderBy("createdAt","desc"));
 onSnapshot(q,(snap)=>{
   let html="";
-  snap.forEach(doc=>{
-    const n = doc.data();
-    html += `
+  snap.forEach(d=>{
+    const n=d.data();
+    html+=`
       <div class="news-item">
         <b>${n.title}</b><br>
         <small>${n.category}</small>
-      </div>
-    `;
+        <div class="flex">
+          <button class="small danger" onclick="deleteNews('${d.id}')">Delete</button>
+        </div>
+      </div>`;
   });
-  document.getElementById("newsList").innerHTML = html || "No news yet";
+  newsList.innerHTML = html || "No news";
 });
 
+window.deleteNews = async (id)=>{
+  if(confirm("Delete this news?")){
+    await deleteDoc(doc(db,"news",id));
+    alert("Deleted");
+  }
+};
+
+/* DOM refs */
+const titleEl = document.getElementById("title");
+const contentEl = document.getElementById("content");
+const categoryEl = document.getElementById("category");
+const statusEl = document.getElementById("status");
+const notifyText = document.getElementById("notifyText");
+const newsList = document.getElementById("newsList");
 </script>
 
 </body>
