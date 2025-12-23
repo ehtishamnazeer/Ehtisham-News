@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ehtisham News</title>
 
 <style>
 :root{
-  --gold:#c9a24d;
-  --light:#ffffff;
-  --dark:#111;
-  --gray:#f3f3f3;
+  --gold:#c9a23f;
+  --white:#ffffff;
+  --bg:#f7f7f7;
+  --dark:#1e1e1e;
 }
 
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 
 body{
   margin:0;
-  background:var(--gray);
+  background:var(--bg);
   color:var(--dark);
 }
 
 header{
-  background:var(--light);
+  background:white;
   padding:14px;
   text-align:center;
-  font-weight:bold;
   font-size:20px;
+  font-weight:bold;
   color:var(--gold);
   border-bottom:2px solid var(--gold);
 }
@@ -34,7 +34,7 @@ header{
 .tabs{
   display:flex;
   justify-content:space-around;
-  background:#fff;
+  background:white;
   position:sticky;
   top:0;
   z-index:10;
@@ -43,15 +43,16 @@ header{
 .tabs button{
   flex:1;
   padding:12px;
-  background:none;
   border:none;
-  font-weight:bold;
+  background:none;
+  font-size:14px;
   cursor:pointer;
 }
 
 .tabs button.active{
-  color:var(--gold);
   border-bottom:3px solid var(--gold);
+  color:var(--gold);
+  font-weight:bold;
 }
 
 .section{
@@ -59,33 +60,31 @@ header{
   padding:15px;
 }
 
-.section.active{display:block;}
+.section.active{display:block}
 
 .card{
-  background:#fff;
+  background:white;
   border-radius:10px;
-  padding:15px;
+  padding:14px;
   margin-bottom:12px;
-  box-shadow:0 5px 15px rgba(0,0,0,.05);
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
 }
 
-.card h3{
-  margin:0 0 8px;
-}
+.card h3{margin:0 0 6px 0}
 
-.read-btn{
-  display:inline-block;
-  padding:8px 14px;
+.card button{
+  margin-top:8px;
   background:var(--gold);
-  color:#fff;
+  color:white;
+  border:none;
+  padding:8px 14px;
   border-radius:6px;
-  text-decoration:none;
-  font-size:14px;
+  cursor:pointer;
 }
 
 .empty{
   text-align:center;
-  padding:40px;
+  padding:40px 10px;
   color:#777;
 }
 </style>
@@ -96,17 +95,19 @@ header{
 <header>Ehtisham News</header>
 
 <div class="tabs">
-  <button class="active" onclick="openTab('games')">Game News</button>
-  <button onclick="openTab('esports')">Esports</button>
-  <button onclick="openTab('community')">Community</button>
+  <button class="active" onclick="openTab('games',this)">Game News</button>
+  <button onclick="openTab('esports',this)">Esports World</button>
+  <button onclick="openTab('community',this)">Community</button>
 </div>
 
 <!-- GAME NEWS -->
 <div id="games" class="section active">
   <div class="card">
-    <h3>New Game Update Released</h3>
-    <p>Latest patch brings performance improvements.</p>
-    <a class="read-btn" href="article.html">Read Now</a>
+    <h3>New PUBG Update Released</h3>
+    <p>Graphics improvement & bug fixes.</p>
+    <button onclick="openArticle('PUBG Update','Full PUBG update details here...')">
+      Read Now
+    </button>
   </div>
 </div>
 
@@ -121,12 +122,34 @@ header{
 </div>
 
 <script>
-function openTab(tab){
+function openTab(id,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
 
-  document.getElementById(tab).classList.add('active');
-  event.target.classList.add('active');
+function openArticle(title,content){
+  const win = window.open('', '_blank');
+  win.document.write(`
+    <html>
+    <head>
+      <title>${title}</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        body{font-family:Arial;padding:20px;background:#f7f7f7}
+        h1{color:#c9a23f}
+        .box{background:white;padding:16px;border-radius:10px}
+      </style>
+    </head>
+    <body>
+      <div class="box">
+        <h1>${title}</h1>
+        <p>${content}</p>
+      </div>
+    </body>
+    </html>
+  `);
 }
 </script>
 
