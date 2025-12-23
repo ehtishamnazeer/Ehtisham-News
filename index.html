@@ -2,144 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ehtisham News</title>
 
 <!-- SEO -->
-<meta name="description" content="Game Updates, Esports World & Community News – Ehtisham News">
-<meta name="keywords" content="gaming news, esports, free fire updates, gaming community">
-<meta name="author" content="Ehtisham News">
+<meta name="description" content="Ehtisham News - Game Updates, Esports World & Community News">
+<meta name="theme-color" content="#f4b400">
 
 <style>
-:root{
-  --primary:#f4b400;
-  --bg:#f7f7f7;
-  --card:#ffffff;
-  --text:#222;
-  --muted:#777;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+body{background:#f6f7f9;color:#222;line-height:1.6}
 
-*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+/* Header */
+header{text-align:center;padding:20px 15px;background:#fff}
+header h1{font-size:26px;font-weight:800}
+header h1 span{color:#f4b400}
+header p{color:#777;font-size:14px}
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-}
-
-header{
-  text-align:center;
-  padding:30px 15px;
-}
-
-header h1{
-  margin:0;
-  font-size:28px;
-}
-header span{color:var(--primary)}
-
-header p{
-  margin-top:6px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* CARDS */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-  padding:20px;
-  max-width:1100px;
-  margin:auto;
-}
-
-.card{
-  background:var(--card);
-  border-radius:16px;
-  padding:22px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-  transition:.35s ease;
-}
-
-.card:hover{
-  transform:translateY(-6px);
-}
-
-.card h3{margin:0 0 8px}
-.card p{color:var(--muted);font-size:14px}
-
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;padding:20px}
+.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 10px 25px rgba(0,0,0,.08);transition:.4s}
+.card:hover{transform:translateY(-6px)}
+.card h3{margin-bottom:8px}
+.card p{color:#666;font-size:14px}
 .card button{
-  margin-top:14px;
-  border:none;
-  padding:10px 18px;
-  background:var(--primary);
-  color:#000;
-  border-radius:999px;
-  font-weight:600;
-  cursor:pointer;
+margin-top:12px;
+background:#f4b400;
+border:none;
+color:#fff;
+padding:10px 16px;
+border-radius:999px;
+font-weight:600;
+cursor:pointer;
 }
 
-/* CONTENT AREA */
-.content{
-  max-width:1100px;
-  margin:10px auto 30px;
-  padding:0 20px;
+/* Tabs */
+.tabs{display:flex;justify-content:center;gap:10px;padding:10px 15px;flex-wrap:wrap}
+.tabs button{
+border:none;
+padding:8px 14px;
+border-radius:999px;
+cursor:pointer;
+background:#eee;
+font-weight:600;
 }
+.tabs button.active{background:#f4b400;color:#fff}
 
-.news-box{
-  background:#fff;
-  border-radius:16px;
-  padding:25px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-  animation:fade .4s ease;
+/* Content */
+.content{padding:20px}
+.news-card{
+background:#fff;
+border-radius:14px;
+padding:15px;
+margin-bottom:12px;
+box-shadow:0 8px 20px rgba(0,0,0,.06);
+animation:fade .5s ease;
+}
+.empty{
+text-align:center;
+padding:30px;
+color:#777;
+background:#fff;
+border-radius:14px;
 }
 
 @keyframes fade{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1}
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:none}
 }
 
-.news-item{
-  padding:14px 0;
-  border-bottom:1px solid #eee;
-}
-
-.news-item:last-child{border:none}
-
-.empty{
-  text-align:center;
-  color:var(--muted);
-  font-size:15px;
-}
-
-/* CONTACT */
+/* Contact */
 .contact{
-  max-width:1100px;
-  margin:30px auto;
-  padding:25px;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-  text-align:center;
+margin:20px;
+background:#fff;
+border-radius:18px;
+padding:20px;
+text-align:center;
 }
-
 .contact a{
-  display:inline-block;
-  margin:8px;
-  padding:10px 18px;
-  background:#111;
-  color:#fff;
-  border-radius:999px;
-  text-decoration:none;
-  font-size:14px;
+display:inline-block;
+margin:6px;
+padding:10px 16px;
+background:#000;
+color:#fff;
+border-radius:999px;
+text-decoration:none;
+font-size:14px;
 }
 
-footer{
-  text-align:center;
-  padding:20px;
-  color:var(--muted);
-  font-size:13px;
+/* Footer */
+footer{text-align:center;color:#888;font-size:13px;padding:15px}
+
+/* Mobile spacing */
+@media(max-width:600px){
+header h1{font-size:22px}
 }
 </style>
 </head>
@@ -147,82 +103,110 @@ footer{
 <body>
 
 <header>
-  <h1>Ehtisham <span>News</span></h1>
-  <p>Game Updates • Esports • Community</p>
+<h1>Ehtisham <span>News</span></h1>
+<p>Game Updates • Esports • Community</p>
 </header>
 
-<!-- YELLOW SECTION (ONLY ONE) -->
+<!-- TOP CARDS (YELLOW AREA ONLY) -->
 <section class="cards">
-  <div class="card">
-    <h3>Latest Game Updates</h3>
-    <p>Free Fire updates, events & features</p>
-    <button onclick="showTab('games')">Read More</button>
-  </div>
+<div class="card">
+<h3>Latest Game Updates</h3>
+<p>Free Fire updates, events & features.</p>
+<button onclick="openTab('games')">Read More</button>
+</div>
 
-  <div class="card">
-    <h3>Esports World</h3>
-    <p>Tournaments, rankings & results</p>
-    <button onclick="showTab('esports')">Explore</button>
-  </div>
+<div class="card">
+<h3>Esports World</h3>
+<p>Tournaments, rankings & results.</p>
+<button onclick="openTab('esports')">Explore</button>
+</div>
 
-  <div class="card">
-    <h3>Community News</h3>
-    <p>Creators, events & giveaways</p>
-    <button onclick="showTab('community')">View</button>
-  </div>
+<div class="card">
+<h3>Community News</h3>
+<p>Creators, events & giveaways.</p>
+<button onclick="openTab('community')">View</button>
+</div>
 </section>
+
+<!-- TABS -->
+<div class="tabs">
+<button id="tab-games" class="active" onclick="switchTab('games')">Game Updates</button>
+<button id="tab-esports" onclick="switchTab('esports')">Esports World</button>
+<button id="tab-community" onclick="switchTab('community')">Community News</button>
+</div>
 
 <!-- CONTENT -->
-<section class="content">
-  <div id="news" class="news-box"></div>
-</section>
+<div class="content" id="content"></div>
 
 <!-- CONTACT -->
-<section class="contact">
-  <h3>📞 Contact Us</h3>
-  <p>Follow & connect with Ehtisham News</p>
-  <a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a>
-  <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
-  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp Channel</a>
-</section>
+<div class="contact">
+<h3>📞 Contact Us</h3>
+<p>Follow & connect with Ehtisham News</p>
+<a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a>
+<a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
+<a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp Channel</a>
+</div>
 
-<footer>
-  © 2025 Ehtisham News • Professional Gaming Platform
-</footer>
+<footer>© 2025 Ehtisham News • Professional Gaming Platform</footer>
 
 <script>
-/* ===== NEWS DATA (yahin se add/remove karna hai) ===== */
-const data = {
-  games:[
-    {title:"Free Fire Winter Update Released"},
-    {title:"New Character Skills Revealed"}
-  ],
-  esports:[], // empty = stay tuned
-  community:[
-    {title:"Community Giveaway Coming Soon"}
-  ]
+/* ================= NEWS DATA ================= */
+/* YAHAN NEWS ADD KARTE JAO */
+const news = {
+games: [
+ {title:"Free Fire Winter Update", text:"New characters, events and skins released."}
+],
+esports: [],
+community: []
 };
 
-function showTab(type){
-  const box=document.getElementById("news");
-  box.innerHTML="";
+/* ================= LOGIC ================= */
+let currentTab = "games";
 
-  if(!data[type] || data[type].length===0){
-    box.innerHTML=`<p class="empty">🚀 Stay tuned for updated news</p>`;
-    return;
-  }
+function render(){
+const box=document.getElementById("content");
+box.innerHTML="";
+const items=news[currentTab];
 
-  data[type].forEach(n=>{
-    box.innerHTML+=`
-      <div class="news-item">
-        <strong>${n.title}</strong>
-      </div>
-    `;
-  });
+if(items.length===0){
+box.innerHTML=`<div class="empty">🚀 Stay tuned for updated news</div>`;
+return;
 }
 
-/* Default load */
-showTab("games");
+items.forEach(n=>{
+box.innerHTML+=`
+<div class="news-card">
+<h4>${n.title}</h4>
+<p>${n.text}</p>
+</div>`;
+});
+}
+
+function switchTab(tab){
+currentTab=tab;
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+document.getElementById("tab-"+tab).classList.add("active");
+render();
+}
+
+function openTab(tab){
+switchTab(tab);
+window.scrollTo({top:document.querySelector(".tabs").offsetTop-10,behavior:"smooth"});
+}
+
+/* Initial */
+render();
+
+/* ================= NOTIFICATIONS ================= */
+if("Notification"in window){
+Notification.requestPermission();
+}
+
+/* ================= INSTALL PROMPT ================= */
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt",e=>{
+deferredPrompt=e;
+});
 </script>
 
 </body>
