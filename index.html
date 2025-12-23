@@ -7,208 +7,245 @@
 
 <meta name="theme-color" content="#c9a23f">
 
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;font-family:Arial;background:#f6f6f6}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Inter',system-ui,-apple-system,Arial;
+  background:#f4f5f7;
+  color:#111;
+}
 h1,h2,h3{margin:0}
 a{text-decoration:none;color:inherit}
-button{background:#c9a23f;color:#fff;border:none;padding:10px 16px;border-radius:20px;cursor:pointer}
 
 /* SPLASH */
 #splash{
- position:fixed;inset:0;
- background:#fff;
- display:flex;
- align-items:center;
- justify-content:center;
- z-index:9999;
- animation:fadeOut 2s forwards;
+  position:fixed;inset:0;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  animation:splashOut 2.2s ease forwards;
 }
-#splash div{
- width:110px;height:110px;
- background:#c9a23f;color:#fff;
- border-radius:26px;
- display:flex;align-items:center;justify-content:center;
- font-size:48px;
+#splash .logo{
+  width:110px;height:110px;
+  border-radius:28px;
+  background:#c9a23f;
+  color:#fff;
+  font-size:44px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:pop 1.2s ease;
 }
-@keyframes fadeOut{
- 0%{opacity:1}
- 85%{opacity:1}
- 100%{opacity:0;visibility:hidden}
+@keyframes pop{
+  0%{transform:scale(.6);opacity:0}
+  70%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
+@keyframes splashOut{
+  0%,85%{opacity:1}
+  100%{opacity:0;visibility:hidden}
 }
 
 /* HEADER */
-header{text-align:center;padding:20px;background:#fff}
+header{
+  text-align:center;
+  padding:22px 15px;
+  background:#fff;
+  border-bottom:1px solid #eee;
+}
 header span{color:#c9a23f}
+header p{margin-top:6px;color:#555}
 
-/* CARDS */
-.container{padding:15px}
+/* CONTAINER */
+.container{padding:16px;max-width:900px;margin:auto}
+
+/* CARD */
 .card{
- background:#fff;
- border-radius:16px;
- padding:16px;
- margin-bottom:15px;
- box-shadow:0 5px 15px rgba(0,0,0,.08);
- animation:up .4s ease;
+  background:#fff;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  animation:fadeUp .35s ease;
 }
-@keyframes up{
- from{opacity:0;transform:translateY(10px)}
- to{opacity:1}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
 }
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(0,0,0,.1);
+  transition:.25s ease;
+}
+
+/* BUTTON */
+button{
+  background:#c9a23f;
+  color:#fff;
+  border:none;
+  padding:10px 18px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:600;
+}
+button:hover{opacity:.9}
 
 /* PAGES */
-#newsPage,#adminPanel,#singleNews{display:none}
+#newsPage,#adminPanel{display:none}
 
 /* FOOTER */
-footer{background:#fff;padding:15px;text-align:center}
-footer a{margin:5px}
+footer{
+  background:#fff;
+  padding:18px;
+  text-align:center;
+  font-size:14px;
+  border-top:1px solid #eee;
+}
+footer a{margin:0 6px;color:#444}
+
+/* INSTALL */
+.installBox{
+  position:fixed;
+  bottom:20px;left:15px;right:15px;
+  z-index:999;
+}
 </style>
 </head>
 
 <body>
 
-<div id="splash"><div>EN</div></div>
+<div id="splash"><div class="logo">EN</div></div>
 
 <header>
-<h1>Ehtisham <span>News</span></h1>
-<p>Gaming • Esports • Community</p>
+  <h1>Ehtisham <span>News</span></h1>
+  <p>Gaming • Esports • Community</p>
 </header>
 
-<!-- HOME -->
 <div class="container" id="home">
-  <div class="card"><h2>🔥 Gaming</h2><button onclick="openNews('gaming')">Read</button></div>
-  <div class="card"><h2>🏆 Esports</h2><button onclick="openNews('esports')">Read</button></div>
-  <div class="card"><h2>👥 Community</h2><button onclick="openNews('community')">Read</button></div>
-  <div class="card"><h3>🔐 Admin</h3><button onclick="openAdmin()">Open</button></div>
+  <div class="card">
+    <h2>🔥 Gaming</h2>
+    <p>Latest gaming updates</p>
+    <button onclick="openNews('gaming')">Read More</button>
+  </div>
+  <div class="card">
+    <h2>🏆 Esports</h2>
+    <p>Tournaments & rankings</p>
+    <button onclick="openNews('esports')">Read More</button>
+  </div>
+  <div class="card">
+    <h2>👥 Community</h2>
+    <p>Creators & community news</p>
+    <button onclick="openNews('community')">Read More</button>
+  </div>
+  <div class="card">
+    <h3>🔐 Admin</h3>
+    <button onclick="openAdmin()">Open Admin Panel</button>
+  </div>
 </div>
 
-<!-- NEWS LIST -->
 <div class="container" id="newsPage">
-<h2 id="newsTitle"></h2>
-<div id="newsContent"></div>
-<button onclick="goHome()">⬅ Back</button>
+  <h2 id="newsTitle"></h2>
+  <div id="newsContent"></div>
+  <button onclick="goHome()">⬅ Back</button>
 </div>
 
-<!-- SINGLE NEWS -->
-<div class="container" id="singleNews">
-<div id="singleContent"></div>
-<button onclick="backToList()">⬅ Back</button>
-</div>
-
-<!-- ADMIN -->
 <div class="container" id="adminPanel">
-<h2>Admin Panel</h2>
-<input id="aTitle" placeholder="Title"><br><br>
-<textarea id="aContent" placeholder="Content"></textarea><br><br>
-<select id="aCategory">
-<option value="gaming">Gaming</option>
-<option value="esports">Esports</option>
-<option value="community">Community</option>
-</select><br><br>
-<button onclick="addNews()">Add News</button>
-
-<hr>
-<h3>🔔 Notification</h3>
-<input id="nTitle" placeholder="Title"><br><br>
-<input id="nBody" placeholder="Message"><br><br>
-<button onclick="sendNotification()">Send</button>
-
-<br><br>
-<button onclick="goHome()">⬅ Back</button>
+  <h2>Admin Panel</h2>
+  <input id="aTitle" placeholder="News title"><br><br>
+  <textarea id="aContent" placeholder="News content"></textarea><br><br>
+  <select id="aCategory">
+    <option value="gaming">Gaming</option>
+    <option value="esports">Esports</option>
+    <option value="community">Community</option>
+  </select><br><br>
+  <button onclick="addNews()">Add News</button>
+  <hr>
+  <h3>🔔 Send Notification</h3>
+  <input id="nTitle" placeholder="Title"><br><br>
+  <input id="nBody" placeholder="Message"><br><br>
+  <button onclick="sendNotification()">Send</button><br><br>
+  <button onclick="goHome()">⬅ Back</button>
 </div>
 
 <footer>
-<h3>Contact Us</h3>
-<a href="#">WhatsApp</a> | <a href="#">Facebook</a> | <a href="#">Instagram</a>
+  <h3>Contact Us</h3>
+  <a href="#">WhatsApp</a> |
+  <a href="#">Facebook</a> |
+  <a href="#">Instagram</a> |
+  <a href="#">TikTok</a>
 </footer>
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
 firebase.initializeApp({
- apiKey:"AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
- authDomain:"ehtisham-news.firebaseapp.com",
- projectId:"ehtisham-news"
+  apiKey:"AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
+  authDomain:"ehtisham-news.firebaseapp.com",
+  projectId:"ehtisham-news"
 });
 const db=firebase.firestore();
-let currentCat="";
-let newsCache=[];
-</script>
 
-<script>
+/* NAV */
 function openNews(cat){
- currentCat=cat;
- home.style.display="none";
- newsPage.style.display="block";
- newsTitle.innerText=cat.toUpperCase();
- newsContent.innerHTML="Loading...";
-
- db.collection("news")
- .where("category","==",cat)
- .orderBy("time","desc")
- .onSnapshot(s=>{
-   newsCache=[];
-   let h="";
-   s.forEach(d=>{
-     newsCache.push({...d.data(),id:d.id});
-   });
-   newsCache.forEach((n,i)=>{
-     h+=`
-     <div class="card" onclick="openSingle(${i})">
-       <h3>${n.title}</h3>
-       <p>${n.content.slice(0,80)}...</p>
-       <small>Read More →</small>
-     </div>`;
-   });
-   newsContent.innerHTML=h||"No news";
- });
+  home.style.display="none";
+  newsPage.style.display="block";
+  newsTitle.innerText=cat.toUpperCase();
+  newsContent.innerHTML="Loading...";
+  db.collection("news").where("category","==",cat)
+  .onSnapshot(s=>{
+    let h="";
+    s.forEach(d=>{
+      let n=d.data();
+      h+=`<div class="card"><h3>${n.title}</h3><p>${n.content}</p></div>`;
+    });
+    newsContent.innerHTML=h||"<p>No news found</p>";
+  });
 }
+function openAdmin(){home.style.display="none";adminPanel.style.display="block"}
+function goHome(){newsPage.style.display="none";adminPanel.style.display="none";home.style.display="block"}
 
-function openSingle(i){
- newsPage.style.display="none";
- singleNews.style.display="block";
- let n=newsCache[i];
- let next=i+1<newsCache.length?`<br><br><a onclick="openSingle(${i+1})">Next News →</a>`:"";
- singleContent.innerHTML=`
- <div class="card">
- <h2>${n.title}</h2>
- <p>${n.content}</p>${next}
- </div>`;
-}
-
-function backToList(){
- singleNews.style.display="none";
- newsPage.style.display="block";
-}
-
-function openAdmin(){
- home.style.display="none";
- adminPanel.style.display="block";
-}
-
-function goHome(){
- newsPage.style.display=singleNews.style.display=adminPanel.style.display="none";
- home.style.display="block";
-}
-
+/* ADD NEWS */
 function addNews(){
- db.collection("news").add({
-  title:aTitle.value,
-  content:aContent.value,
-  category:aCategory.value,
-  time:Date.now()
- });
- aTitle.value="";aContent.value="";
+  db.collection("news").add({
+    title:aTitle.value,
+    content:aContent.value,
+    category:aCategory.value,
+    time:Date.now()
+  });
+  aTitle.value="";aContent.value="";
 }
 
+/* NOTIFICATION – SAFE */
+let lastNotify=null;
+if("Notification"in window){
+  Notification.requestPermission();
+  db.collection("notifications")
+  .orderBy("time","desc").limit(1)
+  .onSnapshot(s=>{
+    s.forEach(d=>{
+      if(d.id!==lastNotify){
+        lastNotify=d.id;
+        let n=d.data();
+        new Notification(n.title,{body:n.body});
+      }
+    });
+  });
+}
 function sendNotification(){
- db.collection("notifications").add({
-  title:nTitle.value,
-  body:nBody.value,
-  time:Date.now()
- });
- alert("Notification Sent");
+  db.collection("notifications").add({
+    title:nTitle.value,
+    body:nBody.value,
+    time:Date.now()
+  });
+  nTitle.value="";nBody.value="";
 }
 </script>
 
