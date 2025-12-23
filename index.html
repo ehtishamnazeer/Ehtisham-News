@@ -8,59 +8,92 @@
 <meta name="theme-color" content="#c9a23f">
 
 <style>
-body{margin:0;font-family:Arial;background:#f6f6f6}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f6f6f6;
+}
 h1,h2,h3{margin:0}
 a{text-decoration:none;color:inherit}
 
-/* Splash */
+/* ================= SPLASH ANIMATION ================= */
 #splash{
- position:fixed;inset:0;
- background:#fff;
- display:flex;
- align-items:center;
- justify-content:center;
- z-index:9999;
+  position:fixed;
+  inset:0;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  animation: splashFade 1.8s ease forwards;
 }
-#splash.hide{display:none}
-.loader{font-size:24px;font-weight:bold;color:#c9a23f}
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  color:#c9a23f;
+  animation: logoPop 1.2s ease;
+}
+@keyframes logoPop{
+  0%{transform:scale(0.6);opacity:0}
+  60%{transform:scale(1.1);opacity:1}
+  100%{transform:scale(1)}
+}
+@keyframes splashFade{
+  0%{opacity:1}
+  85%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
 
-/* Header */
-header{text-align:center;padding:20px;background:#fff}
+/* ================= HEADER ================= */
+header{
+  text-align:center;
+  padding:20px;
+  background:#fff;
+}
 header span{color:#c9a23f}
 
-/* Cards */
+/* ================= CARDS ================= */
 .container{padding:15px}
 .card{
- background:#fff;
- border-radius:16px;
- padding:20px;
- margin-bottom:15px;
- box-shadow:0 5px 15px rgba(0,0,0,.08);
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,.08);
+  animation: fadeUp .4s ease;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:none}
 }
 .card button{
- margin-top:10px;
- background:#c9a23f;
- color:#fff;
- border:none;
- padding:10px 16px;
- border-radius:20px;
- cursor:pointer;
+  margin-top:10px;
+  background:#c9a23f;
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:20px;
+  cursor:pointer;
 }
 
-/* News */
+/* ================= NEWS PAGE ================= */
 #newsPage{display:none}
 
-/* Footer */
-footer{background:#fff;padding:15px;text-align:center}
+/* ================= FOOTER ================= */
+footer{
+  background:#fff;
+  padding:15px;
+  text-align:center;
+}
 footer a{margin:5px}
 </style>
 </head>
 
 <body>
 
-<!-- Splash -->
+<!-- SPLASH -->
 <div id="splash">
-  <div class="loader">Ehtisham News</div>
+  <div class="logo">Ehtisham News</div>
 </div>
 
 <header>
@@ -96,6 +129,7 @@ footer a{margin:5px}
   <button onclick="goHome()">⬅ Back</button>
 </div>
 
+<!-- FOOTER (ONLY ONE) -->
 <footer>
   <h3>Contact Us</h3>
   <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
@@ -123,86 +157,30 @@ const db = firebase.firestore();
 </script>
 
 <script>
-// Splash FIX
-window.onload = ()=>{
-  document.getElementById("splash").classList.add("hide");
-};
-
-// Load news
+/* ================= LOAD NEWS (FIXED) ================= */
 function openNews(category){
-  home.style.display="none";
-  newsPage.style.display="block";
-  newsTitle.innerText = category.toUpperCase();
-  newsContent.innerHTML="Loading...";
+  document.getElementById("home").style.display="none";
+  document.getElementById("newsPage").style.display="block";
+  document.getElementById("newsTitle").innerText = category.toUpperCase();
+  document.getElementById("newsContent").innerHTML = "Loading...";
 
   db.collection("news")
     .where("category","==",category)
-    .orderBy("date","desc")
-    .onSnapshot(snap=>{
+    .onSnapshot(snapshot=>{
       let html="";
-      snap.forEach(doc=>{
-        let n=doc.data();
-        html+=`
+      snapshot.forEach(doc=>{
+        const n = doc.data();
+        html += `
           <div class="card">
             <h3>${n.title}</h3>
             <p>${n.content}</p>
-            <small>${n.date}</small>
-          </div>`;
+            <small>${n.date || ""}</small>
+          </div>
+        `;
       });
-      newsContent.innerHTML = html || "<p>No news yet</p>";
+      document.getElementById("newsContent").innerHTML =
+        html || "<p>No news found</p>";
     });
-}
-
-function goHome(){
-  newsPage.style.display="none";
-  home.style.display="block";
-}
-</script>
-
-</body>
-</html>  <h3>Contact Us</h3>
-  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L">WhatsApp</a> |
-  <a href="https://www.facebook.com/share/16UChCgJTn/">Facebook</a> |
-  <a href="https://www.instagram.com/ehtisham_nazeer">Instagram</a> |
-  <a href="https://www.tiktok.com/@ehtishamnazeer1">TikTok</a>
-</footer>
-
-<!-- ================= FIREBASE STEP 3 (CORRECT WAY) ================= -->
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
-    authDomain: "ehtisham-news.firebaseapp.com",
-    projectId: "ehtisham-news",
-    storageBucket: "ehtisham-news.firebasestorage.app",
-    messagingSenderId: "52980900534",
-    appId: "1:52980900534:web:3595bef67929dd1c727c17"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-</script>
-
-<script>
-/* Splash FIX */
-window.onload = () => {
-  document.getElementById("splash").classList.add("hide");
-};
-
-/* Navigation */
-function openNews(cat){
-  document.getElementById("home").style.display="none";
-  document.getElementById("newsPage").style.display="block";
-  document.getElementById("newsTitle").innerText = cat.toUpperCase();
-  document.getElementById("newsContent").innerHTML =
-    "<p>Firebase se news yahan load hogi…</p>";
 }
 
 function goHome(){
