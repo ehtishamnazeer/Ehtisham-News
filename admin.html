@@ -2,126 +2,180 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Admin Panel - Ehtisham News</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel – Ehtisham News</title>
 
 <style>
-body{font-family:Arial;background:#f4f4f4;margin:0}
-.container{max-width:500px;margin:auto;padding:20px}
-.card{background:#fff;padding:20px;border-radius:12px;margin-bottom:15px}
-input,textarea,select,button{
-  width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ccc
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f4f4f4;
 }
-button{background:#c9a23f;color:#fff;border:none;cursor:pointer}
-button.logout{background:#444}
-h2{text-align:center}
-.newsItem{border-bottom:1px solid #ddd;padding:8px 0}
-.newsItem button{background:red;margin-top:5px}
+header{
+  background:#c9a23f;
+  color:#fff;
+  padding:15px;
+  text-align:center;
+}
+.container{
+  padding:15px;
+}
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+input, textarea, select{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+button{
+  background:#c9a23f;
+  color:#fff;
+  border:none;
+  padding:12px;
+  border-radius:10px;
+  width:100%;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+.status{
+  text-align:center;
+  margin-top:10px;
+  font-weight:bold;
+}
+.news-item{
+  border-bottom:1px solid #eee;
+  padding:8px 0;
+}
+.news-item small{
+  color:#777;
+}
 </style>
 </head>
 
 <body>
 
+<header>
+  <h2>Admin Panel</h2>
+  <p>Add News → Firestore</p>
+</header>
+
 <div class="container">
 
-<!-- LOGIN -->
-<div class="card" id="loginBox">
-  <h2>Admin Login</h2>
-  <input type="email" id="email" placeholder="Admin Email">
-  <input type="password" id="password" placeholder="Password">
-  <button onclick="login()">Login</button>
+  <!-- ADD NEWS -->
+  <div class="card">
+    <h3>Add News</h3>
+
+    <input type="text" id="title" placeholder="News Title">
+
+    <textarea id="content" rows="4" placeholder="News Content"></textarea>
+
+    <select id="category">
+      <option value="">Select Category</option>
+      <option value="gaming">Gaming</option>
+      <option value="esports">Esports</option>
+      <option value="community">Community</option>
+    </select>
+
+    <button onclick="addNews()">Publish News</button>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <!-- NEWS LIST -->
+  <div class="card">
+    <h3>Latest News</h3>
+    <div id="newsList">Loading...</div>
+  </div>
+
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="card" id="adminBox" style="display:none">
-  <h2>Admin Panel</h2>
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  orderBy,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  <input id="title" placeholder="News Title">
-  <select id="category">
-    <option value="gaming">Gaming</option>
-    <option value="esports">Esports</option>
-    <option value="community">Community</option>
-  </select>
-  <textarea id="content" placeholder="News Content"></textarea>
-  <button onclick="addNews()">Add News</button>
-
-  <h3>All News</h3>
-  <div id="newsList"></div>
-
-  <button class="logout" onclick="logout()">Logout</button>
-</div>
-
-</div>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<script>
+/* 🔴 APNI FIREBASE CONFIG YAHA PASTE KARO */
 const firebaseConfig = {
   apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
   authDomain: "ehtisham-news.firebaseapp.com",
   projectId: "ehtisham-news",
-  storageBucket: "ehtisham-news.firebasestorage.app",
+  storageBucket: "ehtisham-news.appspot.com",
   messagingSenderId: "52980900534",
   appId: "1:52980900534:web:3595bef67929dd1c727c17"
 };
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-/* Auth */
-auth.onAuthStateChanged(user=>{
-  if(user){
-    loginBox.style.display="none";
-    adminBox.style.display="block";
-    loadNews();
+/* ADD NEWS FUNCTION */
+window.addNews = async function(){
+  const title = document.getElementById("title").value.trim();
+  const content = document.getElementById("content").value.trim();
+  const category = document.getElementById("category").value;
+  const statusBox = document.getElementById("status");
+
+  if(!title || !content || !category){
+    statusBox.style.color="red";
+    statusBox.innerText="⚠️ Please fill all fields";
+    return;
   }
+
+  try{
+    await addDoc(collection(db,"news"),{
+      title: title,
+      content: content,
+      category: category,
+      status: "published",
+      createdAt: serverTimestamp()
+    });
+
+    statusBox.style.color="green";
+    statusBox.innerText="✅ News Published Successfully";
+
+    document.getElementById("title").value="";
+    document.getElementById("content").value="";
+    document.getElementById("category").value="";
+
+  }catch(e){
+    statusBox.style.color="red";
+    statusBox.innerText="❌ Error adding news";
+    console.error(e);
+  }
+};
+
+/* LOAD NEWS LIST */
+const q = query(collection(db,"news"), orderBy("createdAt","desc"));
+onSnapshot(q,(snap)=>{
+  let html="";
+  snap.forEach(doc=>{
+    const n = doc.data();
+    html += `
+      <div class="news-item">
+        <b>${n.title}</b><br>
+        <small>${n.category}</small>
+      </div>
+    `;
+  });
+  document.getElementById("newsList").innerHTML = html || "No news yet";
 });
 
-function login(){
-  auth.signInWithEmailAndPassword(
-    email.value,
-    password.value
-  ).catch(e=>alert(e.message));
-}
-
-function logout(){
-  auth.signOut();
-  location.reload();
-}
-
-/* Firestore */
-function addNews(){
-  db.collection("news").add({
-    title:title.value,
-    category:category.value,
-    content:content.value,
-    date:new Date().toLocaleString()
-  });
-  title.value=""; content.value="";
-}
-
-function loadNews(){
-  db.collection("news").orderBy("date","desc")
-  .onSnapshot(snap=>{
-    newsList.innerHTML="";
-    snap.forEach(doc=>{
-      let d=doc.data();
-      newsList.innerHTML+=`
-        <div class="newsItem">
-          <b>${d.title}</b> (${d.category})
-          <button onclick="delNews('${doc.id}')">Delete</button>
-        </div>`;
-    });
-  });
-}
-
-function delNews(id){
-  db.collection("news").doc(id).delete();
-}
 </script>
 
 </body>
