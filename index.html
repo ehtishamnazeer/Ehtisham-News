@@ -2,123 +2,158 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ehtisham News | Game Updates • Esports • Community</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Latest Free Fire game updates, esports news and gaming community events in Pakistan.">
-<meta name="keywords" content="Free Fire, Esports Pakistan, Gaming News, Community Events">
-<meta name="author" content="Ehtisham News">
+<title>Ehtisham News</title>
 
 <style>
 :root{
-  --gold:#d4a017;
+  --primary:#d4a017;
   --dark:#111;
-  --light:#f6f6f6;
-  --card:#fff;
+  --light:#f5f5f5;
+  --card:#ffffff;
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
-body{background:var(--light);color:#333;scroll-behavior:smooth}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body{
+  background:linear-gradient(#fafafa,#f0f0f0);
+  color:#222;
+}
 
 /* Header */
 header{
   text-align:center;
   padding:30px 15px;
-  background:#fff;
 }
-header h1 span{color:var(--gold)}
-header p{color:#777;margin-top:6px}
+
+header h1{
+  font-size:30px;
+}
+header span{
+  color:var(--primary);
+}
+header p{
+  margin-top:6px;
+  opacity:.7;
+}
 
 /* Cards */
-.container{
-  max-width:1100px;
-  margin:30px auto;
-  padding:0 15px;
+.cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:20px;
+  padding:20px;
+  max-width:1100px;
+  margin:auto;
 }
+
 .card{
   background:var(--card);
   border-radius:16px;
-  padding:22px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
   transition:.4s ease;
-  animation:fadeUp .8s ease;
 }
 .card:hover{
-  transform:translateY(-8px);
+  transform:translateY(-6px);
 }
-.tag{
-  display:inline-block;
-  font-size:12px;
-  padding:5px 10px;
-  border-radius:20px;
-  background:#f1ead6;
-  color:#8a6b00;
-  margin-bottom:12px;
-}
-.card h2{margin-bottom:10px}
-.card p{color:#666;font-size:14px;line-height:1.6}
 
-/* Buttons */
+.card h3{
+  margin:10px 0;
+}
+
+.card p{
+  opacity:.75;
+  font-size:14px;
+}
+
 .btn{
   display:inline-block;
   margin-top:15px;
-  padding:10px 18px;
-  border-radius:25px;
-  background:var(--gold);
+  padding:10px 22px;
+  background:var(--primary);
   color:#fff;
+  border-radius:25px;
   text-decoration:none;
-  font-size:14px;
+  cursor:pointer;
   transition:.3s;
 }
-.btn:hover{opacity:.85}
+.btn:hover{
+  opacity:.85;
+}
 
 /* Sections */
 section{
   max-width:1100px;
-  margin:50px auto;
-  padding:0 15px;
-  animation:fadeUp .8s ease;
+  margin:40px auto;
+  padding:0 20px;
 }
-section h2{margin-bottom:12px}
-.empty{
+
+.section-box{
   background:#fff;
+  border-radius:16px;
   padding:20px;
+  margin-top:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
+  animation:fade .6s ease;
+}
+
+.news-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:15px;
+  margin-top:15px;
+}
+
+.news{
+  background:#fafafa;
+  padding:15px;
   border-radius:12px;
-  color:#777;
+}
+
+.empty{
+  opacity:.6;
+  padding:15px;
+  background:#f7f7f7;
+  border-radius:12px;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px)}
+  to{opacity:1; transform:none}
 }
 
 /* Contact */
 .contact{
   background:#fff;
-  padding:30px 15px;
-  border-radius:18px;
+  max-width:900px;
+  margin:50px auto;
+  padding:30px;
+  border-radius:20px;
   text-align:center;
   box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
-.contact a{
+
+.socials a{
   display:inline-block;
-  margin:8px;
-  padding:10px 18px;
-  border-radius:25px;
+  margin:10px;
+  padding:10px 20px;
+  border-radius:30px;
   background:#000;
   color:#fff;
   text-decoration:none;
-  font-size:14px;
 }
 
-/* Footer */
 footer{
   text-align:center;
-  padding:25px;
-  color:#777;
-  font-size:13px;
-}
-
-/* Animation */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:translateY(0)}
+  padding:20px;
+  opacity:.6;
+  font-size:14px;
 }
 </style>
 </head>
@@ -130,69 +165,73 @@ footer{
   <p>Game Updates • Esports • Community</p>
 </header>
 
-<!-- MAIN CARDS -->
-<div class="container">
+<!-- TOP CARDS -->
+<div class="cards">
   <div class="card">
-    <span class="tag">🔥 Game Updates</span>
-    <h2>Latest Game Updates</h2>
-    <p>Free Fire updates, upcoming events, characters and new in‑game features.</p>
-    <a href="#game-updates" class="btn">Read More</a>
+    <h3>Latest Game Updates</h3>
+    <p>Free Fire updates, events & features.</p>
+    <div class="btn" onclick="openTab('game')">Read More</div>
   </div>
 
   <div class="card">
-    <span class="tag">🏆 Esports</span>
-    <h2>Esports World</h2>
-    <p>Competitive tournaments, rankings and esports coverage.</p>
-    <a href="#esports" class="btn">Explore</a>
+    <h3>Esports World</h3>
+    <p>Tournaments, rankings & results.</p>
+    <div class="btn" onclick="openTab('esports')">Explore</div>
   </div>
 
   <div class="card">
-    <span class="tag">👥 Community</span>
-    <h2>Community News</h2>
-    <p>Creators, giveaways, offline events and community highlights.</p>
-    <a href="#community" class="btn">View</a>
+    <h3>Community News</h3>
+    <p>Creators, giveaways & events.</p>
+    <div class="btn" onclick="openTab('community')">View</div>
   </div>
 </div>
 
-<!-- GAME UPDATES -->
-<section id="game-updates">
+<!-- SECTIONS -->
+<section id="game" class="section-box">
   <h2>🎮 Game Updates</h2>
-  <div class="empty">
-    Stay tuned 🚀 New game update articles coming soon.
+  <div class="news-grid">
+    <!-- Example News -->
+    <div class="news">🔥 New FF Event launching soon</div>
+    <div class="news">🎁 Free rewards coming this week</div>
   </div>
 </section>
 
-<!-- ESPORTS -->
-<section id="esports">
+<section id="esports" class="section-box">
   <h2>🏆 Esports World</h2>
   <div class="empty">
-    No esports news yet. Stay tuned for upcoming tournaments & results.
+    Stay tuned 🚀 No esports news yet.
   </div>
 </section>
 
-<!-- COMMUNITY -->
-<section id="community">
+<section id="community" class="section-box">
   <h2>👥 Community News</h2>
   <div class="empty">
-    Community events & creator news will appear here soon.
+    Community events & creator news coming soon.
   </div>
 </section>
 
 <!-- CONTACT -->
-<section>
-  <div class="contact">
-    <h2>📞 Contact Us</h2>
-    <p>Follow & connect with Ehtisham News</p>
-    <br>
+<div class="contact">
+  <h2>📞 Contact Us</h2>
+  <p>Follow & connect with Ehtisham News</p>
+  <div class="socials">
     <a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a>
-    <a href="https://www.instagram.com/ehtisham_nazeer?igsh=M3RoMzN5eTNqbXZu" target="_blank">Instagram</a>
-    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp Channel</a>
+    <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
+    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
   </div>
-</section>
+</div>
 
 <footer>
-  © 2025 Ehtisham News • Professional Gaming Platform
+© 2025 Ehtisham News • Professional Gaming Platform
 </footer>
+
+<script>
+function openTab(id){
+  document.getElementById(id).scrollIntoView({
+    behavior:"smooth"
+  });
+}
+</script>
 
 </body>
 </html>
