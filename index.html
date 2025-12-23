@@ -8,76 +8,111 @@
 <style>
 :root{--gold:#d4af37}
 *{box-sizing:border-box;font-family:Arial}
-body{margin:0;background:#f7f7f7;color:#111}
+body{margin:0;background:#f5f5f5;color:#111}
+
+/* SPLASH */
+#splash{
+  position:fixed;inset:0;background:#111;display:flex;
+  align-items:center;justify-content:center;color:var(--gold);
+  font-size:28px;font-weight:bold;z-index:1000;
+  animation:fadeout 1.5s forwards;animation-delay:1.5s
+}
+@keyframes fadeout{to{opacity:0;visibility:hidden}}
 
 /* HEADER */
 header{
   background:linear-gradient(135deg,var(--gold),#b8962e);
-  color:#fff;padding:14px;text-align:center;font-size:20px;font-weight:bold;
-  position:sticky;top:0;z-index:10
+  color:white;padding:14px;text-align:center;
+  font-size:20px;font-weight:bold;position:sticky;top:0
 }
 header button{
   position:absolute;right:10px;top:10px;
-  background:#fff;color:#111;border:none;border-radius:20px;padding:6px 10px;
-  cursor:pointer;font-size:12px
+  border:none;border-radius:20px;padding:6px 10px;
+  background:white;cursor:pointer;font-size:12px
 }
 
 /* LAYOUT */
 .app{display:flex;min-height:100vh}
 .tabs{
-  width:90px;background:#fff;border-right:2px solid var(--gold);
+  width:90px;background:white;border-right:2px solid var(--gold);
   display:flex;flex-direction:column
 }
 .tabs button{
-  padding:16px;border:none;background:none;cursor:pointer;font-weight:bold
+  border:none;background:none;padding:16px;
+  font-weight:bold;cursor:pointer
 }
-.tabs button.active{background:var(--gold);color:#fff}
+.tabs button.active{background:var(--gold);color:white}
 
 .content{flex:1;padding:14px}
+
+/* CARDS */
 .card{
-  background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,.08)
+  background:white;border-radius:12px;padding:14px;
+  margin-bottom:12px;box-shadow:0 4px 10px rgba(0,0,0,.08)
 }
-.read{background:var(--gold);color:#fff;border:none;padding:6px 12px;border-radius:16px;cursor:pointer}
+.read{
+  background:var(--gold);color:white;border:none;
+  padding:6px 12px;border-radius:16px;cursor:pointer
+}
 
 /* ARTICLE */
 #article{display:none}
-.back{color:var(--gold);cursor:pointer;font-weight:bold;margin-bottom:10px}
+.back{color:var(--gold);font-weight:bold;cursor:pointer;margin-bottom:10px}
+
+/* CONTACT */
+.contact a{
+  display:block;margin:10px 0;text-decoration:none;
+  background:var(--gold);color:white;
+  padding:12px;border-radius:20px;text-align:center
+}
 
 /* ADMIN */
 #admin{
-  display:none;background:#fff;border-top:3px solid var(--gold);padding:12px
+  display:none;background:white;padding:14px;
+  border-top:3px solid var(--gold)
 }
 #admin input,#admin textarea,#admin select{
   width:100%;margin:6px 0;padding:8px
 }
-#admin button{background:var(--gold);border:none;padding:8px 12px;color:#fff;cursor:pointer}
+#admin button{
+  background:var(--gold);border:none;
+  color:white;padding:8px 12px;cursor:pointer
+}
 </style>
 </head>
 
 <body>
 
+<div id="splash">Ehtisham News</div>
+
 <header>
   Ehtisham News
-  <button onclick="enableAlerts()">Enable Alerts</button>
+  <button onclick="enableAlerts()">Alerts</button>
 </header>
 
 <div class="app">
+
   <!-- TABS -->
   <div class="tabs">
     <button class="active" onclick="openTab('game',this)">Game</button>
     <button onclick="openTab('esports',this)">Esports</button>
     <button onclick="openTab('community',this)">Community</button>
+    <button onclick="openTab('contact',this)">Contact</button>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
+
     <div id="list">
+
       <div id="game" class="tab">
         <div class="card">
           <h3>New Game Update</h3>
           <p>Latest patch released.</p>
-          <button class="read" onclick="openArticle('New Game Update','Full game update details...')">Read</button>
+          <button class="read"
+            onclick="openArticle('New Game Update','Full game update details here...')">
+            Read
+          </button>
         </div>
       </div>
 
@@ -88,6 +123,15 @@ header button{
       <div id="community" class="tab" style="display:none">
         <div class="card">Stay tuned for updated news</div>
       </div>
+
+      <!-- CONTACT -->
+      <div id="contact" class="tab contact" style="display:none">
+        <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
+        <a href="https://www.facebook.com/share/16UChCgJTn/" target="_blank">Facebook</a>
+        <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a>
+        <a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank">TikTok</a>
+      </div>
+
     </div>
 
     <!-- ARTICLE VIEW -->
@@ -98,13 +142,14 @@ header button{
         <p id="aBody"></p>
       </div>
     </div>
+
   </div>
 </div>
 
 <!-- ADMIN PANEL -->
 <div id="admin">
   <h3>Admin Panel</h3>
-  <input id="pin" placeholder="Enter Admin PIN">
+  <input id="pin" placeholder="Enter PIN">
   <button onclick="login()">Login</button>
 
   <div id="adminForm" style="display:none">
@@ -120,7 +165,6 @@ header button{
 </div>
 
 <script>
-/* TABS */
 function openTab(id,btn){
   document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
   document.getElementById(id).style.display='block';
@@ -128,29 +172,31 @@ function openTab(id,btn){
   btn.classList.add('active');
 }
 
-/* ARTICLE */
 function openArticle(t,b){
-  list.style.display='none'; article.style.display='block';
-  aTitle.innerText=t; aBody.innerText=b;
+  list.style.display='none';
+  article.style.display='block';
+  aTitle.innerText=t;
+  aBody.innerText=b;
 }
 function back(){
-  article.style.display='none'; list.style.display='block';
+  article.style.display='none';
+  list.style.display='block';
 }
 
 /* NOTIFICATIONS */
 function enableAlerts(){
-  if(!("Notification" in window)){alert("Not supported");return}
+  if(!("Notification" in window)) return;
   Notification.requestPermission().then(p=>{
-    if(p==="granted") new Notification("Ehtisham News",{body:"Alerts enabled"});
+    if(p==="granted") new Notification("Ehtisham News",{body:"Alerts Enabled"});
   });
 }
 
 /* ADMIN */
 document.addEventListener("keydown",e=>{
-  if(e.key==="A" && e.shiftKey) admin.style.display='block'; // Shift + A
+  if(e.shiftKey && e.key==="A") admin.style.display='block';
 });
 function login(){
-  if(pin.value==="1234"){adminForm.style.display='block'}
+  if(pin.value==="1234") adminForm.style.display='block';
   else alert("Wrong PIN");
 }
 function addNews(){
@@ -159,13 +205,16 @@ function addNews(){
   <div class="card">
     <h3>${title.value}</h3>
     <p>${body.value.substring(0,60)}...</p>
-    <button class="read" onclick="openArticle('${title.value}','${body.value}')">Read</button>
-  </div>`+c.innerHTML;
+    <button class="read"
+      onclick="openArticle('${title.value}','${body.value}')">
+      Read
+    </button>
+  </div>` + c.innerHTML;
 
   if(Notification.permission==="granted"){
-    new Notification("New News Added",{body:title.value});
+    new Notification("New News",{body:title.value});
   }
-  title.value=""; body.value="";
+  title.value="";body.value="";
 }
 </script>
 
