@@ -1,163 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Game Updates • Esports • Community</title>
-<meta name="description" content="Latest Game Updates, Esports World and Community News in one place." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameHub • Gaming News</title>
+<meta name="description" content="Latest Game Updates, Esports World & Community News">
+<meta name="theme-color" content="#c9a24d">
+
 <style>
 :root{
-  --bg:#0b0f1a; --card:#12162a; --accent:#4cc9f0; --muted:#9aa4bf; --text:#e8ebff;
+  --gold:#c9a24d; --gray:#666; --border:#eee;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
-  background:linear-gradient(180deg,#0b0f1a,#0e1330); color:var(--text);
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui;background:#fff;color:#111}
+.container{max-width:1100px;margin:auto;padding:16px}
+.hidden{display:none}
+button{cursor:pointer;border:none}
+a{text-decoration:none;color:inherit}
 
-/* Header */
-header{
-  position:sticky; top:0; z-index:9;
-  backdrop-filter:blur(10px);
-  background:rgba(11,15,26,.7);
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.wrap{max-width:1100px; margin:auto; padding:14px 16px}
-.brand{font-weight:800; letter-spacing:.4px}
-nav{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap}
-nav button{
-  background:#10163a; color:var(--text); border:1px solid rgba(255,255,255,.08);
-  padding:10px 14px; border-radius:12px; cursor:pointer;
-  transition:.25s transform,.25s background;
-}
-nav button.active, nav button:hover{background:#1a1f4d; transform:translateY(-1px)}
+/* HEADER */
+header{border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff}
+.nav{display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:20px}
+.logo span{color:var(--gold)}
 
-/* Sections */
-section{display:none; animation:fade .5s ease}
-section.active{display:block}
-@keyframes fade{from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:none}}
+/* HOME CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px}
+.card{border:1px solid var(--border);border-radius:18px;padding:20px;transition:.3s}
+.card:hover{transform:translateY(-6px)}
+.card button{margin-top:12px;background:var(--gold);color:#fff;padding:10px 16px;border-radius:20px}
 
-.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px}
-.card{
-  background:linear-gradient(180deg,#12162a,#0f1430);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px; padding:14px;
-  transition:.25s transform,.25s box-shadow;
-}
-.card:hover{transform:translateY(-4px); box-shadow:0 10px 30px rgba(0,0,0,.35)}
-.card h3{margin:.2em 0 .4em}
-.card p{color:var(--muted)}
-.btn{
-  display:inline-block; margin-top:10px;
-  padding:10px 14px; border-radius:12px;
-  background:linear-gradient(135deg,#4cc9f0,#6c7cff);
-  color:#0b0f1a; font-weight:700; text-decoration:none;
-}
+/* NEWS */
+.news{border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px}
+.empty{text-align:center;color:var(--gray);padding:50px}
 
-/* Empty */
-.empty{
-  text-align:center; padding:40px; color:var(--muted);
-  border:1px dashed rgba(255,255,255,.15); border-radius:16px;
+/* ADMIN */
+.admin-box{max-width:500px;margin:40px auto;border:1px solid var(--border);border-radius:18px;padding:20px}
+.admin-box input,.admin-box select,textarea{
+  width:100%;padding:10px;margin-bottom:10px;border:1px solid var(--border);border-radius:10px
 }
+.admin-box button{background:var(--gold);color:#fff;padding:10px;border-radius:20px;width:100%}
+.small-btn{background:#eee;padding:6px 10px;border-radius:12px;margin-left:8px}
 
-/* Article */
-.article{max-width:900px; margin:40px auto; padding:0 16px}
-.article h1{margin-top:0}
-
-/* Contact */
-footer{margin-top:40px; border-top:1px solid rgba(255,255,255,.08)}
-.socials a{
-  display:inline-block; margin-right:10px; margin-top:10px;
-  padding:10px 14px; border-radius:12px; background:#10163a;
-  color:var(--text); text-decoration:none; border:1px solid rgba(255,255,255,.08)
-}
-
-/* Mobile */
-@media (max-width:600px){
-  nav{gap:8px}
-  .btn{width:100%; text-align:center}
-}
+/* CONTACT */
+.contact{border:1px solid var(--border);border-radius:18px;padding:20px;margin:40px 0}
+footer{text-align:center;color:var(--gray);font-size:13px;padding:20px}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="wrap">
-    <div class="brand">🎮 Game Updates</div>
-    <nav>
-      <button class="active" onclick="showTab('game')">Game Updates</button>
-      <button onclick="showTab('esports')">Esports World</button>
-      <button onclick="showTab('community')">Community News</button>
-    </nav>
+  <div class="container nav">
+    <div class="logo">Game<span>Hub</span></div>
+    <button onclick="enableNotifications()" style="background:var(--gold);color:#fff;padding:8px 14px;border-radius:20px">
+      Enable Alerts
+    </button>
   </div>
 </header>
 
-<main class="wrap">
+<main class="container">
 
-  <!-- GAME UPDATES -->
-  <section id="game" class="active">
-    <div class="grid">
-      <div class="card">
-        <h3>Free Fire Hungama Karachi 2025</h3>
-        <p>Offline community event with activities, creators and rewards.</p>
-        <a class="btn" target="_blank" href="#news1">Read More</a>
-      </div>
+<!-- HOME -->
+<section id="home">
+  <div class="cards">
+    <div class="card">
+      <h3>Latest Game Updates</h3>
+      <button onclick="openCategory('game')">Explore</button>
     </div>
-  </section>
-
-  <!-- ESPORTS -->
-  <section id="esports">
-    <div class="empty">🚀 Stay tuned for updated news</div>
-  </section>
-
-  <!-- COMMUNITY -->
-  <section id="community">
-    <div class="grid">
-      <div class="card">
-        <h3>Community Meet Highlights</h3>
-        <p>Fans, creators and casual gamers joined together.</p>
-        <a class="btn" target="_blank" href="#news2">Read More</a>
-      </div>
+    <div class="card">
+      <h3>Esports World</h3>
+      <button onclick="openCategory('esports')">Explore</button>
     </div>
-  </section>
+    <div class="card">
+      <h3>Community News</h3>
+      <button onclick="openCategory('community')">Explore</button>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS PAGE -->
+<section id="newsPage" class="hidden">
+  <p style="color:var(--gold);margin:16px 0;cursor:pointer" onclick="goHome()">← Back</p>
+  <h2 id="newsTitle"></h2>
+  <div id="newsList"></div>
+</section>
+
+<!-- ADMIN LOGIN -->
+<section id="adminLogin" class="admin-box hidden">
+  <h3>Admin Login</h3>
+  <input type="password" id="adminPass" placeholder="Admin password">
+  <button onclick="loginAdmin()">Login</button>
+</section>
+
+<!-- ADMIN PANEL -->
+<section id="adminPanel" class="admin-box hidden">
+  <h3>Add News</h3>
+  <select id="newsCategory">
+    <option value="game">Game Updates</option>
+    <option value="esports">Esports World</option>
+    <option value="community">Community News</option>
+  </select>
+  <input id="newsTitleInput" placeholder="News title">
+  <textarea id="newsDescInput" placeholder="News description"></textarea>
+  <button onclick="addNews()">Add News</button>
+
+  <h4 style="margin-top:20px">Existing News</h4>
+  <div id="adminNewsList"></div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+  <h3>Contact</h3>
+  <a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a> |
+  <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank">Instagram</a> |
+  <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp</a>
+</section>
 
 </main>
 
-<!-- ARTICLES (same file, no 404) -->
-<div class="article" id="news1">
-  <h1>Free Fire Hungama Karachi 2025</h1>
-  <p>
-    Garena Free Fire hosted a two‑day offline community event at Lucky One Mall,
-    featuring interactive zones, giveaways and creator meetups.
-  </p>
-</div>
-
-<div class="article" id="news2">
-  <h1>Community Meet Highlights</h1>
-  <p>
-    Strong turnout showed the growing gaming culture and community engagement.
-  </p>
-</div>
-
-<footer>
-  <div class="wrap">
-    <h3>Contact Us</h3>
-    <div class="socials">
-      <a href="https://www.facebook.com/share/1bZPVnN91e/" target="_blank">Facebook</a>
-      <a href="https://www.instagram.com/ehtisham_nazeer?igsh=M3RoMzN5eTNqbXZu" target="_blank">Instagram</a>
-      <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank">WhatsApp Channel</a>
-    </div>
-  </div>
-</footer>
+<footer>© 2025 GameHub</footer>
 
 <script>
-function showTab(id){
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+/* ===== CONFIG ===== */
+const ADMIN_PASSWORD="admin123";
+
+/* ===== DATA ===== */
+let DATA=JSON.parse(localStorage.getItem("NEWS_DATA")) || {
+  game:[], esports:[], community:[]
+};
+
+/* ===== ROUTING ===== */
+function openCategory(type){
+  history.pushState({}, "", "?tab="+type);
+  renderCategory(type);
+}
+function goHome(){
+  history.pushState({}, "", location.pathname);
+  homeView();
+}
+
+/* ===== RENDER ===== */
+function homeView(){
+  home.classList.remove("hidden");
+  newsPage.classList.add("hidden");
+}
+function renderCategory(type){
+  home.classList.add("hidden");
+  newsPage.classList.remove("hidden");
+  newsTitle.innerText={
+    game:"Latest Game Updates",
+    esports:"Esports World",
+    community:"Community News"
+  }[type];
+  newsList.innerHTML="";
+  if(DATA[type].length===0){
+    newsList.innerHTML=`<div class="empty">🚀 Stay tuned for updated news</div>`;
+    return;
+  }
+  DATA[type].forEach(n=>{
+    newsList.innerHTML+=`<div class="news"><h4>${n.title}</h4><p>${n.desc}</p></div>`;
+  });
+}
+
+/* ===== ADMIN ===== */
+function loginAdmin(){
+  if(adminPass.value===ADMIN_PASSWORD){
+    adminLogin.classList.add("hidden");
+    adminPanel.classList.remove("hidden");
+    renderAdminNews();
+  }else alert("Wrong password");
+}
+function addNews(){
+  const cat=newsCategory.value;
+  DATA[cat].push({
+    title:newsTitleInput.value,
+    desc:newsDescInput.value
+  });
+  localStorage.setItem("NEWS_DATA",JSON.stringify(DATA));
+  newsTitleInput.value="";
+  newsDescInput.value="";
+  renderAdminNews();
+}
+function renderAdminNews(){
+  adminNewsList.innerHTML="";
+  Object.keys(DATA).forEach(cat=>{
+    DATA[cat].forEach((n,i)=>{
+      adminNewsList.innerHTML+=`
+        <div class="news">
+          <b>${n.title}</b> (${cat})
+          <button class="small-btn" onclick="deleteNews('${cat}',${i})">Delete</button>
+        </div>`;
+    });
+  });
+}
+function deleteNews(cat,i){
+  DATA[cat].splice(i,1);
+  localStorage.setItem("NEWS_DATA",JSON.stringify(DATA));
+  renderAdminNews();
+}
+
+/* ===== LOAD ===== */
+const params=new URLSearchParams(location.search);
+if(params.get("admin")==="true"){
+  adminLogin.classList.remove("hidden");
+}else if(params.get("tab")){
+  renderCategory(params.get("tab"));
+}
+
+/* ===== NOTIFICATIONS ===== */
+function enableNotifications(){
+  Notification.requestPermission().then(p=>{
+    if(p==="granted") new Notification("Notifications enabled 🎉");
+  });
 }
 </script>
 
