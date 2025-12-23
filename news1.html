@@ -9,8 +9,8 @@
 body{
   margin:0;
   font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(180deg,#050b18,#0a1a2f);
-  color:#e6f4ff;
+  background:#f6f6f6;
+  color:#333;
 }
 
 .container{
@@ -19,40 +19,46 @@ body{
   padding:20px;
 }
 
+/* NEWS IMAGE */
 .event-img{
-  <img src="event.jpg">
   width:100%;
-  border-radius:16px;
+  max-height:420px;
+  object-fit:cover;
+  border-radius:14px;
   margin-bottom:20px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.5);
 }
 
+/* TITLE */
 h1{
-  color:#00eaff;
-  margin-bottom:8px;
+  font-size:26px;
+  margin-bottom:6px;
+  color:#111;
 }
 
 .meta{
+  color:#777;
   font-size:14px;
-  color:#9fdcff;
-  margin-bottom:20px;
+  margin-bottom:18px;
+}
+
+/* SECTIONS */
+.section{
+  background:#fff;
+  border-radius:16px;
+  padding:18px;
+  margin-top:18px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.05);
+}
+
+.section h2{
+  margin-top:0;
+  color:#c9a24d; /* GOLD */
+  font-size:20px;
 }
 
 p{
   font-size:16px;
   line-height:1.7;
-}
-
-h2{
-  margin-top:35px;
-  color:#00eaff;
-}
-
-.card{
-  background:rgba(255,255,255,0.06);
-  padding:18px;
-  border-radius:14px;
-  margin-top:15px;
 }
 
 ul{
@@ -62,76 +68,88 @@ ul{
 li{
   margin-bottom:6px;
 }
+
+/* MOBILE */
+@media(max-width:600px){
+  h1{font-size:22px;}
+  .event-img{max-height:260px;}
+}
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
-<!-- IMAGE -->
-<img src="event.jpg" alt="Free Fire Hungama Karachi 2025" class="event-img">
+  <!-- IMAGE -->
+  <img src="event.jpg" alt="Free Fire Hungama Karachi 2025" class="event-img">
 
-<!-- TITLE -->
-<h1>Free Fire Hungama Karachi 2025</h1>
-<div class="meta">
-Karachi, Pakistan — December 20–21, 2025 | Lucky One Mall
+  <!-- TITLE -->
+  <h1>Free Fire Hungama Karachi 2025</h1>
+  <div class="meta">
+    Karachi, Pakistan • December 20–21, 2025 • Lucky One Mall
+  </div>
+
+  <!-- INTRO -->
+  <p>
+    Garena Free Fire successfully hosted the <strong>Free Fire Hungama offline community event</strong>
+    in Karachi, bringing together gamers, content creators, and esports fans from across Pakistan.
+  </p>
+
+  <!-- GAMEPLAY -->
+  <div class="section">
+    <h2>🔥 Interactive Gameplay Zones</h2>
+    <ul>
+      <li>Kla’s Punch Zone</li>
+      <li>Alvaro’s Grenade Toss</li>
+      <li>Kelly’s Reflexes</li>
+      <li>Mr. Waggor’s Gloo Powers</li>
+    </ul>
+    <p>
+      Each zone attracted massive participation and created a high‑energy gaming atmosphere.
+    </p>
+  </div>
+
+  <!-- GIVEAWAYS -->
+  <div class="section">
+    <h2>🎁 Exclusive Giveaways</h2>
+    <p>
+      Participants had the chance to win exciting rewards. A special highlight was the
+      <strong>Free Fire x Digimon Exclusive Merch Box</strong>, awarded to the first 20 participants.
+    </p>
+  </div>
+
+  <!-- CREATORS -->
+  <div class="section">
+    <h2>⭐ Popular Free Fire Creators</h2>
+    <ul>
+      <li>Zindabad Plays</li>
+      <li>Adil Rehman</li>
+      <li>Rufe Bhai</li>
+      <li>Shifu</li>
+      <li>Sparrow Darinda</li>
+    </ul>
+  </div>
+
+  <!-- IMPACT -->
+  <div class="section">
+    <h2>🔥 Community Impact</h2>
+    <p>
+      The event saw a strong turnout of casual and competitive players, highlighting
+      Free Fire’s growing fanbase in Pakistan.
+    </p>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="section">
+    <h2>🏁 Conclusion</h2>
+    <p>
+      Free Fire Hungama Karachi 2025 delivered an unforgettable offline gaming experience
+      and marked another milestone in Garena’s commitment to Pakistan’s gaming community.
+    </p>
+  </div>
+
 </div>
 
-<!-- INTRO -->
-<p>
-Garena Free Fire successfully hosted the <strong>Free Fire Hungama offline community event</strong> in Karachi,
-bringing together gamers, content creators, and esports fans from across Pakistan.
-</p>
-
-<!-- GAMEPLAY -->
-<h2>🎮 Interactive Gameplay Zones</h2>
-<div class="card">
-<ul>
-  <li>Kla’s Punch Zone</li>
-  <li>Alvaro’s Grenade Toss</li>
-  <li>Kelly’s Reflexes</li>
-  <li>Mr. Waggor’s Gloo Powers</li>
-</ul>
-<p>
-Each zone attracted massive participation and created a high‑energy gaming atmosphere throughout the event.
-</p>
-</div>
-
-<!-- GIVEAWAYS -->
-<h2>🎁 Exclusive Giveaways</h2>
-<div class="card">
-<p>
-Participants had the chance to win exciting rewards. A special highlight was the
-<strong>Free Fire x Digimon Exclusive Merch Box</strong>, awarded to the first 20 participants.
-</p>
-</div>
-
-<!-- CREATORS -->
-<h2>⭐ Popular Free Fire Creators</h2>
-<div class="card">
-<ul>
-  <li>Zindabad Plays</li>
-  <li>Adil Rehman</li>
-  <li>Rufe Bhai</li>
-  <li>Shifu</li>
-  <li>Sparrow Darinda</li>
-</ul>
-</div>
-
-<!-- COMMUNITY -->
-<h2>🔥 Community Impact</h2>
-<p>
-The event saw a massive turnout from casual and competitive players, highlighting
-Free Fire’s strong and growing fanbase in Pakistan.
-</p>
-
-<!-- CONCLUSION -->
-<h2>🏁 Conclusion</h2>
-<p>
-Free Fire Hungama Karachi 2025 delivered an unforgettable offline gaming experience and
-marked another milestone in Garena’s commitment to Pakistan’s gaming community.
-</p>
-
-</div>
 </body>
 </html>
