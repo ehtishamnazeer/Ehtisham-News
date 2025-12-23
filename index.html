@@ -5,129 +5,153 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Ehtisham News | Elite Gaming</title>
 
-<link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --gold: #c9a23f;
-  --thermal-bg: radial-gradient(circle at 50% 30%, #2a2210, #050505 70%);
+  --bg: #0a0a0a;
+  --card-bg: rgba(255, 255, 255, 0.03);
 }
 
 body {
-  margin: 0; font-family: 'Poppins', sans-serif;
-  background: #050505; background-image: var(--thermal-bg);
-  background-attachment: fixed; color: #fff; min-height: 100vh;
+  margin: 0; font-family: 'Inter', sans-serif;
+  background: var(--bg); color: #fff; min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* --- FF STYLE ANIMATED INTRO --- */
+/* --- SUPER PRO FF CHARACTER SPLASH --- */
 #splash {
   position: fixed; inset: 0; background: #000;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  z-index: 10000; transition: 0.8s ease-out;
+  z-index: 10000; transition: opacity 1s ease;
 }
 
-/* Animated Character Aura / Glow */
-.aura {
-  position: absolute; width: 250px; height: 250px;
-  background: var(--gold); filter: blur(100px);
-  opacity: 0.2; animation: ffPulse 2s infinite ease-in-out;
+/* Free Fire Character Shadow Animation */
+.ff-character {
+  width: 180px; height: 250px;
+  background: url('https://pngimg.com/uploads/free_fire/free_fire_PNG45.png') no-repeat center/contain;
+  filter: drop-shadow(0 0 20px var(--gold)) brightness(0.2);
+  animation: charGlow 2.5s infinite ease-in-out;
+  margin-bottom: 20px;
 }
 
 #splash h1 {
-  font-size: 2.8rem; font-weight: 800; font-family: 'Inter';
-  letter-spacing: -2px; z-index: 2; animation: slideUpIntro 1s forwards;
+  font-family: 'Orbitron', sans-serif; font-size: 2.2rem;
+  margin: 0; letter-spacing: 4px; color: #fff;
 }
-#splash h1 span { color: var(--gold); text-shadow: 0 0 20px rgba(201, 162, 63, 0.6); }
+#splash h1 span { color: var(--gold); }
 
-@keyframes ffPulse { 0%, 100% { transform: scale(1); opacity: 0.1; } 50% { transform: scale(1.4); opacity: 0.3; } }
-@keyframes slideUpIntro { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
-
-/* --- PREMIUM SOCIAL BOX (FF Style) --- */
-.connect-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 25px; padding: 25px; margin: 30px auto;
-  max-width: 400px; text-align: center;
+@keyframes charGlow {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--gold)) brightness(0.2); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 30px var(--gold)) brightness(0.6); }
 }
-.social-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
-.social-item { 
-    text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
-    transition: 0.3s; display: flex; flex-direction: column; align-items: center;
-}
-.social-item:hover { color: var(--gold); transform: translateY(-5px); }
-.social-item img { width: 42px; height: 42px; margin-bottom: 8px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3)); }
 
-/* --- APP STYLE NAVIGATION --- */
+/* --- PREMIUM UI COMPONENTS --- */
+header {
+  padding: 30px 20px; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+header h2 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; }
+header h2 span { color: var(--gold); }
+
+.container { padding: 20px; max-width: 600px; margin: 0 auto; }
+
 .card {
-  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px; padding: 22px; margin-bottom: 15px; cursor: pointer; transition: 0.2s;
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px; padding: 25px; margin-bottom: 20px;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative; overflow: hidden;
 }
-.card:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.08); }
+.card:active { transform: scale(0.97); background: rgba(255,255,255,0.06); }
 
-.page { display: none; animation: fadeIn 0.5s; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.card h3 { font-family: 'Orbitron'; font-size: 1.1rem; margin: 0 0 10px; color: var(--gold); }
+.card p { font-size: 0.9rem; color: #888; line-height: 1.6; margin: 0; }
 
-#installToast {
-  position: fixed; bottom: 20px; left: 20px; right: 20px;
-  background: #fff; color: #000; padding: 15px 20px;
-  border-radius: 15px; display: none; justify-content: space-between;
-  align-items: center; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+/* --- PROFESSIONAL SOCIAL BOX --- */
+.footer-box {
+  background: #000; border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 40px 20px; margin-top: 40px; text-align: center;
 }
+.social-row {
+  display: flex; justify-content: center; gap: 25px; margin: 25px 0;
+}
+.social-link {
+  display: flex; flex-direction: column; align-items: center;
+  text-decoration: none; transition: 0.3s;
+}
+.social-link img { width: 40px; height: 40px; margin-bottom: 8px; }
+.social-link span { font-size: 10px; font-weight: 700; color: #666; letter-spacing: 1px; }
+.social-link:hover span { color: var(--gold); }
+
+/* --- PAGE TRANSITIONS --- */
+.page { display: none; animation: pageFade 0.6s ease; }
+@keyframes pageFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
 </style>
 </head>
 <body>
 
 <div id="splash">
-  <div class="aura"></div>
-  <h1>Ehtisham <span>News</span></h1>
-  <p style="z-index:2; font-size:10px; letter-spacing:3px; color:#666; margin-top:10px;">INITIALIZING...</p>
+  <div class="ff-character"></div>
+  <h1>EHTISHAM <span>NEWS</span></h1>
+  <div style="width: 100px; height: 2px; background: #222; margin-top: 20px; position: relative; overflow: hidden;">
+    <div style="width: 50%; height: 100%; background: var(--gold); position: absolute; animation: load 2s infinite;"></div>
+  </div>
 </div>
 
-<header style="padding: 25px 20px; max-width: 800px; margin: 0 auto;">
-  <h2 onclick="location.reload()" style="margin:0; font-family:'Inter'; font-size:1.6rem; cursor:pointer;">Ehtisham <span>News</span></h2>
+<header>
+  <h2 onclick="location.reload()">EHTISHAM <span>NEWS</span></h2>
 </header>
 
-<main style="padding-bottom: 50px;">
-    <div id="home" class="page" style="display:block;">
-      <div style="padding: 0 20px;">
-        <div class="card" onclick="openCategory('gaming')"><h3>🔥 Gaming News</h3><p>Latest AAA titles and leaks.</p></div>
-        <div class="card" onclick="openCategory('esports')"><h3>🏆 Esports</h3><p>Tournament updates.</p></div>
-        <div class="card" onclick="openCategory('community')"><h3>👥 Community</h3><p>Connect with gamers.</p></div>
+<main>
+  <div id="home" class="page" style="display:block;">
+    <div class="container">
+      <div class="card" onclick="openCategory('gaming')">
+        <h3>GAMING INTEL</h3>
+        <p>Latest patch updates, leaks, and pro-settings.</p>
+      </div>
+      <div class="card" onclick="openCategory('esports')">
+        <h3>PRO CIRCUIT</h3>
+        <p>Tournament standings and elite player stats.</p>
+      </div>
+      <div class="card" onclick="openCategory('community')">
+        <h3>COMMUNITY</h3>
+        <p>Events and fan-led discussions.</p>
       </div>
     </div>
+  </div>
 
-    <div id="newsList" class="page">
-        <div style="padding: 0 20px;">
-            <h2 id="catTitle" style="color:var(--gold); font-family:'Inter';"></h2>
-            <div id="newsItems"></div>
-            <button onclick="goHome()" style="background:#222; color:#fff; border:none; padding:12px 25px; border-radius:12px; margin-top:20px;">⬅ BACK</button>
-        </div>
+  <div id="newsList" class="page">
+    <div class="container">
+      <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size: 1.2rem;"></h2>
+      <div id="newsItems"></div>
+      <button onclick="goHome()" style="background:none; color:#666; border:1px solid #333; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:700; margin-top:20px;">BACK TO BASE</button>
     </div>
+  </div>
 </main>
 
-<div class="connect-card">
-  <h3 style="font-family:'Inter'; font-size: 1.1rem; margin:0;">CONNECT WITH ME 🚀</h3>
-  <div class="social-grid">
-    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-item" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA"><span>WA</span>
+<div class="footer-box">
+  <h4 style="font-family:'Orbitron'; font-size: 0.9rem; letter-spacing: 2px; color: #444;">CONNECT WITH COMMAND</h4>
+  <div class="social-row">
+    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-link">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA">
+      <span>WHATSAPP</span>
     </a>
-    <a href="https://www.facebook.com/share/16UChCgJTn/" class="social-item" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="FB"><span>FB</span>
+    <a href="https://www.facebook.com/share/16UChCgJTn/" class="social-link">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="FB">
+      <span>FACEBOOK</span>
     </a>
-    <a href="https://www.instagram.com/ehtisham_nazeer" class="social-item" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG"><span>IG</span>
+    <a href="https://www.instagram.com/ehtisham_nazeer" class="social-link">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG">
+      <span>INSTAGRAM</span>
     </a>
-    <a href="https://www.tiktok.com/@ehtishamnazeer1" class="social-item" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK"><span>TK</span>
+    <a href="https://www.tiktok.com/@ehtishamnazeer1" class="social-link">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK">
+      <span>TIKTOK</span>
     </a>
   </div>
-  <p style="margin-top:20px; font-size:9px; color:#444;">© SHAHGCREATOR 2025</p>
-</div>
-
-<div id="installToast">
-  <span style="font-weight:700; font-size:14px;">Add to Home Screen?</span>
-  <button id="btnInstall" style="background:#000; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:700;">INSTALL</button>
+  <p style="font-size: 10px; color: #222; margin-top: 30px;">© EHTISHAM NEWS 2025 | ALL RIGHTS RESERVED</p>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -141,44 +165,36 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-// Splash Handle
+// Splash Exit Logic
 window.addEventListener('load', () => {
   setTimeout(() => {
     const s = document.getElementById('splash');
     s.style.opacity = '0';
-    setTimeout(() => s.remove(), 800);
-  }, 3000);
+    setTimeout(() => s.remove(), 1000);
+  }, 3500);
 });
 
-function switchPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.style.display='none');
-  document.getElementById(id).style.display='block';
-  window.scrollTo(0,0);
-}
-
 function openCategory(cat) {
-  switchPage('newsList');
-  document.getElementById("catTitle").innerText = cat.toUpperCase();
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('newsList').style.display = 'block';
+  document.getElementById('catTitle').innerText = cat.toUpperCase() + " FEED";
+  
   db.collection("news").where("category","==",cat).orderBy("date","desc").get().then(snap => {
     let html = "";
     snap.forEach(d => {
-      html += `<div class="card" onclick="alert('News detail coming soon')"><h3>${d.data().title}</h3><p>${d.data().content.substring(0,80)}...</p></div>`;
+      html += `<div class="card"><h3>${d.data().title}</h3><p>${d.data().content.substring(0,100)}...</p></div>`;
     });
-    document.getElementById("newsItems").innerHTML = html || "Updating news...";
+    document.getElementById("newsItems").innerHTML = html || "No data available in sector.";
   });
 }
-function goHome() { switchPage('home'); }
 
-// PWA Install Logic
-let defP;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); defP = e;
-  document.getElementById('installToast').style.display = 'flex';
-});
-document.getElementById('btnInstall').onclick = () => {
-  document.getElementById('installToast').style.display = 'none';
-  defP.prompt();
-};
+function goHome() {
+  document.getElementById('newsList').style.display = 'none';
+  document.getElementById('home').style.display = 'block';
+}
+
+@keyframes load { 0% { left: -100%; } 100% { left: 100%; } }
 </script>
+
 </body>
 </html>
