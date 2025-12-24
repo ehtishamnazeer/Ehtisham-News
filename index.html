@@ -3,95 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ehtisham News | Elite Portal</title>
+    <title>EHTISHAM NEWS | Pro Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
-        :root { --gold: #c9a23f; --bg: #f8f9fa; --card: #ffffff; --text: #1a1a1a; --border: #e2e8f0; }
+        :root { --gold: #c9a23f; --bg: #ffffff; --card: #f8f9fa; --text: #000000; --border: #eeeeee; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         
-        body { 
-            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); 
-            min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-        /* --- 1. CLEAN CENTERED ANIMATION --- */
+        /* --- 1. PRO GLITCH SPLASH --- */
         #splash {
-            position: fixed; inset: 0; background: #fff; z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; inset: 0; background: #000; z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.8s cubic-bezier(0.8, 0, 0.2, 1);
         }
-        .splash-text { 
-            font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 4px; color: #000;
-            animation: breathe 2.5s ease-in-out infinite;
-        }
+        .splash-text { font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 5px; color: #fff; animation: glitch 2s infinite; }
         .splash-text span { color: var(--gold); }
-        @keyframes breathe { 
-            0%, 100% { opacity: 0.3; transform: scale(0.95); filter: blur(2px); } 
-            50% { opacity: 1; transform: scale(1.05); filter: blur(0px); } 
-        }
+        @keyframes glitch { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.02); } 100% { opacity: 1; transform: scale(1); } }
 
-        /* --- 2. PREMIUM LIGHT HEADER --- */
-        header { padding: 40px 20px; text-align: center; background: #fff; border-bottom: 1px solid var(--border); }
-        header h2 { font-family: 'Orbitron'; font-size: 1.4rem; color: #000; }
+        /* --- 2. BOLD PREMIUM HEADER --- */
+        header { padding: 50px 20px 30px; text-align: center; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        header h1 { font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 3px; font-weight: 900; text-shadow: 2px 2px 0px rgba(201,162,63,0.15); }
         header span { color: var(--gold); }
 
-        /* --- 3. CATEGORY CARDS (SMOOTH UI) --- */
+        /* --- 3. DYNAMIC CONTENT --- */
         .container { padding: 30px 20px; max-width: 500px; margin: 0 auto; width: 100%; }
         
         .cat-card { 
-            background: var(--card); border: 1px solid var(--border); 
-            border-radius: 24px; padding: 25px; margin-bottom: 15px; 
-            cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; align-items: center; gap: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 25px; margin-bottom: 18px; 
+            cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 20px;
         }
-        .cat-card:active { transform: scale(0.96); box-shadow: none; border-color: var(--gold); }
-        .icon-box { 
-            width: 50px; height: 50px; background: rgba(201,162,63,0.1); 
-            border-radius: 16px; display: flex; align-items: center; justify-content: center; 
-            font-size: 1.3rem; 
-        }
-        .cat-info h3 { font-size: 1rem; font-weight: 800; color: #000; }
-        .cat-info p { font-size: 0.8rem; color: #888; margin-top: 2px; }
+        .cat-card:active { transform: scale(0.95); border-color: var(--gold); background: #fff; }
+        .icon-box { width: 55px; height: 55px; background: #fff; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .cat-info h3 { font-size: 1.1rem; font-weight: 900; color: #000; }
+        .cat-info p { font-size: 0.8rem; color: #888; margin-top: 3px; }
 
-        /* --- 4. NEWS VIEW & MODAL --- */
-        .news-card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 12px; border: 1px solid var(--border); }
-        #newsModal { 
-            position: fixed; inset: 0; background: #fff; z-index: 20000; 
-            display: none; overflow-y: auto; padding: 40px 20px;
-            animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .modal-img { width: 100%; border-radius: 20px; margin: 15px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        /* --- 4. NEWS UI --- */
+        .empty-state { text-align: center; padding: 40px 20px; color: #aaa; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; }
+        .news-card { background: #fff; border: 2px solid var(--border); border-radius: 22px; padding: 25px; margin-bottom: 15px; }
+        #newsModal { position: fixed; inset: 0; background: #fff; z-index: 20000; display: none; overflow-y: auto; padding: 40px 20px; }
+        .modal-img { width: 100%; border-radius: 22px; margin: 20px 0; border: 1px solid var(--border); }
 
-        /* --- 5. CONTACT US SECTION (PROFESSIONAL) --- */
-        .footer-wrap { margin-top: auto; padding: 40px 20px; text-align: center; background: #fff; border-top: 1px solid var(--border); }
-        .contact-btn { 
-            display: inline-block; padding: 8px 25px; border-radius: 30px; 
-            background: #000; color: #fff; font-size: 10px; font-weight: 800;
-            letter-spacing: 2px; margin-bottom: 30px; text-transform: uppercase;
-        }
-        .social-grid { display: flex; justify-content: center; gap: 12px; margin-bottom: 25px; }
-        .social-btn { 
-            width: 55px; height: 55px; background: var(--bg); border: 1px solid var(--border);
-            border-radius: 18px; display: flex; align-items: center; justify-content: center;
-        }
-        .social-btn img { width: 24px; height: 24px; }
-        .copyright { font-size: 10px; color: #bbb; font-weight: 600; }
+        /* --- 5. SOCIALS FIXED --- */
+        .footer-wrap { padding: 40px 20px; text-align: center; margin-top: auto; }
+        .contact-btn { display: inline-block; padding: 12px 35px; border-radius: 50px; background: #000; color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 2px; margin-bottom: 25px; text-decoration: none; }
+        .social-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .social-btn { width: 60px; height: 60px; background: #f8f9fa; border: 1px solid var(--border); border-radius: 20px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .social-btn:active { transform: scale(0.9); border-color: var(--gold); }
+        .social-btn img { width: 28px; height: 28px; }
 
         .page { display: none; }
     </style>
 </head>
 <body>
 
-    <div id="splash">
-        <div class="splash-text">EHTISHAM <span>NEWS</span></div>
-    </div>
+    <div id="splash"><div class="splash-text">EHTISHAM <span>NEWS</span></div></div>
 
-    <header><h2 onclick="goHome()">EHTISHAM <span>NEWS</span></h2></header>
+    <header><h1>EHTISHAM <span>NEWS</span></h1></header>
 
-    <main style="flex: 1;">
+    <main>
         <div id="home" class="page" style="display:block;">
             <div class="container">
                 <div class="cat-card" onclick="openCategory('gaming')">
@@ -107,6 +78,92 @@
                     <div class="cat-info"><h3>Esports World Updates</h3><p>Global pro-circuit standings</p></div>
                 </div>
             </div>
+        </div>
+
+        <div id="newsList" class="page">
+            <div class="container">
+                <h2 id="catTitle" style="color:var(--gold); font-size:1rem; margin-bottom:25px; font-family:'Orbitron';"></h2>
+                <div id="newsItems"></div>
+                <button onclick="goHome()" style="width:100%; padding:20px; border-radius:20px; background:#000; color:#fff; border:none; font-weight:900; cursor:pointer; margin-top:20px;">BACK TO SECTORS</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="newsModal">
+        <div id="modalData" class="container"></div>
+        <div class="container"><button onclick="closeModal()" style="width:100%; padding:20px; background:var(--gold); border:none; border-radius:20px; font-weight:900; color:#000;">CLOSE INTELLIGENCE</button></div>
+    </div>
+
+    <div class="footer-wrap">
+        <a href="mailto:contact@ehtishamnews.com" class="contact-btn">CONTACT US</a>
+        <div class="social-grid">
+            <a href="https://wa.me/923238615938" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png"></a>
+            <a href="https://facebook.com/yourlink" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"></a>
+            <a href="https://instagram.com/ehtisham_nazeer" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"></a>
+            <a href="https://tiktok.com/@ehtishamnazeer1" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"></a>
+        </div>
+        <p style="font-size:9px; color:#ccc; font-weight:700;">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
+        const db = firebase.firestore();
+
+        window.onload = () => {
+            setTimeout(() => { 
+                const s = document.getElementById('splash');
+                s.style.opacity = '0';
+                s.style.transform = 'translateY(-100%)';
+                setTimeout(() => s.remove(), 800);
+            }, 2500);
+        };
+
+        function openCategory(cat) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('newsList').style.display = 'block';
+            document.getElementById('catTitle').innerText = "DATA FEED: " + cat.toUpperCase();
+            
+            db.collection("news").where("category", "==", cat).orderBy("date", "desc")
+            .onSnapshot((snap) => {
+                let html = "";
+                if (snap.empty) {
+                    html = `<div class="empty-state">📡 SYSTEM IDLE:<br>Stay tuned for updated news.</div>`;
+                } else {
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        html += `<div class="news-card" onclick="showFull(\`${d.title}\`, \`${d.content}\`, '${d.imgTop||''}', '${d.imgMid||''}', '${d.imgEnd||''}')">
+                            <h3 style="font-size:1.1rem; margin-bottom:10px;">${d.title}</h3>
+                            <p style="font-size:0.9rem; color:#666; line-height:1.5;">${d.content.substring(0,85)}...</p>
+                        </div>`;
+                    });
+                }
+                document.getElementById("newsItems").innerHTML = html;
+            });
+        }
+
+        function showFull(title, content, i1, i2, i3) {
+            const middle = Math.floor(content.length / 2);
+            let modalHtml = `
+                <h2 style="color:#000; font-family:Orbitron; font-size:1.4rem; margin-bottom:20px; line-height:1.3;">${title}</h2>
+                ${i1 ? `<img src="${i1}" class="modal-img">` : ''}
+                <p style="line-height:1.8; color:#333; font-size:1.05rem;">${content.substring(0, middle)}</p>
+                ${i2 ? `<img src="${i2}" class="modal-img">` : ''}
+                <p style="line-height:1.8; color:#333; font-size:1.05rem;">${content.substring(middle)}</p>
+                ${i3 ? `<img src="${i3}" class="modal-img">` : ''}
+            `;
+            document.getElementById('modalData').innerHTML = modalHtml;
+            document.getElementById('newsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() { document.getElementById('newsModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function goHome() { document.getElementById('newsList').style.display = 'none'; document.getElementById('home').style.display = 'block'; }
+    </script>
+</body>
+</html>            </div>
         </div>
 
         <div id="newsList" class="page">
