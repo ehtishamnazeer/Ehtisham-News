@@ -2,95 +2,109 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin - Ehtisham News Control</title>
+<title>EHTISHAM | Multi-Image Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-:root { --gold: #c9a23f; --light-bg: #f8f9fa; --text: #1a1a1a; --border: #e2e8f0; }
-body { margin:0; font-family:'Inter', sans-serif; background:var(--light-bg); color:var(--text); }
+:root { --gold: #c9a23f; --bg: #f5f7fa; --border: #e2e8f0; }
+body { margin:0; font-family:'Inter', sans-serif; background:var(--bg); color:#333; }
 
-header { background: #fff; padding: 25px; border-bottom: 2px solid var(--gold); text-align: center; }
-header h2 { margin: 0; font-size: 1.2rem; letter-spacing: 1px; color: #000; }
-header span { color: var(--gold); }
+header { background:#fff; padding:20px; border-bottom:2px solid var(--gold); position: sticky; top:0; z-index:100; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+header h2 { margin:0; font-size:1.1rem; letter-spacing:1px; }
 
-.container { padding: 20px; max-width: 600px; margin: 0 auto; }
+.container { padding:20px; max-width:700px; margin:0 auto; }
 
-/* Dashboard Mini-Stats */
-.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-.stat-box { background: #fff; padding: 15px; border-radius: 12px; border: 1px solid var(--border); text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-.stat-box h4 { font-size: 0.7rem; color: #888; text-transform: uppercase; margin: 0; }
-.stat-box p { font-size: 1.4rem; font-weight: 800; color: var(--gold); margin: 5px 0 0; }
+.card { background:#fff; border-radius:16px; padding:20px; margin-bottom:20px; border:1px solid var(--border); box-shadow:0 4px 6px rgba(0,0,0,0.02); }
+h3 { font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:15px; color:var(--gold); display:flex; align-items:center; gap:8px; }
 
-.card { background: #fff; border-radius: 16px; padding: 25px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-h3 { font-size: 0.9rem; font-weight: 800; color: #444; margin-bottom: 15px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
-h3::before { content: ""; width: 4px; height: 16px; background: var(--gold); border-radius: 10px; }
+.input-group { margin-bottom:15px; }
+label { font-size:0.7rem; font-weight:800; color:#888; text-transform:uppercase; margin-bottom:5px; display:block; }
+input, textarea, select { width:100%; padding:12px; border:1px solid var(--border); border-radius:10px; font-family:inherit; transition:0.3s; font-size:0.9rem; }
+input:focus { border-color:var(--gold); outline:none; background:#fffdfa; }
 
-label { font-size: 0.75rem; font-weight: 700; color: #666; display: block; margin-top: 12px; margin-left: 5px; }
-input, textarea, select { width: 100%; padding: 12px; margin: 5px 0 10px; background: #fff; border: 1px solid var(--border); border-radius: 10px; font-family: inherit; transition: 0.3s; }
-input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px rgba(201,162,63,0.1); }
+.img-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
-button { background: #000; color: #fff; border: none; padding: 14px; border-radius: 10px; width: 100%; cursor: pointer; font-weight: 700; transition: 0.3s; margin-top: 10px; }
-button:active { transform: scale(0.98); }
-button.notify { background: var(--gold); color: #000; }
+button { background:#000; color:#fff; border:none; padding:15px; border-radius:12px; width:100%; cursor:pointer; font-weight:800; font-size:0.9rem; transition:0.3s; }
+button:hover { background:var(--gold); color:#000; }
+button:active { transform:scale(0.98); }
 
-/* News List Styles */
-.news-item { background: #fff; border: 1px solid var(--border); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-.news-data b { font-size: 0.95rem; color: #000; display: block; }
-.news-data small { color: var(--gold); font-weight: 800; font-size: 0.65rem; background: rgba(201,162,63,0.1); padding: 2px 8px; border-radius: 4px; }
-button.del { background: #fee2e2; color: #ef4444; width: auto; padding: 6px 12px; font-size: 0.7rem; }
+.news-item { background:#fff; border:1px solid var(--border); padding:12px; border-radius:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
+.news-item b { font-size:0.9rem; }
+.badge { font-size:0.6rem; padding:3px 8px; border-radius:5px; background:rgba(201,162,63,0.1); color:var(--gold); font-weight:800; }
 
-.status-log { text-align: center; font-size: 0.8rem; margin-top: 10px; font-weight: 600; color: #10b981; }
+.del-btn { background:#fff1f1; color:#ef4444; border:none; padding:8px 12px; border-radius:8px; font-size:0.7rem; font-weight:800; cursor:pointer; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <h2>EHTISHAM <span>ADMIN CENTER</span></h2>
+    <h2>EHTISHAM <span>NEWS CONTROL</span></h2>
 </header>
 
 <div class="container">
-  
-  <div class="dashboard-grid">
-    <div class="stat-box"><h4>Articles</h4><p id="totalCount">0</p></div>
-    <div class="stat-box"><h4>System</h4><p style="color:#10b981">Live</p></div>
-  </div>
+    
+    <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <div class="card" style="flex:1; margin:0; text-align:center; padding:15px;">
+            <label>Live Articles</label>
+            <div id="totalCount" style="font-size:1.5rem; font-weight:900;">0</div>
+        </div>
+        <div class="card" style="flex:1; margin:0; text-align:center; padding:15px;">
+            <label>Status</label>
+            <div style="font-size:1.1rem; font-weight:900; color:#10b981;">CONNECTED</div>
+        </div>
+    </div>
 
-  <div class="card">
-    <h3>Write New Article</h3>
-    
-    <label>Headline</label>
-    <input id="title" placeholder="Enter news title">
-    
-    <label>News Detail</label>
-    <textarea id="content" rows="4" placeholder="Write full article here..."></textarea>
-    
-    <label>Thumbnail / Image URL</label>
-    <input id="imgUrl" placeholder="https://example.com/image.jpg">
-    
-    <label>Target Sector</label>
-    <select id="category">
-      <option value="">Choose Category</option>
-      <option value="gaming">Gaming News</option>
-      <option value="esports">Esports Feed</option>
-      <option value="community">Community Updates</option>
-    </select>
-    
-    <button onclick="addNews()">🚀 Publish to Web</button>
-    <div class="status-log" id="status"></div>
-  </div>
+    <div class="card">
+        <h3>1. Content Details</h3>
+        <div class="input-group">
+            <label>Main Headline</label>
+            <input id="title" placeholder="Enter shocking news title...">
+        </div>
+        <div class="input-group">
+            <label>News Body (Use <br> for new lines)</label>
+            <textarea id="content" rows="6" placeholder="Write the main story here..."></textarea>
+        </div>
+        <div class="input-group">
+            <label>Category</label>
+            <select id="category">
+                <option value="gaming">Gaming</option>
+                <option value="esports">Esports</option>
+                <option value="community">Community</option>
+            </select>
+        </div>
 
-  <div class="card">
-    <h3>App Notification</h3>
-    <input id="notifyText" placeholder="Push a quick alert to users...">
-    <button class="notify" onclick="sendNotification()">Broadcast Alert</button>
-  </div>
+        <h3>2. Triple Image Assets</h3>
+        <div class="img-grid">
+            <div class="input-group">
+                <label>Top Image</label>
+                <input id="img1" placeholder="URL 1">
+            </div>
+            <div class="input-group">
+                <label>Mid Image</label>
+                <input id="img2" placeholder="URL 2">
+            </div>
+            <div class="input-group">
+                <label>End Image</label>
+                <input id="img3" placeholder="URL 3">
+            </div>
+        </div>
 
-  <div class="card">
-    <h3>Active Feed</h3>
-    <div id="newsList">Loading current stream...</div>
-  </div>
+        <button onclick="addNews()">🚀 TRANSMIT TO MAIN SITE</button>
+        <p id="status" style="text-align:center; font-size:0.8rem; margin-top:10px; font-weight:700; color:#10b981;"></p>
+    </div>
+
+    <div class="card">
+        <h3>In-App Broadcast</h3>
+        <input id="notifyText" placeholder="Short alert for notification bar...">
+        <button onclick="sendNotification()" style="background:#fff; border:1px solid #000; color:#000; margin-top:10px;">SEND ALERT</button>
+    </div>
+
+    <div class="card">
+        <h3>Live Feed Management</h3>
+        <div id="newsList">Refreshing stream...</div>
+    </div>
 
 </div>
 
@@ -99,78 +113,79 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
-  authDomain: "ehtisham-news.firebaseapp.com",
-  projectId: "ehtisham-news",
-  storageBucket: "ehtisham-news.appspot.com",
-  messagingSenderId: "52980900534",
-  appId: "1:52980900534:web:3595bef67929dd1c727c17"
+    apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
+    authDomain: "ehtisham-news.firebaseapp.com",
+    projectId: "ehtisham-news",
+    storageBucket: "ehtisham-news.appspot.com",
+    messagingSenderId: "52980900534",
+    appId: "1:52980900534:web:3595bef67929dd1c727c17"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.addNews = async ()=>{
-  const title = titleEl.value.trim();
-  const content = contentEl.value.trim();
-  const image = imgUrlEl.value.trim();
-  const category = categoryEl.value;
-  
-  if(!title || !content || !category){
-    statusEl.style.color="red"; statusEl.innerText="Please fill required fields."; return;
-  }
-  
-  statusEl.innerText="Uploading to Firebase...";
-  
-  try {
-    await addDoc(collection(db,"news"), {
-      title, content, image, category,
-      date: serverTimestamp() // Fixed sync with main site
-    });
-    statusEl.innerText="Successfully Published!";
-    titleEl.value=""; contentEl.value=""; imgUrlEl.value=""; categoryEl.value="";
-    setTimeout(()=> statusEl.innerText="", 3000);
-  } catch(e) { statusEl.innerText="Error uploading news."; }
+window.addNews = async () => {
+    const title = document.getElementById('title').value.trim();
+    const content = document.getElementById('content').value.trim();
+    const cat = document.getElementById('category').value;
+    const i1 = document.getElementById('img1').value.trim();
+    const i2 = document.getElementById('img2').value.trim();
+    const i3 = document.getElementById('img3').value.trim();
+
+    if(!title || !content) return alert("Title and Content are mandatory!");
+
+    document.getElementById('status').innerText = "📡 SYNCING WITH SERVER...";
+
+    try {
+        await addDoc(collection(db, "news"), {
+            title, 
+            content, 
+            category: cat,
+            imgTop: i1,
+            imgMid: i2,
+            imgEnd: i3,
+            date: serverTimestamp()
+        });
+        document.getElementById('status').innerText = "✔️ NEWS PUBLISHED SUCCESSFULLY!";
+        // Reset form
+        ['title', 'content', 'img1', 'img2', 'img3'].forEach(id => document.getElementById(id).value = "");
+        setTimeout(() => document.getElementById('status').innerText = "", 3000);
+    } catch(e) {
+        alert("Error: " + e.message);
+    }
 };
 
-window.sendNotification = async ()=>{
-  const text = notifyText.value.trim();
-  if(!text) return;
-  await addDoc(collection(db,"notifications"), { text, date: serverTimestamp() });
-  notifyText.value="";
-  alert("Notification Sent!");
+window.sendNotification = async () => {
+    const text = document.getElementById('notifyText').value.trim();
+    if(!text) return;
+    await addDoc(collection(db, "notifications"), { text, date: serverTimestamp() });
+    document.getElementById('notifyText').value = "";
+    alert("Broadcast sent!");
 };
 
 // Fetching List
-const q = query(collection(db,"news"), orderBy("date","desc"));
-onSnapshot(q, (snap)=>{
-  let html = "";
-  document.getElementById('totalCount').innerText = snap.size;
-  snap.forEach(d => {
-    const n = d.data();
-    html += `
-      <div class="news-item">
-        <div class="news-data">
-          <b>${n.title}</b>
-          <small>${n.category.toUpperCase()}</small>
-        </div>
-        <button class="del" onclick="deleteNews('${d.id}')">Delete</button>
-      </div>`;
-  });
-  newsList.innerHTML = html || "No news found.";
+const q = query(collection(db, "news"), orderBy("date", "desc"));
+onSnapshot(q, (snap) => {
+    let html = "";
+    document.getElementById('totalCount').innerText = snap.size;
+    snap.forEach(d => {
+        const n = d.data();
+        html += `
+            <div class="news-item">
+                <div>
+                    <b>${n.title.substring(0,30)}...</b><br>
+                    <span class="badge">${n.category.toUpperCase()}</span>
+                </div>
+                <button class="del-btn" onclick="deleteNews('${d.id}')">ERASE</button>
+            </div>`;
+    });
+    document.getElementById('newsList').innerHTML = html || "No news published yet.";
 });
 
-window.deleteNews = async (id)=>{
-  if(confirm("Permanently delete this article?")) await deleteDoc(doc(db,"news",id));
+window.deleteNews = async (id) => {
+    if(confirm("Confirm deletion from main site?")) await deleteDoc(doc(db, "news", id));
 };
-
-const titleEl = document.getElementById("title");
-const contentEl = document.getElementById("content");
-const imgUrlEl = document.getElementById("imgUrl");
-const categoryEl = document.getElementById("category");
-const statusEl = document.getElementById("status");
-const notifyText = document.getElementById("notifyText");
-const newsList = document.getElementById("newsList");
 </script>
+
 </body>
 </html>
