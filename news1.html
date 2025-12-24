@@ -3,110 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS | Pro Portal v5</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>EHTISHAM NEWS v10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;800&display=swap" rel="stylesheet">
 
     <style>
         :root { --gold: #c9a23f; --bg: #ffffff; --card: #f8f9fa; --border: #eeeeee; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #000; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #000; overflow-x: hidden; }
 
-        /* FIXED TOP NAV WITH BUTTONS */
-        .top-nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 20px; background: #fff; position: sticky; top: 0; 
-            z-index: 9999; border-bottom: 2px solid var(--gold);
+        /* HEADER SYMBOLS - Symbols Fixed in Top Bar */
+        .header-bar { 
+            display: flex !important; justify-content: space-between; align-items: center; 
+            padding: 12px 20px; background: #fff; position: sticky; top: 0; 
+            z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .nav-icons { display: flex; gap: 12px; }
-        .action-btn { background: var(--card); border: 1px solid var(--border); border-radius: 10px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; }
+        .control-btns { display: flex; gap: 10px; }
+        .action-icon { 
+            background: var(--card); border: 1px solid var(--border); border-radius: 10px; 
+            width: 40px; height: 40px; display: flex; align-items: center; 
+            justify-content: center; cursor: pointer; font-size: 1.2rem;
+        }
 
-        header { padding: 30px 20px; text-align: center; }
-        header h1 { font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 2px; }
+        header { padding: 25px 20px; text-align: center; }
+        header h1 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 1px; }
         header span { color: var(--gold); }
 
-        .container { padding: 0 20px 40px; max-width: 500px; margin: 0 auto; }
+        /* SECTORS CARDS */
+        .sector-box { 
+            background: #fff; border: 2px solid var(--border); border-radius: 20px; 
+            padding: 22px; margin: 0 20px 15px; cursor: pointer; display: flex; 
+            align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .sector-box:active { transform: scale(0.96); background: #f9f9f9; }
 
-        /* CATEGORY CARDS */
-        .cat-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 15px; cursor: pointer; display: flex; align-items: center; gap: 15px; }
-
-        /* NEWS CARD WITH READ MORE */
-        .news-card { background: #fff; border: 1px solid var(--border); border-radius: 25px; margin-bottom: 25px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-        .news-cover { width: 100%; height: 200px; object-fit: cover; }
-        .news-info { padding: 20px; }
-        .news-info h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        /* NEWS LISTING - Fixed Card Design */
+        .news-item { 
+            background: #fff; border: 1px solid var(--border); border-radius: 25px; 
+            margin: 0 20px 25px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.06); 
+        }
+        .item-img { width: 100%; height: 200px; object-fit: cover; background: #eee; }
+        .item-text { padding: 20px; }
         
-        .read-btn { width: 100%; padding: 18px; background: #000; color: #fff; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; margin-top: 15px; }
+        /* READ MORE BUTTON - The Missing Piece */
+        .read-btn { 
+            width: 100%; padding: 16px; background: #000; color: #fff; 
+            border: none; border-radius: 12px; font-weight: 800; font-size: 0.9rem;
+            cursor: pointer; text-transform: uppercase; margin-top: 15px;
+        }
 
-        /* MODAL */
-        #newsModal { position: fixed; inset: 0; background: #fff; z-index: 10000; display: none; overflow-y: auto; }
-        .close-bar { position: sticky; top: 0; background: #000; color: #fff; padding: 15px; text-align: center; font-weight: 900; cursor: pointer; }
+        /* ARTICLE MODAL */
+        #articleViewer { position: fixed; inset: 0; background: #fff; z-index: 9999; display: none; overflow-y: auto; }
+        .close-top { position: sticky; top: 0; background: #000; color: #fff; padding: 15px; text-align: center; font-weight: 900; cursor: pointer; }
+        .article-body { padding: 25px; }
 
-        .page { display: none; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="top-nav">
-        <div style="font-family:'Orbitron'; font-weight:900;">E<span>.</span>NEWS</div>
-        <div class="nav-icons">
-            <div class="action-btn" onclick="alert('Notifications Active! 🔔')">🔔</div>
-            <div class="action-btn" onclick="alert('Click Browser Menu > Add to Home Screen 📲')">📲</div>
+    <div class="header-bar">
+        <div style="font-family:'Orbitron'; font-weight:900; font-size:1rem;">E<span>.</span>NEWS</div>
+        <div class="control-btns">
+            <div class="action-icon" onclick="alert('🔔 Notifications Active!')">🔔</div>
+            <div class="action-icon" onclick="alert('📲 Click 3-Dots > Add to Home Screen')">📲</div>
         </div>
     </div>
 
     <header><h1 onclick="location.reload()">EHTISHAM <span>NEWS</span></h1></header>
 
-    <main>
-        <div id="home" class="page" style="display:block;">
-            <div class="container">
-                <div class="cat-card" onclick="openCat('gaming')"><span>🎮</span> <h3>Game Update</h3></div>
-                <div class="cat-card" onclick="openCat('community')"><span>👥</span> <h3>Community News</h3></div>
-                <div class="cat-card" onclick="openCat('esports')"><span>🏆</span> <h3>Esports Updates</h3></div>
-            </div>
-        </div>
+    <div id="homeView">
+        <div class="sector-box" onclick="loadContent('gaming')"><span>🎮</span> <h3>Game Updates</h3></div>
+        <div class="sector-box" onclick="loadContent('community')"><span>👥</span> <h3>Community News</h3></div>
+        <div class="sector-box" onclick="loadContent('esports')"><span>🏆</span> <h3>Esports Updates</h3></div>
+    </div>
 
-        <div id="feed" class="page">
-            <div class="container">
-                <h2 id="catT" style="color:var(--gold); font-family:Orbitron; margin-bottom:20px; text-align:center;"></h2>
-                <div id="newsItems"></div>
-                <button onclick="goHome()" style="width:100%; padding:15px; border:none; background:#eee; border-radius:12px; font-weight:700; margin-top:20px;">← BACK</button>
-            </div>
-        </div>
-    </main>
+    <div id="feedView" class="hidden">
+        <div id="itemsContainer"></div>
+        <div style="padding: 0 20px 40px;"><button onclick="goHome()" style="width:100%; padding:18px; border:none; background:#eee; border-radius:15px; font-weight:900;">← BACK TO SECTORS</button></div>
+    </div>
 
-    <div id="newsModal">
-        <div class="close-bar" onclick="closeM()">CLOSE ✖</div>
-        <div id="mContent"></div>
+    <div id="articleViewer">
+        <div class="close-top" onclick="closeArticle()">CLOSE ✖</div>
+        <div id="fullData"></div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        const firebaseConfig = { apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" };
-        firebase.initializeApp(firebaseConfig);
+        const config = { apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" };
+        firebase.initializeApp(config);
         const db = firebase.firestore();
 
-        function openCat(c) {
-            document.getElementById('home').style.display='none';
-            document.getElementById('feed').style.display='block';
-            document.getElementById('catT').innerText = c.toUpperCase();
+        function loadContent(cat) {
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('feedView').classList.remove('hidden');
             
-            db.collection("news").where("category","==",c).orderBy("date","desc").onSnapshot(s => {
-                let h = "";
-                s.forEach(doc => {
+            db.collection("news").where("category", "==", cat).orderBy("date", "desc").onSnapshot(snap => {
+                let html = "";
+                snap.forEach(doc => {
                     const d = doc.data();
-                    h += `
-                    <div class="news-card">
-                        <img src="${d.imgTop || 'https://via.placeholder.com/500x300'}" class="news-cover">
-                        <div class="news-info">
+                    html += `
+                    <div class="news-item">
+                        <img src="${d.imgTop || 'https://via.placeholder.com/500x300'}" class="item-img">
+                        <div class="item-text">
                             <h3>${d.title}</h3>
-                            <p>${d.content.substring(0,80)}...</p>
-                            <button class="read-btn" onclick="showM(\`${d.title}\`,\`${d.content}\`,'${d.imgTop}','${d.imgMid}','${d.imgEnd}')">READ FULL ARTICLE</button>
+                            <p style="color:#666; font-size:0.9rem; margin-top:8px;">${d.content.substring(0,80)}...</p>
+                            <button class="read-btn" onclick="openFull(\`${d.title}\`,\`${d.content}\`,'${d.imgTop}','${d.imgMid}','${d.imgEnd}')">Open Full Article</button>
                         </div>
                     </div>`;
                 });
-                document.getElementById('newsItems').innerHTML = h || "<p style='text-align:center;'>No news found.</p>";
+                document.getElementById('itemsContainer').innerHTML = html || "<p style='text-align:center; padding:40px;'>Syncing...</p>";
+            });
+        }
+
+        function openFull(t, c, i1, i2, i3) {
+            document.getElementById('fullData').innerHTML = `
+                <img src="${i1}" style="width:100%;">
+                <div class="article-body">
+                    <h2 style="font-family:Orbitron; margin-bottom:15px;">${t}</h2>
+                    <p style="line-height:1.8; white-space:pre-wrap;">${c}</p>
+                    ${i2 ? `<img src="${i2}" style="width:100%; border-radius:15px; margin:20px 0;">` : ''}
+                    ${i3 ? `<img src="${i3}" style="width:100%; border-radius:15px; margin:20px 0;">` : ''}
+                </div>
+            `;
+            document.getElementById('articleViewer').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticle() { document.getElementById('articleViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function goHome() { document.getElementById('feedView').classList.add('hidden'); document.getElementById('homeView').classList.remove('hidden'); }
+    </script>
+</body>
+</html>                document.getElementById('newsItems').innerHTML = h || "<p style='text-align:center;'>No news found.</p>";
             });
         }
 
