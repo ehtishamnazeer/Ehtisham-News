@@ -3,171 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ehtisham News | Elite Gaming</title>
+<title>Ehtisham News | Elite Gaming Portal</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@800&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --gold: #c9a23f;
-  --bg: #080808;
-  --card-bg: rgba(255, 255, 255, 0.04);
-  --border: rgba(255, 255, 255, 0.1);
+  --bg: #050505;
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --thermal-glow: radial-gradient(circle at 50% 0%, #1a150a 0%, #050505 70%);
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
 body {
   margin: 0; font-family: 'Inter', sans-serif;
-  background: var(--bg); color: #fff; min-height: 100vh;
+  background-color: var(--bg);
+  background-image: var(--thermal-glow);
+  color: #fff; min-height: 100vh;
   display: flex; flex-direction: column;
 }
 
-/* --- SUPER UNIQUE INTRO --- */
+/* --- SMOOTH INTRO --- */
 #splash {
   position: fixed; inset: 0; background: #000;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  z-index: 10000; opacity: 1; transition: opacity 0.8s ease;
+  z-index: 10000; transition: transform 0.8s cubic-bezier(0.8, 0, 0.2, 1), opacity 0.5s;
 }
 
 #splash h1 {
-  font-family: 'Orbitron', sans-serif; font-size: 2.5rem;
-  letter-spacing: 5px; color: #fff; margin: 0;
-  text-shadow: 0 0 30px rgba(201, 162, 63, 0.3);
+  font-family: 'Orbitron', sans-serif; font-size: 2rem;
+  letter-spacing: 6px; color: #fff; margin: 0;
+  animation: textPulse 2s infinite ease-in-out;
 }
 #splash h1 span { color: var(--gold); }
 
-.loader-bar {
-  width: 150px; height: 2px; background: rgba(255,255,255,0.1);
-  margin-top: 30px; position: relative; overflow: hidden;
-}
-.loader-progress {
-  width: 60%; height: 100%; background: var(--gold);
-  position: absolute; left: -100%;
-  animation: loadMove 1.5s infinite linear;
-}
+@keyframes textPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.98); } }
 
-@keyframes loadMove { 0% { left: -100%; } 100% { left: 100%; } }
-
-/* --- HEADER --- */
+/* --- NAVIGATION / HEADER --- */
 header {
-  padding: 40px 20px; text-align: left; max-width: 800px; margin: 0 auto; width: 100%;
+  padding: 40px 25px 20px; text-align: left;
 }
-header h2 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 2px; margin: 0; }
+header h2 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; margin: 0; }
 header h2 span { color: var(--gold); }
-header p { font-size: 0.7rem; color: #555; letter-spacing: 3px; margin-top: 5px; font-weight: 700; }
+.sub-nav { font-size: 10px; color: #444; letter-spacing: 2px; margin-top: 5px; font-weight: 800; }
 
-/* --- CONTENT --- */
-main { flex: 1; }
-.container { padding: 0 20px 40px; max-width: 800px; margin: 0 auto; }
+/* --- MODERN GLASS CARDS --- */
+.container { padding: 0 20px 40px; max-width: 600px; margin: 0 auto; width: 100%; }
 
 .card {
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 24px; padding: 25px; margin-bottom: 20px;
-  transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  backdrop-filter: blur(10px);
-}
-.card:active { transform: scale(0.97); border-color: var(--gold); }
-.card h3 { margin: 0 0 10px; font-size: 1.2rem; color: #fff; font-weight: 700; }
-.card p { margin: 0; font-size: 0.9rem; color: #999; line-height: 1.6; }
-
-/* --- FOOTER & SOCIALS --- */
-.footer-box {
-  background: rgba(255,255,255,0.02);
-  border-top: 1px solid var(--border);
-  padding: 50px 20px; text-align: center;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px; padding: 25px; margin-bottom: 18px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative; overflow: hidden;
 }
 
-.social-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 15px; max-width: 400px; margin: 30px auto;
+.card:active { transform: scale(0.95); background: rgba(255,255,255,0.06); }
+
+.card h3 { 
+  margin: 0 0 10px; font-size: 1.1rem; color: #fff; font-weight: 700; 
+  display: flex; align-items: center; gap: 10px;
+}
+.card p { margin: 0; font-size: 0.9rem; color: #777; line-height: 1.6; font-weight: 400; }
+
+/* --- SMOOTH PAGE SWITCHING --- */
+.page { display: none; animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+@keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- ELITE SOCIAL FOOTER --- */
+.footer-wrap {
+  margin-top: auto; padding: 50px 20px;
+  background: linear-gradient(to top, #000, transparent);
+  text-align: center;
 }
 
-.social-link {
-  display: flex; flex-direction: column; align-items: center;
+.social-container {
+  display: flex; justify-content: center; gap: 20px;
+  margin: 25px 0;
+}
+
+.social-circle {
+  width: 55px; height: 55px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-decoration: none; transition: 0.3s;
 }
-.social-link img { width: 42px; height: 42px; margin-bottom: 10px; }
-.social-link span { font-size: 9px; font-weight: 700; color: #555; }
-.social-link:hover span { color: var(--gold); }
 
-.page { display: none; animation: slideUp 0.5s ease-out; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.social-circle:active { transform: scale(0.85); border-color: var(--gold); }
 
-/* --- NOTIF & INSTALL --- */
-#installToast {
-  position: fixed; bottom: 20px; left: 20px; right: 20px;
-  background: #fff; color: #000; padding: 18px; border-radius: 20px;
-  display: none; justify-content: space-between; align-items: center;
-  z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-}
+.social-circle img { width: 28px; height: 28px; margin-bottom: 4px; }
+.social-circle span { font-size: 8px; font-weight: 800; color: #555; }
+
+.contact-email { font-size: 11px; color: #333; margin-top: 20px; text-decoration: none; }
 </style>
 </head>
+
 <body>
 
 <div id="splash">
   <h1>EHTISHAM <span>NEWS</span></h1>
-  <div class="loader-bar"><div class="loader-progress"></div></div>
+  <div style="width: 20px; height: 20px; border: 2px solid var(--gold); border-top-color: transparent; border-radius: 50%; margin-top: 30px; animation: spin 0.8s linear infinite;"></div>
 </div>
 
 <header>
-  <h2 onclick="location.reload()">EHTISHAM <span>NEWS</span></h2>
-  <p>GAMING • ESPORTS • UPDATES</p>
+  <h2 onclick="goHome()">EHTISHAM <span>NEWS</span></h2>
+  <div class="sub-nav">PREMIUM GAMING INTEL</div>
 </header>
 
-<main>
+<main style="flex: 1;">
   <div id="home" class="page" style="display:block;">
     <div class="container">
       <div class="card" onclick="openCategory('gaming')">
-        <h3>🔥 Gaming Intel</h3>
-        <p>Latest patch notes, leaks, and pro-settings.</p>
+        <h3><span>🔥</span> Gaming Feed</h3>
+        <p>Real-time updates on AAA titles and server status.</p>
       </div>
       <div class="card" onclick="openCategory('esports')">
-        <h3>🏆 Pro Circuit</h3>
-        <p>Tournament standings and player stats.</p>
+        <h3><span>🏆</span> Esports Hub</h3>
+        <p>Global tournament schedules and roster changes.</p>
       </div>
       <div class="card" onclick="openCategory('community')">
-        <h3>👥 Community</h3>
-        <p>Fan-led discussions and local events.</p>
+        <h3><span>👥</span> Community</h3>
+        <p>Join elite discussions and local gaming events.</p>
       </div>
     </div>
   </div>
 
   <div id="newsList" class="page">
     <div class="container">
-      <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size: 1.2rem;"></h2>
+      <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size: 1rem; margin-bottom: 25px;"></h2>
       <div id="newsItems"></div>
-      <button onclick="goHome()" style="background:none; color:#666; border:1px solid #333; padding:10px 20px; border-radius:12px; cursor:pointer; font-weight:700; margin-top:20px;">BACK TO BASE</button>
+      <button onclick="goHome()" style="background:var(--glass); color:#aaa; border:1px solid var(--glass-border); padding:12px 25px; border-radius:15px; font-weight:700; cursor:pointer; width: 100%; margin-top: 20px;">BACK TO COMMAND</button>
     </div>
   </div>
 </main>
 
-<div class="footer-box">
-  <h4 style="font-family:'Orbitron'; font-size: 0.8rem; letter-spacing: 3px; color: #333;">CONNECT WITH ME</h4>
-  <div class="social-grid">
-    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-link">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA">
-      <span>WHATSAPP</span>
+<div class="footer-wrap">
+  <div style="font-size: 10px; letter-spacing: 4px; color: #222; font-weight: 900;">SECURE CHANNELS</div>
+  <div class="social-container">
+    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-circle">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA"><span>WA</span>
     </a>
-    <a href="https://www.facebook.com/share/16UChCgJTn/" class="social-link">
-      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="FB">
-      <span>FACEBOOK</span>
+    <a href="https://www.facebook.com/share/16UChCgJTn/" class="social-circle">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="FB"><span>FB</span>
     </a>
-    <a href="https://www.instagram.com/ehtisham_nazeer" class="social-link">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG">
-      <span>INSTAGRAM</span>
+    <a href="https://www.instagram.com/ehtisham_nazeer" class="social-circle">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG"><span>IG</span>
     </a>
-    <a href="https://www.tiktok.com/@ehtishamnazeer1" class="social-link">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK">
-      <span>TIKTOK</span>
+    <a href="https://www.tiktok.com/@ehtishamnazeer1" class="social-circle">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK"><span>TK</span>
     </a>
   </div>
-  <p style="font-size: 9px; color: #222; margin-top: 20px;">© EHTISHAM NEWS 2025 | ALL RIGHTS RESERVED</p>
-</div>
-
-<div id="installToast">
-  <span style="font-weight:700; font-size:14px;">Install App?</span>
-  <button id="btnInstall" style="background:#000; color:#fff; border:none; padding:10px 20px; border-radius:12px; font-weight:700;">INSTALL</button>
+  <a href="mailto:contact@ehtishamnews.com" class="contact-email">CONTACT@EHTISHAMNEWS.COM</a>
+  <p style="font-size: 8px; color: #1a1a1a; margin-top: 30px;">© 2025 EHTISHAM NEWS | OPERATIONAL</p>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -181,11 +173,12 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-// Splash Handler - Animation ab stuck nahi hogi
+// Smooth Splash Exit
 window.addEventListener('load', () => {
   setTimeout(() => {
     const s = document.getElementById('splash');
     s.style.opacity = '0';
+    s.style.transform = 'translateY(-100%)';
     setTimeout(() => s.remove(), 800);
   }, 3000);
 });
@@ -193,14 +186,14 @@ window.addEventListener('load', () => {
 function openCategory(cat) {
   document.getElementById('home').style.display = 'none';
   document.getElementById('newsList').style.display = 'block';
-  document.getElementById('catTitle').innerText = cat.toUpperCase();
+  document.getElementById('catTitle').innerText = cat.toUpperCase() + " SECTOR";
   
   db.collection("news").where("category","==",cat).orderBy("date","desc").get().then(snap => {
     let html = "";
     snap.forEach(d => {
-      html += `<div class="card"><h3>${d.data().title}</h3><p>${d.data().content.substring(0,100)}...</p></div>`;
+      html += `<div class="card"><h3>${d.data().title}</h3><p>${d.data().content.substring(0,110)}...</p></div>`;
     });
-    document.getElementById("newsItems").innerHTML = html || "Updating news...";
+    document.getElementById("newsItems").innerHTML = html || "<p style='color:#333'>Fetching data...</p>";
   });
 }
 
@@ -208,18 +201,8 @@ function goHome() {
   document.getElementById('newsList').style.display = 'none';
   document.getElementById('home').style.display = 'block';
 }
-
-// PWA Install
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); deferredPrompt = e;
-  document.getElementById('installToast').style.display = 'flex';
-});
-document.getElementById('btnInstall').onclick = () => {
-  document.getElementById('installToast').style.display = 'none';
-  deferredPrompt.prompt();
-};
 </script>
 
+<style> @keyframes spin { 100% { transform: rotate(360deg); } } </style>
 </body>
 </html>
