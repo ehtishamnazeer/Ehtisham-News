@@ -3,64 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS | V-ULTRA</title>
+    <title>EHTISHAM NEWS | V-FINAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        :root { --gold: #c9a23f; --dark: #000; --glass: rgba(255,255,255,0.95); }
+        :root { --gold: #c9a23f; --dark: #000; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { font-family: 'Outfit', sans-serif; background: #fafafa; color: var(--dark); overflow-x: hidden; }
+        body { font-family: 'Outfit', sans-serif; background: #ffffff; color: var(--dark); overflow-x: hidden; }
 
-        /* --- PRE-LOADER (ONCE ONLY) --- */
-        #loader { 
-            position: fixed; inset: 0; background: #000; z-index: 9999; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-        }
-        .loader-text { font-family: 'Orbitron'; color: #fff; font-size: 1.8rem; letter-spacing: 2px; text-align: center; }
+        /* --- PRE-LOADER (ANIMATION ONLY ONCE) --- */
+        #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5s; }
+        .loader-text { font-family: 'Orbitron'; color: #fff; font-size: 1.8rem; }
         .loader-sub { color: var(--gold); font-size: 0.8rem; margin-top: 10px; letter-spacing: 5px; animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* --- NAV BAR --- */
-        .nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 20px; background: var(--glass); backdrop-filter: blur(10px);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold);
-        }
+        /* --- STICKY NAV --- */
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #fff; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold); }
         .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1rem; }
         .logo span { color: var(--gold); }
-        .nav-actions { display: flex; gap: 10px; }
-        .btn-circle { width: 40px; height: 40px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; cursor: pointer; color: #333; }
 
         .container { padding: 20px; max-width: 500px; margin: 0 auto; }
 
+        /* --- HD IMAGE FIX (STRICT ASPECT RATIO) --- */
+        .news-box { background: #fff; border-radius: 20px; margin-bottom: 25px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
+        /* Pixel Phathny Ka Ilaj: Object Fit Cover + Fixed Height Container */
+        .img-wrap { width: 100%; height: 220px; background: #eee; overflow: hidden; position: relative; }
+        .news-img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; image-rendering: -webkit-optimize-contrast; }
+
+        .news-body { padding: 20px; }
+        .read-btn { width: 100%; padding: 16px; background: #000; color: #fff; border-radius: 12px; font-weight: 800; border: none; cursor: pointer; }
+
         /* --- SECTOR CARDS --- */
-        .card { 
-            background: #fff; border-radius: 24px; padding: 22px; margin-bottom: 18px;
-            display: flex; align-items: center; gap: 20px; border: 1px solid #eee;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.03); cursor: pointer; transition: 0.3s;
-        }
-        .card:active { transform: scale(0.96); border-color: var(--gold); }
-        .card-icon { width: 55px; height: 55px; background: #f9f9f9; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 1px solid #f0f0f0; }
-        .card-info h3 { font-size: 1.2rem; font-weight: 800; color: #111; }
-        .card-info p { font-size: 0.8rem; color: #777; margin-top: 3px; }
+        .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .card-icon { width: 50px; height: 50px; background: #f9f9f9; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border: 1px solid #eee; }
 
-        /* --- HD NEWS & MODAL --- */
-        .news-box { background: #fff; border-radius: 30px; margin-bottom: 30px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .news-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
-        .news-body { padding: 25px; }
-        .read-btn { width: 100%; padding: 18px; background: #000; color: #fff; border-radius: 16px; font-weight: 800; border: none; cursor: pointer; font-size: 0.85rem; }
-
-        #modal { position: fixed; inset: 0; background: #fff; z-index: 5000; display: none; overflow-y: auto; }
-        .modal-close { position: sticky; top: 0; background: #000; color: #fff; padding: 20px; text-align: center; font-weight: 800; cursor: pointer; }
-
-        /* --- FOOTER (COLORS FIXED) --- */
-        .footer { text-align: center; margin-top: 40px; padding: 30px 0; border-top: 1px solid #eee; }
+        /* --- CONTACT BUTTONS (WORKING LINKS) --- */
+        .footer { text-align: center; padding: 30px 0; border-top: 1px solid #eee; margin-top: 30px; }
         .social-row { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
         .s-link { width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border: 1px solid #eee; text-decoration: none; }
+        /* Brand Colors */
         .fa-whatsapp { color: #25D366; } .fa-facebook-f { color: #1877F2; } .fa-instagram { color: #E4405F; } .fa-tiktok { color: #000; }
 
+        #modal { position: fixed; inset: 0; background: #fff; z-index: 5000; display: none; overflow-y: auto; }
+        .modal-close { position: sticky; top: 0; background: #000; color: #fff; padding: 15px; text-align: center; font-weight: 800; }
+
         .hidden { display: none !important; }
+
+        /* --- INSTALL BUTTON --- */
+        .install-btn { background: #000; color: #fff; border: none; padding: 10px 15px; border-radius: 10px; font-weight: 800; font-size: 0.7rem; display: flex; align-items: center; gap: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -72,15 +64,12 @@
 
     <div class="nav">
         <div class="logo">EHTISHAM <span>NEWS</span></div>
-        <div class="nav-actions">
-            <div class="btn-circle" onclick="alert('📲 Browser menu -> Add to Home Screen')"><i class="fas fa-download"></i></div>
-            <div class="btn-circle" onclick="alert('🔔 Notifications Active')"><i class="fas fa-bell"></i></div>
-        </div>
+        <button id="installBtn" class="install-btn"><i class="fas fa-plus-square"></i> INSTALL APP</button>
     </div>
 
     <div class="container">
         <div id="homePage">
-            <h2 style="font-family:Orbitron; text-align:center; font-size:0.9rem; margin: 20px 0; color:#999; letter-spacing:3px;">SELECT SECTOR</h2>
+            <h2 style="font-family:Orbitron; text-align:center; font-size:0.8rem; margin: 20px 0; color:#999; letter-spacing:2px;">SELECT SECTOR</h2>
             
             <div class="card" onclick="openSector('gaming')">
                 <div class="card-icon">🎮</div>
@@ -98,26 +87,26 @@
             </div>
 
             <div class="footer">
-                <p style="font-weight: 800; font-size: 0.8rem;">SECURE CHANNELS</p>
+                <p style="font-weight: 800; font-size: 0.8rem;">CONTACT US</p>
                 <div class="social-row">
-                    <a href="#" class="s-link"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" class="s-link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="s-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="s-link"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://wa.me/923000000000" class="s-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://facebook.com/yourpage" class="s-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/yourprofile" class="s-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://tiktok.com/@yourprofile" class="s-link"><i class="fab fa-tiktok"></i></a>
                 </div>
-                <p style="font-size: 0.7rem; color: #ccc;">© 2025 EHTISHAM NAZEER | V-ULTRA</p>
+                <p style="font-size: 0.7rem; color: #ccc;">© 2025 EHTISHAM NAZEER</p>
             </div>
         </div>
 
         <div id="feedPage" class="hidden">
-            <h2 id="sectorTitle" style="font-family:Orbitron; color:var(--gold); text-align:center; margin: 20px 0; text-transform:uppercase;"></h2>
+            <h2 id="sectorTitle" style="font-family:Orbitron; color:var(--gold); text-align:center; margin-bottom:20px;"></h2>
             <div id="newsList"></div>
-            <button onclick="goBack()" style="width:100%; padding:20px; background:#eee; border:none; border-radius:15px; font-weight:800; margin-top:20px;">← RETURN TO SECTORS</button>
+            <button onclick="goBack()" style="width:100%; padding:18px; background:#f0f0f0; border:none; border-radius:12px; font-weight:800; margin-top:20px;">← BACK</button>
         </div>
     </div>
 
     <div id="modal">
-        <div class="modal-close" onclick="closeModal()">CLOSE ARTICLE ✖</div>
+        <div class="modal-close" onclick="closeModal()">CLOSE ✖</div>
         <div id="modalContent"></div>
     </div>
 
@@ -125,65 +114,74 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // ANIMATION ONLY ON FIRST LOAD
+        // LOAD SCREEN FIX
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                const ldr = document.getElementById('loader');
-                ldr.style.opacity = '0';
-                setTimeout(() => ldr.style.display = 'none', 600);
-            }, 1800);
+            setTimeout(() => { document.getElementById('loader').style.opacity = '0'; 
+            setTimeout(() => document.getElementById('loader').style.display = 'none', 500); }, 1500);
         });
 
+        // INSTALL LOGIC (PWA)
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBtn').style.display = 'flex';
+        });
+
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') deferredPrompt = null;
+            } else {
+                alert("Please use 'Add to Home Screen' from browser menu.");
+            }
+        });
+
+        // FIREBASE & DATA
         firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
         const db = firebase.firestore();
-        let newsCache = {};
-
-        // BACK BUTTON LOGIC
-        window.onpopstate = function() {
-            if (!document.getElementById('feedPage').classList.contains('hidden')) {
-                goBack();
-            }
-        };
+        let cache = {};
 
         function openSector(cat) {
-            history.pushState({page: 2}, ""); // Set history state
+            history.pushState({p: 1}, "");
             document.getElementById('homePage').classList.add('hidden');
             document.getElementById('feedPage').classList.remove('hidden');
             document.getElementById('sectorTitle').innerText = cat;
-            window.scrollTo(0,0);
 
             db.collection("news").where("category", "==", cat).orderBy("date", "desc").onSnapshot(snap => {
                 let html = "";
                 snap.forEach(doc => {
-                    const data = doc.data(); const id = doc.id; newsCache[id] = data;
+                    const d = doc.data(); const id = doc.id; cache[id] = d;
                     html += `
                         <div class="news-box">
-                            <img src="${data.imgTop}" class="news-img">
+                            <div class="img-wrap"><img src="${d.imgTop}" class="news-img"></div>
                             <div class="news-body">
-                                <h2 style="font-weight:800; font-size:1.5rem; margin-bottom:12px;">${data.title}</h2>
-                                <p style="color:#666; margin-bottom:20px;">${data.content.substring(0,100)}...</p>
+                                <h2 style="font-weight:800; font-size:1.3rem; margin-bottom:10px;">${d.title}</h2>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">${d.content.substring(0,80)}...</p>
                                 <button class="read-btn" onclick="openFull('${id}')">Read Full Article</button>
                             </div>
                         </div>`;
                 });
-                document.getElementById('newsList').innerHTML = html || "<p style='text-align:center;'>Syncing Intel...</p>";
+                document.getElementById('newsList').innerHTML = html || "<p style='text-align:center;'>Loading...</p>";
             });
         }
 
         function goBack() {
             document.getElementById('feedPage').classList.add('hidden');
             document.getElementById('homePage').classList.remove('hidden');
-            window.scrollTo(0,0);
         }
 
+        window.onpopstate = () => goBack();
+
         function openFull(id) {
-            const art = newsCache[id];
+            const a = cache[id];
             document.getElementById('modalContent').innerHTML = `
-                <img src="${art.imgTop}" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
+                <img src="${a.imgTop}" style="width:100%; height:auto; display:block;">
                 <div style="padding:25px;">
-                    <h1 style="font-family:Orbitron; margin-bottom:20px;">${art.title}</h1>
-                    <p style="font-size:1.1rem; line-height:1.8; white-space:pre-wrap;">${art.content}</p>
-                    ${art.imgMid ? `<img src="${art.imgMid}" style="width:100%; border-radius:20px; margin-top:20px;">` : ''}
+                    <h1 style="font-family:Orbitron; margin-bottom:15px; font-size:1.5rem;">${a.title}</h1>
+                    <p style="font-size:1.1rem; line-height:1.7; white-space:pre-wrap;">${a.content}</p>
+                    ${a.imgMid ? `<img src="${a.imgMid}" style="width:100%; border-radius:15px; margin-top:20px;">` : ''}
                 </div>`;
             document.getElementById('modal').style.display = 'block';
             document.body.style.overflow = 'hidden';
