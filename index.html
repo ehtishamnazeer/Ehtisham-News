@@ -3,77 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS | PRO MAX</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <title>EHTISHAM NEWS | MIRROR EDITION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --gold: #c9a23f; --dark: #000; --panel: #0a0a0a; --glass: rgba(255, 255, 255, 0.05); }
+        :root { --gold: #c9a23f; --white: #ffffff; --mirror: rgba(255, 255, 255, 0.7); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { font-family: 'Outfit', sans-serif; background: var(--dark); color: #fff; overflow-x: hidden; }
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background: #f8f9fa; 
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: #333; 
+            min-height: 100vh;
+        }
 
-        /* --- HEAVY PREMIUM ANIMATIONS --- */
-        @keyframes reveal { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .animate { animation: reveal 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+        /* --- SMOOTH MIRROR ANIMATIONS --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shine { from { left: -100%; } to { left: 100%; } }
+        .animate { animation: fadeIn 0.6s ease-out forwards; }
 
-        /* --- FIXED HEADER (PRO ALIGNMENT) --- */
+        /* --- CLEAN HEADER (FIXED ALIGNMENT) --- */
         .header { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 15px 20px; position: sticky; top: 0; z-index: 1000;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--gold);
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--gold); box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
-        .logo { font-family: 'Orbitron'; font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; }
+        .logo { font-family: 'Orbitron'; font-size: 1.1rem; font-weight: 900; color: #000; }
         .logo span { color: var(--gold); }
 
-        .header-btns { display: flex; gap: 12px; align-items: center; }
-        .bell-trigger { color: var(--gold); font-size: 1.4rem; position: relative; cursor: pointer; }
-        .bell-badge { position: absolute; top: -3px; right: -2px; width: 9px; height: 9px; background: red; border-radius: 50%; box-shadow: 0 0 8px red; }
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+        .bell-box { color: var(--gold); font-size: 1.4rem; position: relative; cursor: pointer; display: flex; align-items: center; }
+        .dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: red; border-radius: 50%; border: 2px solid #fff; }
 
-        .dl-btn { 
-            background: var(--gold); color: #000; padding: 8px 14px; border-radius: 10px; 
-            font-weight: 900; font-size: 0.7rem; text-decoration: none; border: none;
-            box-shadow: 0 4px 15px rgba(201, 162, 63, 0.3);
+        .install-btn { 
+            background: var(--gold); color: #fff; padding: 8px 14px; border-radius: 10px; 
+            font-weight: 800; font-size: 0.75rem; text-decoration: none; 
+            box-shadow: 0 4px 12px rgba(201, 162, 63, 0.2);
         }
 
-        /* --- MAIN UI --- */
-        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
-        .sub-head { text-align: center; font-family: 'Orbitron'; color: #444; font-size: 0.65rem; letter-spacing: 4px; margin: 25px 0; }
+        .container { padding: 25px; max-width: 500px; margin: 0 auto; }
+        .section-tag { text-align: center; font-family: 'Orbitron'; color: #bbb; font-size: 0.65rem; letter-spacing: 5px; margin: 25px 0; font-weight: 700; }
 
-        .sector-card { 
-            background: var(--panel); border: 1px solid #1a1a1a; border-radius: 22px; 
-            padding: 22px; margin-bottom: 15px; display: flex; align-items: center; gap: 18px;
-            transition: 0.4s; cursor: pointer;
+        /* --- MIRROR GLASS CARDS --- */
+        .card { 
+            background: var(--white); border-radius: 22px; padding: 20px; 
+            margin-bottom: 18px; display: flex; align-items: center; gap: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.04); border: 1px solid #f0f0f0;
+            cursor: pointer; position: relative; overflow: hidden; transition: 0.3s;
         }
-        .sector-card:active { transform: scale(0.96); border-color: var(--gold); background: #111; }
-        .icon-wrap { width: 55px; height: 55px; background: var(--glass); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
-        .info h3 { color: var(--gold); font-weight: 900; font-size: 1.1rem; }
-        .info p { color: #666; font-size: 0.8rem; }
+        .card::before { 
+            content: ''; position: absolute; top: 0; width: 50%; height: 100%; 
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+            transform: skewX(-25deg); left: -100%; transition: 0s;
+        }
+        .card:active { transform: scale(0.97); }
+        .card:hover::before { animation: shine 0.6s; }
 
-        /* --- HD NEWS FEED --- */
-        .news-box { background: var(--panel); border-radius: 28px; margin-bottom: 30px; overflow: hidden; border: 1px solid #1a1a1a; }
-        .img-hd { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; filter: brightness(0.9); }
-        .content-area { padding: 25px; }
-        .content-area h2 { font-size: 1.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 12px; }
-        .content-area p { color: #888; margin-bottom: 20px; line-height: 1.6; }
-        .read-btn { width: 100%; padding: 18px; background: #fff; color: #000; border-radius: 15px; font-weight: 900; border: none; cursor: pointer; }
+        .card-icon { width: 60px; height: 60px; background: #fcfcfc; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
+        .card h3 { font-weight: 800; font-size: 1.2rem; color: #111; }
+        .card p { color: #888; font-size: 0.85rem; margin-top: 2px; }
 
-        /* --- INSTALL & NOTI POPUP --- */
-        #install-bar { 
+        /* --- NEWS BOX (HD) --- */
+        .news-box { background: #fff; border-radius: 28px; margin-bottom: 30px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border: 1px solid #f5f5f5; }
+        .img-hd { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+        .news-body { padding: 25px; }
+        .news-body h2 { font-weight: 800; font-size: 1.5rem; margin-bottom: 12px; line-height: 1.2; color: #000; }
+        .news-body p { color: #666; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6; }
+        .read-btn { width: 100%; padding: 18px; background: #000; color: #fff; border-radius: 16px; font-weight: 800; border: none; cursor: pointer; }
+
+        /* --- FOOTER SOCIALS --- */
+        .footer { text-align: center; margin-top: 50px; padding-bottom: 40px; }
+        .social-flex { display: flex; justify-content: center; gap: 18px; margin-top: 25px; }
+        .s-box { width: 55px; height: 55px; background: #fff; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #333; text-decoration: none; border: 1px solid #eee; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .s-box:active { color: var(--gold); border-color: var(--gold); }
+
+        /* --- MIRROR NOTIFICATION POPUP --- */
+        #noti-popup { 
             position: fixed; bottom: 25px; left: 20px; right: 20px; 
-            background: #fff; color: #000; padding: 18px; border-radius: 20px;
+            background: #fff; color: #000; padding: 20px; border-radius: 22px;
             display: none; justify-content: space-between; align-items: center;
-            z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            z-index: 9999; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease; border: 1px solid var(--gold);
         }
-        .get-btn { background: var(--dark); color: #fff; padding: 10px 18px; border-radius: 12px; font-weight: 900; text-decoration: none; font-size: 0.85rem; }
 
-        /* --- FOOTER --- */
-        .footer { text-align: center; margin-top: 50px; padding-bottom: 30px; border-top: 1px solid #111; padding-top: 30px; }
-        .social-row { display: flex; justify-content: center; gap: 18px; margin-top: 20px; }
-        .s-btn { width: 50px; height: 50px; background: var(--panel); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; text-decoration: none; border: 1px solid #1a1a1a; }
-        .s-btn:active { border-color: var(--gold); color: var(--gold); }
-
-        #full-modal { position: fixed; inset: 0; background: #000; z-index: 10000; display: none; overflow-y: auto; }
-        .modal-nav { position: sticky; top: 0; background: var(--gold); color: #000; padding: 18px; text-align: center; font-weight: 900; letter-spacing: 1px; }
+        #modal { position: fixed; inset: 0; background: #fff; z-index: 10000; display: none; overflow-y: auto; }
+        .modal-nav { position: sticky; top: 0; background: var(--gold); color: #fff; padding: 18px; text-align: center; font-weight: 800; }
 
         .hidden { display: none !important; }
     </style>
@@ -82,32 +98,120 @@
 
     <header class="header">
         <div class="logo">EHTISHAM <span>NEWS</span></div>
-        <div class="header-btns">
-            <div class="bell-trigger" onclick="checkNotifications()">
-                <i class="fas fa-bell"></i><div class="bell-badge"></div>
+        <div class="header-actions">
+            <div class="bell-box" onclick="alert('Notification System Connected')">
+                <i class="fas fa-bell"></i><div class="dot"></div>
             </div>
-            <a href="ehtishamnews.apk" download="ehtishamnews.apk" class="dl-btn">INSTALL APP</a>
+            <a href="ehtishamnews.apk" download="ehtishamnews.apk" class="install-btn">INSTALL APP</a>
         </div>
     </header>
 
     <div class="container">
         <div id="home-view" class="animate">
-            <h2 class="sub-head">INTELLIGENCE CHANNELS</h2>
+            <h2 class="section-tag">DISCOVER SECTORS</h2>
             
-            <div class="sector-card" onclick="switchView('gaming')">
-                <div class="icon-wrap">🎮</div>
-                <div class="info"><h3>Gaming Hub</h3><p>Patches, leaks & tonight news</p></div>
+            <div class="card" onclick="openCat('gaming')">
+                <div class="card-icon">🎮</div>
+                <div class="card-info"><h3>Gaming Hub</h3><p>Latest patches & leaks</p></div>
             </div>
 
-            <div class="sector-card" onclick="switchView('community')">
-                <div class="icon-wrap">👥</div>
-                <div class="info"><h3>Community</h3><p>Events, alerts & member buzz</p></div>
+            <div class="card" onclick="openCat('community')">
+                <div class="card-icon">👥</div>
+                <div class="card-info"><h3>Community</h3><p>Events & member news</p></div>
             </div>
 
-            <div class="sector-card" onclick="switchView('esports')">
-                <div class="icon-wrap">🏆</div>
-                <div class="info"><h3>Esports Hub</h3><p>Tournament stats & world circuit</p></div>
+            <div class="card" onclick="openCat('esports')">
+                <div class="card-icon">🏆</div>
+                <div class="card-info"><h3>Esports Hub</h3><p>World tournament stats</p></div>
             </div>
+
+            <div class="footer">
+                <p style="font-weight:800; color:var(--gold); font-size:0.8rem; letter-spacing:2px;">CUSTOMER SUPPORT</p>
+                <div class="social-flex">
+                    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank" class="s-box"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/share/1A2bZ7tnBX/" target="_blank" class="s-box"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ehtisham_nazeer?igsh=M3RoMzN5eTNqbXZu" target="_blank" class="s-box"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@ehtishamnazeer1?_r=1&_t=ZS-92Th6E1cjHL" target="_blank" class="s-box"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="feed-view" class="hidden">
+            <h2 id="cat-title" style="text-align:center; color:var(--gold); font-family:Orbitron; margin-bottom:25px; font-size:1.4rem;"></h2>
+            <div id="news-list"></div>
+            <button onclick="closeCat()" style="width:100%; padding:20px; background:#f0f0f0; color:#999; border-radius:20px; font-weight:800; border:none; margin-top:15px;">← BACK TO HOME</button>
+        </div>
+    </div>
+
+    <div id="noti-popup">
+        <div style="display:flex; align-items:center; gap:12px;">
+            <div style="font-size:1.5rem;">🔔</div>
+            <div>
+                <p style="font-weight:800; font-size:0.95rem;">E-News Pro Alert</p>
+                <p style="font-size:0.75rem; color:#666;">New gaming patch uploaded!</p>
+            </div>
+        </div>
+        <button onclick="document.getElementById('noti-popup').style.display='none'" style="background:var(--gold); color:#fff; border:none; padding:8px 15px; border-radius:10px; font-weight:800;">VIEW</button>
+    </div>
+
+    <div id="modal">
+        <div class="modal-nav" onclick="closeArt()">CLOSE ARTICLE ✖</div>
+        <div id="modal-data"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
+        const db = firebase.firestore();
+        let cache = {};
+
+        // Mirror Notification Popup (7s delay)
+        setTimeout(() => { document.getElementById('noti-popup').style.display = 'flex'; }, 7000);
+
+        function openCat(cat) {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('feed-view').classList.remove('hidden');
+            document.getElementById('cat-title').innerText = cat.toUpperCase();
+            window.scrollTo(0,0);
+
+            db.collection("news").where("category", "==", cat).orderBy("date", "desc").onSnapshot(snap => {
+                let html = "";
+                snap.forEach(doc => {
+                    const d = doc.data(); cache[doc.id] = d;
+                    html += `
+                        <div class="news-box animate">
+                            <img src="${d.imgTop}" class="img-hd">
+                            <div class="news-body">
+                                <h2>${d.title}</h2>
+                                <p>${d.content.substring(0,100)}...</p>
+                                <button class="read-btn" onclick="openFull('${doc.id}')">FULL ARTICLE</button>
+                            </div>
+                        </div>`;
+                });
+                document.getElementById('news-list').innerHTML = html || "<p style='text-align:center;'>Syncing mirror feed...</p>";
+            });
+        }
+
+        function closeCat() { document.getElementById('feed-view').classList.add('hidden'); document.getElementById('home-view').classList.remove('hidden'); }
+        
+        function openFull(id) {
+            const a = cache[id];
+            document.getElementById('modal-data').innerHTML = `
+                <img src="${a.imgTop}" style="width:100%;">
+                <div style="padding:25px;">
+                    <h1 style="font-family:Orbitron; color:var(--gold); font-size:1.8rem; line-height:1.2; margin-bottom:15px;">${a.title}</h1>
+                    <p style="font-size:1.1rem; line-height:1.8; color:#444; white-space:pre-wrap;">${a.content}</p>
+                    ${a.imgMid ? `<img src="${a.imgMid}" style="width:100%; border-radius:20px; margin-top:30px;">` : ''}
+                </div>`;
+            document.getElementById('modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArt() { document.getElementById('modal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+    </script>
+</body>
+</html>            </div>
 
             <div class="footer">
                 <p style="font-size: 0.7rem; color: var(--gold); font-weight: 900; letter-spacing: 2px;">CUSTOMER SUPPORT</p>
