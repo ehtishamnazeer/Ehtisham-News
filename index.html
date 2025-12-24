@@ -3,78 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ehtisham News | Pro Gaming</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <title>EHTISHAM NEWS | Pro Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
-        :root { --gold: #c9a23f; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        :root { --gold: #c9a23f; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.08); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         
         body { 
             font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; 
-            min-height: 100vh; overflow-x: hidden;
-            display: flex; flex-direction: column;
+            min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;
+            background-image: radial-gradient(circle at 50% -10%, #1a150a 0%, #050505 80%);
         }
 
-        /* --- 1. FIXED CENTERED SPLASH --- */
+        /* --- 1. PRO ANIMATED SPLASH --- */
         #splash {
             position: fixed; inset: 0; background: #000; z-index: 10000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; width: 100vw; height: 100vh;
+            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
-        .splash-logo { font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 5px; color: #fff; }
+        .splash-logo { font-family: 'Orbitron'; font-size: 2rem; letter-spacing: 8px; animation: glow 2s infinite; }
         .splash-logo span { color: var(--gold); }
+        @keyframes glow { 0%, 100% { opacity: 0.6; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
 
         /* --- 2. PREMIUM HEADER --- */
-        header { padding: 40px 20px; text-align: center; }
-        header h2 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 2px; }
+        header { padding: 50px 25px 20px; text-align: left; max-width: 600px; margin: 0 auto; width: 100%; }
+        header h2 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; cursor: pointer; }
         header span { color: var(--gold); }
 
-        /* --- 3. NEWS CARDS --- */
-        .container { padding: 20px; max-width: 500px; margin: 0 auto; width: 100%; }
-        .card { 
-            background: var(--glass); border: 1px solid rgba(255,255,255,0.08); 
-            border-radius: 20px; padding: 20px; margin-bottom: 15px; 
-            cursor: pointer; transition: 0.3s; position: relative;
-        }
-        .card:active { transform: scale(0.97); background: rgba(255,255,255,0.1); }
-        .card h3 { font-size: 1.1rem; margin-bottom: 8px; color: #fff; }
-        .card p { font-size: 0.85rem; color: #888; line-height: 1.5; }
-
-        /* --- 4. FIXED CONTACT US UI --- */
-        .footer-wrap { 
-            margin-top: auto; padding: 40px 20px; text-align: center;
-            background: linear-gradient(to top, #000, transparent);
-        }
-        /* Highlighted Contact Us for better visibility */
-        .contact-box {
-            display: inline-block; padding: 5px 15px; border-radius: 8px;
-            background: rgba(201, 162, 63, 0.1); border: 1px solid var(--gold);
-            margin-bottom: 25px;
-        }
-        .contact-heading { 
-            font-size: 12px; letter-spacing: 4px; color: var(--gold); 
-            font-weight: 900; text-transform: uppercase;
-        }
-
-        .social-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
-        .social-btn { 
-            width: 65px; height: 65px; background: #111; border: 1px solid #222;
-            border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; transition: 0.3s;
-        }
-        .social-btn img { width: 30px; height: 30px; margin-bottom: 4px; }
-        .social-btn span { font-size: 8px; font-weight: 800; color: #666; }
-
-        .copyright-line { font-size: 10px; color: #333; font-weight: 700; margin-top: 10px; }
-
-        .page { display: none; }
+        /* --- 3. DYNAMIC CONTAINER & CARDS --- */
+        .container { padding: 0 20px 40px; max-width: 550px; margin: 0 auto; width: 100%; }
         
-        /* Modal */
+        .card { 
+            background: var(--glass); border: 1px solid var(--border); 
+            border-radius: 24px; padding: 25px; margin-bottom: 20px; 
+            cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(15px); position: relative; overflow: hidden;
+        }
+        .card:active { transform: scale(0.95); border-color: var(--gold); }
+        .card h3 { font-size: 1.1rem; margin-bottom: 10px; font-weight: 800; }
+        .card p { font-size: 0.85rem; color: #888; line-height: 1.6; }
+
+        /* --- 4. NEWS MODAL (THE STAGE) --- */
         #newsModal { 
             position: fixed; inset: 0; background: #000; z-index: 20000; 
-            display: none; padding: 40px 20px; overflow-y: auto;
+            display: none; overflow-y: auto; padding-bottom: 50px;
+            animation: slideUp 0.5s ease-out;
         }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        .modal-hero { width: 100%; height: 250px; object-fit: cover; border-radius: 0 0 30px 30px; margin-bottom: 25px; }
+        .modal-body-img { width: 100%; border-radius: 20px; margin: 20px 0; border: 1px solid var(--border); }
+        .modal-content { font-size: 1rem; line-height: 1.8; color: #ccc; }
+        .modal-title { font-family: 'Orbitron'; color: var(--gold); font-size: 1.4rem; margin-bottom: 15px; }
+
+        /* --- 5. CONTACT US FOOTER --- */
+        .footer-wrap { margin-top: auto; padding: 60px 20px 40px; text-align: center; }
+        .contact-box { 
+            display: inline-block; padding: 6px 20px; border-radius: 12px;
+            background: rgba(201, 162, 63, 0.05); border: 1px solid var(--gold);
+            margin-bottom: 30px;
+        }
+        .contact-heading { font-size: 11px; letter-spacing: 5px; color: var(--gold); font-weight: 900; }
+
+        .social-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        .social-btn { 
+            width: 65px; height: 65px; background: var(--glass); border: 1px solid var(--border);
+            border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; transition: 0.3s;
+        }
+        .social-btn img { width: 28px; height: 28px; margin-bottom: 5px; }
+        .social-btn span { font-size: 8px; font-weight: 800; color: #444; }
+
+        .copyright { font-size: 10px; color: #222; font-weight: 700; letter-spacing: 1px; }
+
+        .page { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .back-btn { background: var(--gold); color: #000; border: none; padding: 18px; border-radius: 20px; width: 100%; font-weight: 900; font-size: 1rem; cursor: pointer; margin-top: 30px; }
     </style>
 </head>
 <body>
@@ -86,34 +92,42 @@
     <main style="flex: 1;">
         <div id="home" class="page" style="display:block;">
             <div class="container">
-                <div class="card" onclick="openCategory('gaming')"><h3>🔥 Gaming Sector</h3><p>Live events and server leaks.</p></div>
-                <div class="card" onclick="openCategory('esports')"><h3>🏆 Esports Hub</h3><p>Pro tournament tracking.</p></div>
+                <div class="card" onclick="openCategory('gaming')">
+                    <h3>🔥 Gaming Sector</h3>
+                    <p>Access forbidden patch notes, leaks, and server intel.</p>
+                </div>
+                <div class="card" onclick="openCategory('esports')">
+                    <h3>🏆 Esports Hub</h3>
+                    <p>Global pro-circuit standings and roster movement tracking.</p>
+                </div>
             </div>
         </div>
 
         <div id="newsList" class="page">
             <div class="container">
-                <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size:1rem; margin-bottom:20px;"></h2>
+                <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size:1rem; margin-bottom:25px; letter-spacing:2px;"></h2>
                 <div id="newsItems"></div>
-                <button onclick="goHome()" style="width:100%; padding:15px; border-radius:12px; background:#111; color:#fff; border:1px solid #333; font-weight:800; margin-top:10px;">BACK</button>
+                <button onclick="goHome()" class="back-btn" style="background:transparent; color:#fff; border:1px solid #333;">BACK TO HUB</button>
             </div>
         </div>
     </main>
 
     <div id="newsModal">
-        <div id="modalContent" class="container"></div>
-        <button onclick="closeModal()" style="width:100%; padding:15px; background:var(--gold); color:#000; border:none; border-radius:12px; font-weight:900; margin-top:20px;">CLOSE</button>
+        <div id="modalData"></div>
+        <div class="container">
+            <button onclick="closeModal()" class="back-btn">CLOSE ARTICLE</button>
+        </div>
     </div>
 
     <div class="footer-wrap">
         <div class="contact-box"><div class="contact-heading">CONTACT US</div></div>
         <div class="social-grid">
             <a href="https://wa.me/923000000000" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png"><span>WA</span></a>
-            <a href="https://facebook.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"><span>FB</span></a>
-            <a href="https://instagram.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"><span>IG</span></a>
-            <a href="https://tiktok.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"><span>TK</span></a>
+            <a href="https://facebook.com/share/..." class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"><span>FB</span></a>
+            <a href="https://instagram.com/ehtisham_nazeer" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"><span>IG</span></a>
+            <a href="https://tiktok.com/@ehtishamnazeer1" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"><span>TK</span></a>
         </div>
-        <div class="copyright-line">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</div>
+        <div class="copyright">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -124,35 +138,66 @@
         const db = firebase.firestore();
 
         window.onload = () => {
-            setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 2500);
+            setTimeout(() => { 
+                const s = document.getElementById('splash');
+                s.style.opacity = '0';
+                setTimeout(() => s.remove(), 800);
+            }, 2500);
         };
 
         function openCategory(cat) {
             document.getElementById('home').style.display = 'none';
             document.getElementById('newsList').style.display = 'block';
-            document.getElementById('catTitle').innerText = cat.toUpperCase();
+            document.getElementById('catTitle').innerText = "> " + cat.toUpperCase();
             
-            // REAL-TIME NEWS FETCHING (Admin panel se add karte hi yahan show hogi)
             db.collection("news").where("category", "==", cat).orderBy("date", "desc")
             .onSnapshot((snap) => {
                 let html = "";
                 snap.forEach(doc => {
                     const d = doc.data();
-                    html += `<div class="card" onclick="showFull('${d.title}', \`${d.content}\`)">
-                                <h3>${d.title}</h3>
-                                <p>${d.content.substring(0, 70)}...</p>
-                             </div>`;
+                    // Pass all image data to the function
+                    html += `
+                    <div class="card" onclick="showFull(\`${d.title}\`, \`${d.content.replace(/\n/g, '<br>')}\`, '${d.imgTop||''}', '${d.imgMid||''}', '${d.imgEnd||''}')">
+                        <h3>${d.title}</h3>
+                        <p>${d.content.substring(0, 100)}...</p>
+                        <span style="color:var(--gold); font-size:10px; font-weight:800; display:block; margin-top:15px;">READ FULL DATA ➔</span>
+                    </div>`;
                 });
-                document.getElementById("newsItems").innerHTML = html || "No news found in this category.";
+                document.getElementById("newsItems").innerHTML = html || "SCANNING FOR DATA...";
             });
         }
 
-        function showFull(t, c) {
-            document.getElementById('modalContent').innerHTML = `<h2 style='color:var(--gold); font-family:Orbitron;'>${t}</h2><p style='margin-top:20px; line-height:1.7;'>${c}</p>`;
+        function showFull(title, content, i1, i2, i3) {
+            // Split content in half to insert mid image
+            const middle = Math.floor(content.length / 2);
+            const part1 = content.substring(0, middle);
+            const part2 = content.substring(middle);
+
+            let modalHtml = `
+                ${i1 ? `<img src="${i1}" class="modal-hero">` : `<div style='height:50px'></div>`}
+                <div class="container">
+                    <h2 class="modal-title">${title}</h2>
+                    <div class="modal-content">
+                        <p>${part1}</p>
+                        ${i2 ? `<img src="${i2}" class="modal-body-img">` : ''}
+                        <p>${part2}</p>
+                        ${i3 ? `<img src="${i3}" class="modal-body-img">` : ''}
+                    </div>
+                </div>
+            `;
+            document.getElementById('modalData').innerHTML = modalHtml;
             document.getElementById('newsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Stop scrolling behind
         }
-        function closeModal() { document.getElementById('newsModal').style.display = 'none'; }
-        function goHome() { document.getElementById('newsList').style.display = 'none'; document.getElementById('home').style.display = 'block'; }
+
+        function closeModal() { 
+            document.getElementById('newsModal').style.display = 'none'; 
+            document.body.style.overflow = 'auto';
+        }
+        function goHome() { 
+            document.getElementById('newsList').style.display = 'none'; 
+            document.getElementById('home').style.display = 'block'; 
+        }
     </script>
 </body>
-</html>ll
+</html>
