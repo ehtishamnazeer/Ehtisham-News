@@ -3,62 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS | MIRROR EDITION</title>
+    <title>EHTISHAM NEWS | PREMIUM</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --gold: #c9a23f; --bg: #fdfdfd; --mirror: rgba(255, 255, 255, 0.8); }
+        :root { --gold: #c9a23f; --soft-gold: #e5c06d; --white: #ffffff; }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: #111; overflow-x: hidden; }
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background: #fdfbfb;
+            background-image: radial-gradient(circle at top right, #fffcf5, #f8f9fa);
+            color: #1a1a1a; 
+            overflow-x: hidden;
+        }
 
-        /* --- HEADER (CLEAN ALIGNMENT) --- */
+        /* --- MODERN HEADER --- */
         .header { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 12px 18px; position: sticky; top: 0; z-index: 1000;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
-            border-bottom: 2px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 15px 20px; position: sticky; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(201, 162, 63, 0.2);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
         }
-        .logo { font-family: 'Orbitron'; font-size: 1.1rem; font-weight: 900; }
-        .logo span { color: var(--gold); }
-        .h-btns { display: flex; gap: 12px; align-items: center; }
-        .bell { color: var(--gold); font-size: 1.3rem; }
+        .logo { font-family: 'Orbitron'; font-size: 1.2rem; font-weight: 900; letter-spacing: 1px; }
+        .logo span { color: var(--gold); text-shadow: 0 0 10px rgba(201, 162, 63, 0.2); }
+
         .install-btn { 
-            background: var(--gold); color: #fff; padding: 8px 14px; border-radius: 10px; 
-            font-weight: 800; font-size: 0.7rem; text-decoration: none; text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(201, 162, 63, 0.2);
+            background: linear-gradient(135deg, var(--gold), var(--soft-gold));
+            color: #fff; padding: 10px 18px; border-radius: 12px; 
+            font-weight: 800; font-size: 0.75rem; text-decoration: none; 
+            box-shadow: 0 5px 15px rgba(201, 162, 63, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* --- MIRROR CONTAINERS --- */
-        .container { padding: 20px; max-width: 500px; margin: 0 auto; min-height: 85vh; }
-        .label { text-align: center; font-family: 'Orbitron'; color: #ccc; font-size: 0.6rem; letter-spacing: 5px; margin: 25px 0; }
+        /* --- PREMIUM MIRROR CARDS --- */
+        .container { padding: 25px; max-width: 500px; margin: 0 auto; }
+        .section-label { text-align: center; font-family: 'Orbitron'; color: #bbb; font-size: 0.65rem; letter-spacing: 6px; margin-bottom: 30px; }
 
         .mirror-card { 
-            background: #fff; border-radius: 22px; padding: 20px; margin-bottom: 18px;
-            display: flex; align-items: center; gap: 18px; border: 1px solid #f0f0f0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03); cursor: pointer; transition: 0.3s;
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(10px);
+            border-radius: 24px; padding: 22px; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .mirror-card:active { transform: scale(0.96); background: #fafafa; }
-        .icon-sq { width: 55px; height: 55px; background: #fcfcfc; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
-        .mirror-card h3 { font-weight: 800; font-size: 1.15rem; color: #000; }
+        .mirror-card:active { transform: scale(0.94); }
+        .mirror-card:hover { border-color: var(--gold); box-shadow: 0 15px 40px rgba(201, 162, 63, 0.1); }
+
+        .icon-sq { 
+            width: 60px; height: 60px; background: #fff; border-radius: 18px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.8rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .mirror-card h3 { font-weight: 800; font-size: 1.2rem; color: #000; margin-bottom: 2px; }
         .mirror-card p { color: #888; font-size: 0.85rem; }
 
-        /* --- HD FEED STYLING --- */
-        .news-box { background: #fff; border-radius: 28px; margin-bottom: 25px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border: 1px solid #f5f5f5; animation: slideUp 0.5s ease; }
-        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-        .img-hd { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
-        .news-data { padding: 22px; }
-        .news-data h2 { font-weight: 800; font-size: 1.4rem; margin-bottom: 10px; line-height: 1.2; }
-        .read-btn { width: 100%; padding: 16px; background: #000; color: #fff; border-radius: 15px; font-weight: 800; border: none; margin-top: 10px; }
+        /* --- HD FEED BOX --- */
+        .feed-box { background: #fff; border-radius: 30px; margin-bottom: 30px; overflow: hidden; border: 1px solid #f0f0f0; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .feed-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+        .feed-content { padding: 25px; }
+        .feed-content h2 { font-weight: 800; font-size: 1.5rem; color: #000; line-height: 1.2; margin-bottom: 12px; }
+        .feed-content p { color: #666; line-height: 1.6; font-size: 0.95rem; }
+        .read-more { width: 100%; padding: 18px; background: #000; color: #fff; border-radius: 18px; font-weight: 800; border: none; margin-top: 15px; cursor: pointer; }
 
-        /* --- MODAL (OVERLAY FIX) --- */
-        #modal-view { position: fixed; inset: 0; background: #fff; z-index: 5000; display: none; overflow-y: auto; }
-        .modal-top { position: sticky; top: 0; background: var(--gold); color: #fff; padding: 18px; text-align: center; font-weight: 800; cursor: pointer; }
+        /* --- FOOTER SOCIALS --- */
+        .footer { text-align: center; margin-top: 60px; padding-bottom: 40px; }
+        .social-flex { display: flex; justify-content: center; gap: 20px; margin-top: 25px; }
+        .s-box { width: 55px; height: 55px; background: #fff; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #333; border: 1px solid #eee; transition: 0.3s; }
+        .s-box:active { border-color: var(--gold); color: var(--gold); transform: translateY(-5px); }
 
-        /* --- FOOTER --- */
-        .footer { text-align: center; padding: 40px 0; border-top: 1px solid #eee; margin-top: 20px; }
-        .socials { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
-        .s-btn { width: 50px; height: 50px; background: #fff; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #333; text-decoration: none; border: 1px solid #eee; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        /* --- MODAL --- */
+        #article-modal { position: fixed; inset: 0; background: #fff; z-index: 9999; display: none; overflow-y: auto; }
+        .modal-nav { position: sticky; top: 0; background: var(--gold); color: #fff; padding: 20px; text-align: center; font-weight: 900; font-family: 'Orbitron'; font-size: 0.8rem; }
 
         .hidden { display: none !important; }
     </style>
@@ -67,119 +86,111 @@
 
     <header class="header">
         <div class="logo">EHTISHAM <span>NEWS</span></div>
-        <div class="h-btns">
-            <div class="bell"><i class="fas fa-bell"></i></div>
-            <a href="ehtishamnews.apk" download class="install-btn">INSTALL APP</a>
-        </div>
+        <a href="ehtishamnews.apk" download class="install-btn">INSTALL APP</a>
     </header>
 
     <div class="container">
-        <div id="home-screen">
-            <h2 class="label">SYSTEM ACCESS</h2>
-            <div class="mirror-card" onclick="openFeed('gaming')">
+        <div id="home-view">
+            <h2 class="section-label">ACCESS CHANNELS</h2>
+            
+            <div class="mirror-card" onclick="loadContent('gaming')">
                 <div class="icon-sq">🎮</div>
-                <div><h3>Gaming Hub</h3><p>Patches & leaks tonight</p></div>
+                <div class="info"><h3>Gaming Hub</h3><p>Latest patches & leaks</p></div>
             </div>
-            <div class="mirror-card" onclick="openFeed('community')">
+
+            <div class="mirror-card" onclick="loadContent('community')">
                 <div class="icon-sq">👥</div>
-                <div><h3>Community</h3><p>Events & member alerts</p></div>
+                <div class="info"><h3>Community</h3><p>Events & member news</p></div>
             </div>
-            <div class="mirror-card" onclick="openFeed('esports')">
+
+            <div class="mirror-card" onclick="loadContent('esports')">
                 <div class="icon-sq">🏆</div>
-                <div><h3>Esports Hub</h3><p>World tournament circuit</p></div>
+                <div class="info"><h3>Esports Hub</h3><p>Tournament world stats</p></div>
             </div>
 
             <div class="footer">
-                <p style="font-weight:800; color:var(--gold); font-size:0.7rem; letter-spacing:2px;">CUSTOMER SUPPORT</p>
-                <div class="socials">
-                    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="s-btn"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.facebook.com/share/1A2bZ7tnBX/" class="s-btn"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/ehtisham_nazeer" class="s-btn"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@ehtishamnazeer1" class="s-btn"><i class="fab fa-tiktok"></i></a>
+                <p style="font-weight:900; color:var(--gold); font-size:0.75rem; letter-spacing:2px;">STAY CONNECTED</p>
+                <div class="social-flex">
+                    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="s-box"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/share/1A2bZ7tnBX/" class="s-box"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ehtisham_nazeer" class="s-box"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@ehtishamnazeer1" class="s-box"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
         </div>
 
-        <div id="feed-screen" class="hidden">
-            <h2 id="cat-title" style="text-align:center; color:var(--gold); font-family:Orbitron; margin-bottom:25px; font-size:1.3rem;"></h2>
+        <div id="feed-view" class="hidden">
+            <h2 id="cat-title" style="text-align:center; color:var(--gold); font-family:Orbitron; margin-bottom:30px; font-size:1.4rem;"></h2>
             <div id="news-list"></div>
-            <button onclick="goBack()" style="width:100%; padding:18px; background:#f0f0f0; color:#999; border-radius:20px; font-weight:800; border:none; margin-top:15px;">← BACK TO HOME</button>
+            <button onclick="backHome()" style="width:100%; padding:20px; background:#f5f5f5; color:#999; border-radius:20px; font-weight:800; border:none; margin-top:15px;">← BACK TO HOME</button>
         </div>
     </div>
 
-    <div id="modal-view">
-        <div class="modal-top" onclick="closeFull()">CLOSE ARTICLE ✖</div>
-        <div id="full-content"></div>
+    <div id="article-modal">
+        <div class="modal-nav" onclick="closeModal()">CLOSE ARTICLE ✖</div>
+        <div id="modal-data"></div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
+
     <script>
-        // Firebase Config
-        const firebaseConfig = {
+        firebase.initializeApp({
             apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
             authDomain: "ehtisham-news.firebaseapp.com",
             projectId: "ehtisham-news",
             messagingSenderId: "951936357732",
             appId: "1:951936357732:web:75039f69741e974e304f32"
-        };
-        firebase.initializeApp(firebaseConfig);
+        });
         const db = firebase.firestore();
-        const messaging = firebase.messaging();
-        let cache = {};
+        let store = {};
 
-        // 1. Notification Permission (Lock Screen Support)
+        // Notification Permission (No Timer!)
         window.onload = () => {
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    console.log('Notification permission granted.');
-                }
-            });
+            Notification.requestPermission();
         };
 
-        // 2. Open Feed Logic
-        function openFeed(cat) {
-            document.getElementById('home-screen').classList.add('hidden');
-            document.getElementById('feed-screen').classList.remove('hidden');
+        function loadContent(cat) {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('feed-view').classList.remove('hidden');
             document.getElementById('cat-title').innerText = cat.toUpperCase();
             window.scrollTo(0,0);
 
             db.collection("news").where("category", "==", cat).orderBy("date", "desc").onSnapshot(snap => {
                 let html = "";
                 snap.forEach(doc => {
-                    const d = doc.data(); cache[doc.id] = d;
+                    const d = doc.data(); store[doc.id] = d;
                     html += `
-                        <div class="news-box">
-                            <img src="${d.imgTop}" class="img-hd">
-                            <div class="news-data">
+                        <div class="feed-box animate">
+                            <img src="${d.imgTop}" class="feed-img">
+                            <div class="feed-content">
                                 <h2>${d.title}</h2>
-                                <p style="color:#666; font-size:0.9rem;">${d.content.substring(0,90)}...</p>
-                                <button class="read-btn" onclick="openFull('${doc.id}')">FULL REPORT</button>
+                                <p>${d.content.substring(0,100)}...</p>
+                                <button class="read-more" onclick="showFull('${doc.id}')">VIEW FULL REPORT</button>
                             </div>
                         </div>`;
                 });
-                document.getElementById('news-list').innerHTML = html || "<p style='text-align:center;'>Syncing mirror feed...</p>";
+                document.getElementById('news-list').innerHTML = html || "<p style='text-align:center;'>Fetching Feed...</p>";
             });
         }
 
-        function goBack() { document.getElementById('feed-screen').classList.add('hidden'); document.getElementById('home-screen').classList.remove('hidden'); }
+        function backHome() { document.getElementById('feed-view').classList.add('hidden'); document.getElementById('home-view').classList.remove('hidden'); }
 
-        // 3. Full Article View
-        function openFull(id) {
-            const a = cache[id];
-            document.getElementById('full-content').innerHTML = `
+        function showFull(id) {
+            const a = store[id];
+            document.getElementById('modal-data').innerHTML = `
                 <img src="${a.imgTop}" style="width:100%;">
                 <div style="padding:25px;">
-                    <h1 style="font-family:Orbitron; color:var(--gold); font-size:1.7rem; line-height:1.2; margin-bottom:15px;">${a.title}</h1>
+                    <h1 style="font-family:Orbitron; color:var(--gold); font-size:1.8rem; margin-bottom:15px; line-height:1.2;">${a.title}</h1>
                     <p style="font-size:1.1rem; line-height:1.8; color:#333; white-space:pre-wrap;">${a.content}</p>
-                    ${a.imgMid ? `<img src="${a.imgMid}" style="width:100%; border-radius:18px; margin-top:25px;">` : ''}
+                    ${a.imgMid ? `<img src="${a.imgMid}" style="width:100%; border-radius:20px; margin-top:30px;">` : ''}
                 </div>`;
-            document.getElementById('modal-view').style.display = 'block';
+            document.getElementById('article-modal').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
 
-        function closeFull() { document.getElementById('modal-view').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function closeModal() { document.getElementById('article-modal').style.display = 'none'; document.body.style.overflow = 'auto'; }
     </script>
 </body>
 </html>
