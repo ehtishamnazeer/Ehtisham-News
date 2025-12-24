@@ -1,155 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Fire Hungama Karachi 2025</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EHTISHAM NEWS | Pro Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
-<style>
-body{
-  margin:0;
-  font-family: Arial, Helvetica, sans-serif;
-  background:#f6f6f6;
-  color:#333;
-}
+    <style>
+        :root { --gold: #c9a23f; --bg: #ffffff; --card: #f8f9fa; --text: #000000; --border: #eeeeee; --electric: #00f2ff; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
+        /* ELECTRIC GLITCH SPLASH */
+        #splash {
+            position: fixed; inset: 0; background: #000; z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        .splash-text { font-family: 'Orbitron'; font-size: 2rem; letter-spacing: 5px; color: #fff; animation: glitch 1s infinite; }
+        @keyframes glitch { 0%, 100% { transform: skew(0deg); } 20% { transform: skew(-3deg); } 40% { transform: skew(3deg); } }
 
-/* NEWS IMAGE */
-.event-img{
-  width:100%;
-  max-height:420px;
-  object-fit:cover;
-  border-radius:14px;
-  margin-bottom:20px;
-}
+        /* TOP ACTION BAR (Notifications & Install) */
+        .top-bar { display: flex; justify-content: space-between; padding: 15px 20px; align-items: center; }
+        .action-btn { background: var(--card); border: 1px solid var(--border); border-radius: 12px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; }
 
-/* TITLE */
-h1{
-  font-size:26px;
-  margin-bottom:6px;
-  color:#111;
-}
+        header { padding: 10px 20px 25px; text-align: center; background: #fff; }
+        header h1 { font-family: 'Orbitron'; font-size: 1.7rem; font-weight: 900; letter-spacing: 2px; }
+        header span { color: var(--gold); }
 
-.meta{
-  color:#777;
-  font-size:14px;
-  margin-bottom:18px;
-}
+        .container { padding: 20px; max-width: 500px; margin: 0 auto; width: 100%; }
+        
+        /* ENHANCED ALL TABS */
+        .cat-card { 
+            background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 22px; margin-bottom: 15px; 
+            cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .cat-card:active { transform: scale(0.96); border-color: var(--gold); background: #fff; }
+        .icon-box { width: 45px; height: 45px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .cat-info h3 { font-size: 1rem; font-weight: 800; }
+        .cat-info p { font-size: 0.75rem; color: #888; margin-top: 2px; }
 
-/* SECTIONS */
-.section{
-  background:#fff;
-  border-radius:16px;
-  padding:18px;
-  margin-top:18px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.05);
-}
+        /* NEWS CARD WITH COVER IMAGE */
+        .news-card { background: #fff; border: 1px solid var(--border); border-radius: 22px; margin-bottom: 20px; overflow: hidden; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .news-cover { width: 100%; height: 180px; object-fit: cover; background: #eee; }
+        .news-details { padding: 20px; }
+        .news-details h3 { font-size: 1.1rem; margin-bottom: 8px; line-height: 1.3; }
+        .news-details p { font-size: 0.85rem; color: #666; line-height: 1.5; }
 
-.section h2{
-  margin-top:0;
-  color:#c9a24d; /* GOLD */
-  font-size:20px;
-}
+        #newsModal { position: fixed; inset: 0; background: #fff; z-index: 20000; display: none; overflow-y: auto; padding: 0; }
+        .modal-header-img { width: 100%; height: 250px; object-fit: cover; }
+        .modal-body { padding: 30px 20px; }
+        .modal-img { width: 100%; border-radius: 18px; margin: 20px 0; border: 1px solid var(--border); }
 
-p{
-  font-size:16px;
-  line-height:1.7;
-}
+        .footer-wrap { padding: 30px 20px; text-align: center; border-top: 1px solid var(--border); }
+        .social-grid { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
+        .social-btn { width: 55px; height: 55px; background: #fff; border: 1px solid var(--border); border-radius: 15px; display: flex; align-items: center; justify-content: center; }
+        .social-btn img { width: 26px; height: 26px; }
 
-ul{
-  padding-left:20px;
-}
-
-li{
-  margin-bottom:6px;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  h1{font-size:22px;}
-  .event-img{max-height:260px;}
-}
-</style>
+        .page { display: none; }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <div id="splash"><div class="splash-text">EHTISHAM <span>NEWS</span></div></div>
 
-  <!-- IMAGE -->
-  <img src="event.jpg" alt="Free Fire Hungama Karachi 2025" class="event-img">
+    <div class="top-bar">
+        <div class="action-btn" onclick="toggleNotify()">🔔</div>
+        <div class="action-btn" onclick="installApp()">📲</div>
+    </div>
 
-  <!-- TITLE -->
-  <h1>Free Fire Hungama Karachi 2025</h1>
-  <div class="meta">
-    Karachi, Pakistan • December 20–21, 2025 • Lucky One Mall
-  </div>
+    <header><h1 onclick="goHome()">EHTISHAM <span>NEWS</span></h1></header>
 
-  <!-- INTRO -->
-  <p>
-    Garena Free Fire successfully hosted the <strong>Free Fire Hungama offline community event</strong>
-    in Karachi, bringing together gamers, content creators, and esports fans from across Pakistan.
-  </p>
+    <main>
+        <div id="home" class="page" style="display:block;">
+            <div class="container">
+                <div class="cat-card" onclick="openCategory('gaming')">
+                    <div class="icon-box">🎮</div>
+                    <div class="cat-info"><h3>Game Update</h3><p>Latest patches & server leaks</p></div>
+                </div>
+                <div class="cat-card" onclick="openCategory('community')">
+                    <div class="icon-box">👥</div>
+                    <div class="cat-info"><h3>Community News</h3><p>Server events & member alerts</p></div>
+                </div>
+                <div class="cat-card" onclick="openCategory('esports')">
+                    <div class="icon-box">🏆</div>
+                    <div class="cat-info"><h3>Esports World Updates</h3><p>Global pro-circuit standings</p></div>
+                </div>
+            </div>
+        </div>
 
-  <!-- GAMEPLAY -->
-  <div class="section">
-    <h2>🔥 Interactive Gameplay Zones</h2>
-    <ul>
-      <li>Kla’s Punch Zone</li>
-      <li>Alvaro’s Grenade Toss</li>
-      <li>Kelly’s Reflexes</li>
-      <li>Mr. Waggor’s Gloo Powers</li>
-    </ul>
-    <p>
-      Each zone attracted massive participation and created a high‑energy gaming atmosphere.
-    </p>
-  </div>
+        <div id="newsList" class="page">
+            <div class="container">
+                <h2 id="catTitle" style="color:var(--gold); font-size:0.9rem; margin-bottom:20px; font-family:'Orbitron';"></h2>
+                <div id="newsItems"></div>
+                <button onclick="goHome()" style="width:100%; padding:18px; border-radius:15px; background:#000; color:#fff; font-weight:800; cursor:pointer; margin-top:20px; border:none;">BACK TO COMMAND</button>
+            </div>
+        </div>
+    </main>
 
-  <!-- GIVEAWAYS -->
-  <div class="section">
-    <h2>🎁 Exclusive Giveaways</h2>
-    <p>
-      Participants had the chance to win exciting rewards. A special highlight was the
-      <strong>Free Fire x Digimon Exclusive Merch Box</strong>, awarded to the first 20 participants.
-    </p>
-  </div>
+    <div id="newsModal">
+        <div id="modalContent"></div>
+        <div class="container" style="padding-bottom:50px;">
+            <button onclick="closeModal()" style="width:100%; padding:20px; background:var(--gold); border-radius:20px; font-weight:900; border:none; color:#000;">CLOSE ARTICLE</button>
+        </div>
+    </div>
 
-  <!-- CREATORS -->
-  <div class="section">
-    <h2>⭐ Popular Free Fire Creators</h2>
-    <ul>
-      <li>Zindabad Plays</li>
-      <li>Adil Rehman</li>
-      <li>Rufe Bhai</li>
-      <li>Shifu</li>
-      <li>Sparrow Darinda</li>
-    </ul>
-  </div>
+    <div class="footer-wrap">
+        <div class="social-grid">
+            <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png"></a>
+            <a href="https://www.facebook.com/share/1A2bZ7tnBX/" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"></a>
+            <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"></a>
+            <a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"></a>
+        </div>
+        <p style="font-size:9px; color:#bbb; margin-top:20px;">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</p>
+    </div>
 
-  <!-- IMPACT -->
-  <div class="section">
-    <h2>🔥 Community Impact</h2>
-    <p>
-      The event saw a strong turnout of casual and competitive players, highlighting
-      Free Fire’s growing fanbase in Pakistan.
-    </p>
-  </div>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-  <!-- CONCLUSION -->
-  <div class="section">
-    <h2>🏁 Conclusion</h2>
-    <p>
-      Free Fire Hungama Karachi 2025 delivered an unforgettable offline gaming experience
-      and marked another milestone in Garena’s commitment to Pakistan’s gaming community.
-    </p>
-  </div>
+    <script>
+        firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
+        const db = firebase.firestore();
 
-</div>
+        window.onload = () => { setTimeout(() => { document.getElementById('splash').style.transform = 'translateY(-100%)'; }, 2500); };
 
+        function toggleNotify() {
+            let status = confirm("Do you want to get real-time gaming notifications?");
+            alert(status ? "Notifications Enabled! 🔔" : "Notifications Disabled. 🛑");
+        }
+
+        function installApp() {
+            alert("To install: Click Browser Menu (⋮) -> 'Add to Home Screen' 📲");
+        }
+
+        function openCategory(cat) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('newsList').style.display = 'block';
+            document.getElementById('catTitle').innerText = "DATA STREAM: " + cat.toUpperCase();
+            
+            db.collection("news").where("category", "==", cat).orderBy("date", "desc")
+            .onSnapshot((snap) => {
+                let html = "";
+                if (snap.empty) {
+                    html = `<div style="text-align:center; padding:50px; color:#aaa;">Stay tuned for updated news.</div>`;
+                } else {
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        // Cover image logic: if imgTop exists, use it as cover
+                        const cover = d.imgTop || 'https://via.placeholder.com/400x200?text=No+Image';
+                        html += `
+                        <div class="news-card" onclick="showFull(\`${d.title}\`, \`${d.content}\`, '${d.imgTop}', '${d.imgMid}', '${d.imgEnd}')">
+                            <img src="${cover}" class="news-cover">
+                            <div class="news-details">
+                                <h3>${d.title}</h3>
+                                <p>${d.content.substring(0, 100)}...</p>
+                            </div>
+                        </div>`;
+                    });
+                }
+                document.getElementById("newsItems").innerHTML = html;
+            });
+        }
+
+        function showFull(t, c, i1, i2, i3) {
+            const middle = Math.floor(c.length / 2);
+            document.getElementById('modalContent').innerHTML = `
+                <img src="${i1}" class="modal-header-img">
+                <div class="modal-body">
+                    <h2 style="font-family:Orbitron; font-size:1.5rem; margin-bottom:20px;">${t}</h2>
+                    <p style="line-height:1.8; color:#333; font-size:1.05rem;">${c.substring(0, middle)}</p>
+                    ${i2 ? `<img src="${i2}" class="modal-img">` : ''}
+                    <p style="line-height:1.8; color:#333; font-size:1.05rem;">${c.substring(middle)}</p>
+                    ${i3 ? `<img src="${i3}" class="modal-img">` : ''}
+                </div>
+            `;
+            document.getElementById('newsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() { document.getElementById('newsModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function goHome() { document.getElementById('newsList').style.display = 'none'; document.getElementById('home').style.display = 'block'; }
+    </script>
 </body>
 </html>
