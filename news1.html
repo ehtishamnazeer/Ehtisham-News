@@ -12,40 +12,43 @@
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
         /* HEADER & TOP CONTROLS */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
-        .nav-icons { display: flex; gap: 10px; }
-        .icon-btn { width: 45px; height: 45px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #fff; position: sticky; top: 0; z-index: 999; border-bottom: 2px solid var(--gold); }
+        .nav-icons { display: flex; gap: 15px; }
+        .icon-btn { font-size: 1.5rem; cursor: pointer; padding: 5px; }
         
-        header { padding: 30px 20px; text-align: center; }
+        header { padding: 25px 20px; text-align: center; }
         header h1 { font-family: 'Orbitron'; font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; }
         header span { color: var(--gold); }
 
         .container { padding: 0 20px 40px; max-width: 500px; margin: 0 auto; }
         
-        /* CARDS */
-        .cat-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 22px; margin-bottom: 15px; cursor: pointer; display: flex; align-items: center; gap: 15px; }
+        /* CATEGORY CARDS */
+        .cat-card { background: var(--card); border: 2px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 15px; cursor: pointer; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .cat-card h3 { font-size: 1.1rem; font-weight: 800; }
         
-        /* NEWS CARD WITH READ MORE */
-        .news-card { background: #fff; border: 1px solid var(--border); border-radius: 22px; margin-bottom: 25px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .news-cover { width: 100%; height: 200px; object-fit: cover; background: #eee; }
+        /* NEWS CARD */
+        .news-card { background: #fff; border: 2px solid var(--border); border-radius: 25px; margin-bottom: 30px; overflow: hidden; }
+        .news-cover { width: 100%; height: 220px; object-fit: cover; background: #eee; display: block; }
         .news-content-box { padding: 20px; }
-        .news-content-box h3 { font-size: 1.2rem; margin-bottom: 10px; color: #000; }
-        .news-content-box p { font-size: 0.9rem; color: #666; line-height: 1.5; margin-bottom: 15px; }
+        .news-content-box h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 900; }
+        .news-content-box p { font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 20px; }
         
-        .read-more-btn { 
-            width: 100%; padding: 15px; background: #000; color: #fff; border: none; 
-            border-radius: 12px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;
-            cursor: pointer; text-transform: uppercase;
+        /* THE RED BUTTON (READ MORE) */
+        .read-btn { 
+            display: block; width: 100%; padding: 18px; background: #000; color: #fff; 
+            border: none; border-radius: 15px; font-weight: 900; font-size: 1rem;
+            text-align: center; text-transform: uppercase; cursor: pointer;
         }
 
-        /* MODAL */
-        #newsModal { position: fixed; inset: 0; background: #fff; z-index: 20000; display: none; overflow-y: auto; }
-        .modal-img { width: 100%; border-radius: 0 0 25px 25px; max-height: 300px; object-fit: cover; }
-        .modal-body { padding: 25px; }
+        /* MODAL (FULL SCREEN ARTICLE) */
+        #newsModal { position: fixed; inset: 0; background: #fff; z-index: 9999; display: none; overflow-y: auto; }
+        .modal-close-top { position: sticky; top: 0; background: #000; color: #fff; padding: 15px; text-align: center; font-weight: 900; z-index: 10; cursor: pointer; }
+        .modal-body { padding: 0 0 50px 0; }
+        .modal-text-wrap { padding: 25px; }
 
-        .footer { padding: 40px 20px; text-align: center; border-top: 1px solid var(--border); }
-        .social-btn { width: 55px; height: 55px; background: #fff; border: 1px solid var(--border); border-radius: 15px; display: inline-flex; align-items: center; justify-content: center; margin: 0 5px; }
-        .social-btn img { width: 26px; height: 26px; }
+        .footer { padding: 50px 20px; text-align: center; border-top: 1px solid var(--border); background: #fdfdfd; }
+        .social-btn { width: 60px; height: 60px; background: #fff; border: 2px solid var(--border); border-radius: 20px; display: inline-flex; align-items: center; justify-content: center; margin: 0 8px; }
+        .social-btn img { width: 30px; height: 30px; }
 
         .page { display: none; }
     </style>
@@ -53,10 +56,10 @@
 <body>
 
     <div class="top-nav">
-        <h2 style="font-family:Orbitron; font-size:1rem;">E<span>.</span>N</h2>
+        <h2 style="font-family:Orbitron; font-size:1.1rem;">E<span>.</span>N</h2>
         <div class="nav-icons">
-            <div class="icon-btn" onclick="toggleNotify()">🔔</div>
-            <div class="icon-btn" onclick="installApp()">📲</div>
+            <div class="icon-btn" onclick="showNotify()">🔔</div>
+            <div class="icon-btn" onclick="showInstall()">📲</div>
         </div>
     </div>
 
@@ -73,19 +76,20 @@
 
         <div id="newsList" class="page">
             <div class="container">
-                <h2 id="catTitle" style="color:var(--gold); margin-bottom:20px; font-family:Orbitron; font-size:0.8rem;"></h2>
+                <h2 id="catTitle" style="color:var(--gold); margin-bottom:25px; font-family:Orbitron; font-size:1rem; text-align:center;"></h2>
                 <div id="newsItems"></div>
-                <button onclick="goHome()" style="width:100%; padding:15px; border:none; background:#eee; border-radius:12px; font-weight:700;">← BACK</button>
+                <button onclick="goHome()" style="width:100%; padding:20px; border:none; background:#eee; border-radius:15px; font-weight:900; margin-top:20px;">← BACK TO MENU</button>
             </div>
         </div>
     </main>
 
     <div id="newsModal">
-        <div id="modalContent"></div>
-        <div class="container"><button onclick="closeModal()" style="width:100%; padding:18px; background:var(--gold); border:none; border-radius:15px; font-weight:900;">CLOSE</button></div>
+        <div class="modal-close-top" onclick="closeModal()">CLOSE ARTICLE ✖</div>
+        <div id="modalContent" class="modal-body"></div>
     </div>
 
     <div class="footer">
+        <p style="font-weight:900; font-size:10px; letter-spacing:2px; margin-bottom:20px;">Contact Us</p>
         <div class="social-grid">
             <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png"></a>
             <a href="https://www.facebook.com/share/1A2bZ7tnBX/" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"></a>
@@ -98,50 +102,72 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
+        // Initialize Firebase
+        const firebaseConfig = { apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" };
+        firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        function toggleNotify() { alert("Notification System: Active 🔔"); }
-        function installApp() { alert("Click Browser Options > Add to Home Screen 📲"); }
+        // 1. Notifications & Install
+        function showNotify() { alert("🔔 Notifications are now ACTIVE!"); }
+        function showInstall() { alert("📲 To Install: Click Browser Menu (3 dots) then 'Add to Home Screen'"); }
 
+        // 2. Open Category
         function openCategory(cat) {
             document.getElementById('home').style.display = 'none';
             document.getElementById('newsList').style.display = 'block';
-            document.getElementById('catTitle').innerText = "FEED: " + cat.toUpperCase();
+            document.getElementById('catTitle').innerText = "STREAM: " + cat.toUpperCase();
             
             db.collection("news").where("category", "==", cat).orderBy("date", "desc").onSnapshot((snap) => {
                 let html = "";
-                snap.forEach(doc => {
-                    const d = doc.data();
-                    html += `
-                    <div class="news-card">
-                        <img src="${d.imgTop || 'https://via.placeholder.com/400x200'}" class="news-cover">
-                        <div class="news-content-box">
-                            <h3>${d.title}</h3>
-                            <p>${d.content.substring(0, 80)}...</p>
-                            <button class="read-more-btn" onclick="showFull(\`${d.title}\`, \`${d.content}\`, '${d.imgTop}', '${d.imgMid}', '${d.imgEnd}')">Read Full Article</button>
-                        </div>
-                    </div>`;
-                });
-                document.getElementById("newsItems").innerHTML = html || "<p style='text-align:center;'>No news found.</p>";
+                if(snap.empty) {
+                    html = "<p style='text-align:center; padding:50px; color:#999;'>Stay tuned for updated news.</p>";
+                } else {
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        const coverImg = d.imgTop || 'https://via.placeholder.com/600x400?text=EHTISHAM+NEWS';
+                        html += `
+                        <div class="news-card">
+                            <img src="${coverImg}" class="news-cover">
+                            <div class="news-content-box">
+                                <h3>${d.title}</h3>
+                                <p>${d.content.substring(0, 100)}...</p>
+                                <button class="read-btn" onclick="showFull(\`${d.title.replace(/'/g, "\\'")}\`, \`${d.content.replace(/'/g, "\\'")}\`, '${d.imgTop}', '${d.imgMid}', '${d.imgEnd}')">Open Article</button>
+                            </div>
+                        </div>`;
+                    });
+                }
+                document.getElementById("newsItems").innerHTML = html;
+            }, (error) => {
+                console.log(error);
+                document.getElementById("newsItems").innerHTML = "Error loading news. Check Firebase.";
             });
         }
 
+        // 3. Show Full Article (Modal)
         function showFull(t, c, i1, i2, i3) {
-            document.getElementById('modalContent').innerHTML = `
-                <img src="${i1}" class="modal-img">
-                <div class="modal-body">
-                    <h2 style="margin-bottom:15px; font-family:Orbitron;">${t}</h2>
-                    <p style="line-height:1.7; white-space: pre-line;">${c}</p>
-                    ${i2 ? `<img src="${i2}" style="width:100%; border-radius:15px; margin:15px 0;">` : ''}
-                    ${i3 ? `<img src="${i3}" style="width:100%; border-radius:15px; margin:15px 0;">` : ''}
+            const contentHtml = `
+                <img src="${i1 || ''}" style="width:100%; display:${i1?'block':'none'};">
+                <div class="modal-text-wrap">
+                    <h2 style="font-family:Orbitron; font-size:1.6rem; margin-bottom:20px;">${t}</h2>
+                    <p style="line-height:1.8; white-space: pre-wrap; font-size:1.1rem; color:#222;">${c}</p>
+                    ${i2 ? `<img src="${i2}" style="width:100%; border-radius:15px; margin:20px 0;">` : ''}
+                    ${i3 ? `<img src="${i3}" style="width:100%; border-radius:15px; margin:20px 0;">` : ''}
                 </div>
             `;
+            document.getElementById('modalContent').innerHTML = contentHtml;
             document.getElementById('newsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() { document.getElementById('newsModal').style.display = 'none'; }
-        function goHome() { document.getElementById('newsList').style.display = 'none'; document.getElementById('home').style.display = 'block'; }
+        // 4. Navigation
+        function closeModal() { 
+            document.getElementById('newsModal').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+        function goHome() { 
+            document.getElementById('newsList').style.display = 'none'; 
+            document.getElementById('home').style.display = 'block'; 
+        }
     </script>
 </body>
 </html>
