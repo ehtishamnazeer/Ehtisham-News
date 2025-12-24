@@ -2,90 +2,101 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EHTISHAM | News Control Center</title>
+<title>Admin - Ehtisham News Control</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-:root { --gold: #c9a23f; --bg: #050505; --card: rgba(255,255,255,0.03); --border: rgba(255,255,255,0.08); }
-body { margin:0; font-family:'Inter', sans-serif; background:var(--bg); color:#fff; overflow-x:hidden; background-image: radial-gradient(circle at 50% 0%, #1a150a 0%, #050505 70%); }
+:root { --gold: #c9a23f; --light-bg: #f8f9fa; --text: #1a1a1a; --border: #e2e8f0; }
+body { margin:0; font-family:'Inter', sans-serif; background:var(--light-bg); color:var(--text); }
 
-header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
-header h2 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 3px; font-size: 1.5rem; }
+header { background: #fff; padding: 25px; border-bottom: 2px solid var(--gold); text-align: center; }
+header h2 { margin: 0; font-size: 1.2rem; letter-spacing: 1px; color: #000; }
+header span { color: var(--gold); }
 
-.container { padding: 20px; max-width: 800px; margin: 0 auto; }
+.container { padding: 20px; max-width: 600px; margin: 0 auto; }
 
-/* Dashboard Stats */
-.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-.stat-card { background: var(--card); border: 1px solid var(--border); padding: 15px; border-radius: 15px; text-align: center; }
-.stat-card h4 { font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 1px; }
-.stat-card p { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
+/* Dashboard Mini-Stats */
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+.stat-box { background: #fff; padding: 15px; border-radius: 12px; border: 1px solid var(--border); text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+.stat-box h4 { font-size: 0.7rem; color: #888; text-transform: uppercase; margin: 0; }
+.stat-box p { font-size: 1.4rem; font-weight: 800; color: var(--gold); margin: 5px 0 0; }
 
-.card { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 24px; margin-bottom: 20px; backdrop-filter: blur(10px); }
-h3 { font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 20px; color: #fff; border-left: 3px solid var(--gold); padding-left: 10px; }
+.card { background: #fff; border-radius: 16px; padding: 25px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+h3 { font-size: 0.9rem; font-weight: 800; color: #444; margin-bottom: 15px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+h3::before { content: ""; width: 4px; height: 16px; background: var(--gold); border-radius: 10px; }
 
-input, textarea, select { width: 100%; padding: 14px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; color: #fff; font-size: 0.9rem; }
-input:focus { border-color: var(--gold); outline: none; }
+label { font-size: 0.75rem; font-weight: 700; color: #666; display: block; margin-top: 12px; margin-left: 5px; }
+input, textarea, select { width: 100%; padding: 12px; margin: 5px 0 10px; background: #fff; border: 1px solid var(--border); border-radius: 10px; font-family: inherit; transition: 0.3s; }
+input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px rgba(201,162,63,0.1); }
 
-button { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: 800; text-transform: uppercase; transition: 0.3s; }
-button:active { transform: scale(0.96); }
-button.danger { background: transparent; color: #ff4444; border: 1px solid #ff4444; padding: 8px 15px; width: auto; font-size: 0.7rem; }
+button { background: #000; color: #fff; border: none; padding: 14px; border-radius: 10px; width: 100%; cursor: pointer; font-weight: 700; transition: 0.3s; margin-top: 10px; }
+button:active { transform: scale(0.98); }
+button.notify { background: var(--gold); color: #000; }
 
-.news-item { background: rgba(255,255,255,0.01); border: 1px solid var(--border); padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-.news-info b { display: block; font-size: 1rem; margin-bottom: 4px; }
-.news-info span { font-size: 0.7rem; color: var(--gold); background: rgba(201,162,63,0.1); padding: 2px 8px; border-radius: 5px; }
+/* News List Styles */
+.news-item { background: #fff; border: 1px solid var(--border); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.news-data b { font-size: 0.95rem; color: #000; display: block; }
+.news-data small { color: var(--gold); font-weight: 800; font-size: 0.65rem; background: rgba(201,162,63,0.1); padding: 2px 8px; border-radius: 4px; }
+button.del { background: #fee2e2; color: #ef4444; width: auto; padding: 6px 12px; font-size: 0.7rem; }
 
-.status-msg { text-align: center; margin-top: 10px; font-size: 0.8rem; font-weight: 600; }
+.status-log { text-align: center; font-size: 0.8rem; margin-top: 10px; font-weight: 600; color: #10b981; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <h2>EHTISHAM <span>ADMIN</span></h2>
-  <p style="font-size: 10px; color: #444; letter-spacing: 2px;">COMMAND CENTER V2.0</p>
+  <h2>EHTISHAM <span>ADMIN CENTER</span></h2>
 </header>
 
 <div class="container">
   
-  <div class="stats">
-    <div class="stat-card"><h4>Total News</h4><p id="totalCount">0</p></div>
-    <div class="stat-card"><h4>Live Sector</h4><p>Active</p></div>
+  <div class="dashboard-grid">
+    <div class="stat-box"><h4>Articles</h4><p id="totalCount">0</p></div>
+    <div class="stat-box"><h4>System</h4><p style="color:#10b981">Live</p></div>
   </div>
 
   <div class="card">
-    <h3>Publish News</h3>
-    <input id="title" placeholder="Catchy Headline">
-    <textarea id="content" rows="4" placeholder="Full report / Details..."></textarea>
+    <h3>Write New Article</h3>
+    
+    <label>Headline</label>
+    <input id="title" placeholder="Enter news title">
+    
+    <label>News Detail</label>
+    <textarea id="content" rows="4" placeholder="Write full article here..."></textarea>
+    
+    <label>Thumbnail / Image URL</label>
+    <input id="imgUrl" placeholder="https://example.com/image.jpg">
+    
+    <label>Target Sector</label>
     <select id="category">
-      <option value="">Select Sector</option>
-      <option value="gaming">Gaming</option>
-      <option value="esports">Esports</option>
-      <option value="community">Community</option>
+      <option value="">Choose Category</option>
+      <option value="gaming">Gaming News</option>
+      <option value="esports">Esports Feed</option>
+      <option value="community">Community Updates</option>
     </select>
-    <button onclick="addNews()">Transmit Data</button>
-    <div class="status-msg" id="status"></div>
+    
+    <button onclick="addNews()">🚀 Publish to Web</button>
+    <div class="status-log" id="status"></div>
   </div>
 
   <div class="card">
-    <h3>Broadcast Alert</h3>
-    <input id="notifyText" placeholder="Short alert message...">
-    <button onclick="sendNotification()" style="background:#fff; color:#000;">Send Notification</button>
+    <h3>App Notification</h3>
+    <input id="notifyText" placeholder="Push a quick alert to users...">
+    <button class="notify" onclick="sendNotification()">Broadcast Alert</button>
   </div>
 
   <div class="card">
-    <h3>Live Stream Feed</h3>
-    <div id="newsList">Scanning...</div>
+    <h3>Active Feed</h3>
+    <div id="newsList">Loading current stream...</div>
   </div>
 
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getFirestore, collection, addDoc, serverTimestamp,
-  query, orderBy, onSnapshot, deleteDoc, doc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
@@ -99,73 +110,67 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ADD NEWS FIX: Using 'date' instead of 'createdAt' to sync with main site
 window.addNews = async ()=>{
   const title = titleEl.value.trim();
   const content = contentEl.value.trim();
+  const image = imgUrlEl.value.trim();
   const category = categoryEl.value;
   
   if(!title || !content || !category){
-    statusEl.style.color="#ff4444"; statusEl.innerText="⚠️ Data incomplete"; return;
+    statusEl.style.color="red"; statusEl.innerText="Please fill required fields."; return;
   }
   
-  statusEl.innerText="📡 Transmitting...";
+  statusEl.innerText="Uploading to Firebase...";
   
   try {
-    await addDoc(collection(db,"news"),{
-      title, 
-      content, 
-      category,
-      status: "published",
-      date: serverTimestamp() // Main site uses 'date'
+    await addDoc(collection(db,"news"), {
+      title, content, image, category,
+      date: serverTimestamp() // Fixed sync with main site
     });
-    statusEl.style.color="#00ff88"; statusEl.innerText="✔️ Data Published to Index";
-    titleEl.value=""; contentEl.value=""; categoryEl.value="";
-  } catch(e) {
-    statusEl.innerText="❌ Transmission Failed";
-  }
+    statusEl.innerText="Successfully Published!";
+    titleEl.value=""; contentEl.value=""; imgUrlEl.value=""; categoryEl.value="";
+    setTimeout(()=> statusEl.innerText="", 3000);
+  } catch(e) { statusEl.innerText="Error uploading news."; }
 };
 
 window.sendNotification = async ()=>{
   const text = notifyText.value.trim();
   if(!text) return;
-  await addDoc(collection(db,"notifications"),{ text, date: serverTimestamp() });
+  await addDoc(collection(db,"notifications"), { text, date: serverTimestamp() });
   notifyText.value="";
-  alert("Notification Broadcasted");
+  alert("Notification Sent!");
 };
 
-// Real-time List + Stats
+// Fetching List
 const q = query(collection(db,"news"), orderBy("date","desc"));
-onSnapshot(q,(snap)=>{
-  let html="";
+onSnapshot(q, (snap)=>{
+  let html = "";
   document.getElementById('totalCount').innerText = snap.size;
-  snap.forEach(d=>{
-    const n=d.data();
-    html+=`
+  snap.forEach(d => {
+    const n = d.data();
+    html += `
       <div class="news-item">
-        <div class="news-info">
+        <div class="news-data">
           <b>${n.title}</b>
-          <span>${n.category.toUpperCase()}</span>
+          <small>${n.category.toUpperCase()}</small>
         </div>
-        <button class="danger" onclick="deleteNews('${d.id}')">ERASE</button>
+        <button class="del" onclick="deleteNews('${d.id}')">Delete</button>
       </div>`;
   });
-  newsList.innerHTML = html || "No data in sectors.";
+  newsList.innerHTML = html || "No news found.";
 });
 
 window.deleteNews = async (id)=>{
-  if(confirm("Erase this data permanently?")){
-    await deleteDoc(doc(db,"news",id));
-  }
+  if(confirm("Permanently delete this article?")) await deleteDoc(doc(db,"news",id));
 };
 
 const titleEl = document.getElementById("title");
 const contentEl = document.getElementById("content");
+const imgUrlEl = document.getElementById("imgUrl");
 const categoryEl = document.getElementById("category");
 const statusEl = document.getElementById("status");
 const notifyText = document.getElementById("notifyText");
 const newsList = document.getElementById("newsList");
 </script>
-
 </body>
 </html>
