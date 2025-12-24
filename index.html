@@ -3,122 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ehtisham News | Elite Gaming Portal</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <title>Ehtisham News | Elite Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --gold: #c9a23f;
-            --bg: #050505;
-            --card-bg: rgba(255, 255, 255, 0.02);
-            --border: rgba(255, 255, 255, 0.08);
-        }
+        :root { --gold: #c9a23f; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; background-image: radial-gradient(circle at 50% -20%, #1a150a 0%, #050505 80%); }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        /* --- CENTERED SPLASH --- */
+        #splash { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.8s ease; }
+        .splash-logo { font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 5px; animation: pulse 2s infinite; }
+        .splash-logo span { color: var(--gold); }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.05); opacity: 1; } }
 
-        body {
-            margin: 0; font-family: 'Inter', sans-serif;
-            background: var(--bg); color: #fff; min-height: 100vh;
-            display: flex; flex-direction: column; overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% -20%, #1a150a 0%, #050505 80%);
-        }
-
-        /* --- 1. PERFECT CENTERED OPENING ANIMATION --- */
-        #splash {
-            position: fixed; inset: 0; background: #000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 10000; transition: all 0.8s cubic-bezier(0.7, 0, 0.3, 1);
-        }
-
-        .splash-logo {
-            font-family: 'Orbitron', sans-serif; font-size: 2.2rem;
-            letter-spacing: 8px; text-align: center;
-            animation: logoScale 2s ease-in-out infinite;
-        }
-        .splash-logo span { color: var(--gold); text-shadow: 0 0 30px rgba(201, 162, 63, 0.5); }
-
-        .loading-line {
-            width: 120px; height: 1px; background: rgba(255,255,255,0.1);
-            margin-top: 20px; position: relative; overflow: hidden;
-        }
-        .loading-line::after {
-            content: ''; position: absolute; left: -100%; width: 100%; height: 100%;
-            background: var(--gold); animation: loadBar 1.5s infinite;
-        }
-
-        @keyframes logoScale { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } }
-        @keyframes loadBar { 100% { left: 100%; } }
-
-        /* --- 2. SMOOTH HEADER --- */
-        header { padding: 50px 25px 20px; max-width: 800px; margin: 0 auto; width: 100%; }
-        header h2 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; margin: 0; cursor: pointer; }
+        header { padding: 50px 25px 20px; text-align: left; max-width: 600px; margin: 0 auto; width: 100%; }
+        header h2 { font-family: 'Orbitron'; font-size: 1.4rem; cursor: pointer; margin:0; }
         header span { color: var(--gold); }
-        .tagline { font-size: 9px; color: #444; letter-spacing: 3px; margin-top: 5px; font-weight: 800; text-transform: uppercase; }
 
-        /* --- 3. ENHANCED USER-FRIENDLY CARDS --- */
         .container { padding: 0 20px 40px; max-width: 600px; margin: 0 auto; width: 100%; }
 
-        .card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 24px; padding: 25px; margin-bottom: 18px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer; position: relative; z-index: 5;
+        /* --- FIXED CLICKABLE NEWS CARDS --- */
+        .card { 
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 24px; padding: 25px; margin-bottom: 18px; 
+            cursor: pointer; position: relative; z-index: 10; 
+            transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); 
             backdrop-filter: blur(10px);
         }
-        .card:active { transform: scale(0.96); border-color: var(--gold); background: rgba(255,255,255,0.05); }
-
+        .card:active { transform: scale(0.97); border-color: var(--gold); background: rgba(255,255,255,0.06); }
         .card h3 { margin: 0 0 10px; font-size: 1.1rem; font-weight: 700; color: #fff; }
-        .card p { margin: 0; font-size: 0.85rem; color: #666; line-height: 1.6; }
+        .card p { margin: 0; font-size: 0.85rem; color: #777; line-height: 1.6; }
 
-        /* --- 4. PRECISE FOOTER DESIGN (Matches Screenshot) --- */
-        .footer-wrap {
-            margin-top: auto; padding: 60px 20px 40px; text-align: center;
-            background: linear-gradient(to top, #000 0%, transparent 100%);
-        }
-
-        .secure-title { font-size: 10px; letter-spacing: 5px; color: #222; font-weight: 900; margin-bottom: 25px; }
-
-        .social-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 35px; }
+        /* --- REFINED CONTACT US FOOTER --- */
+        .footer-wrap { margin-top: auto; padding: 60px 20px 40px; text-align: center; background: linear-gradient(to top, #000 0%, transparent 100%); }
+        .contact-heading { font-size: 11px; letter-spacing: 5px; color: #333; font-weight: 900; margin-bottom: 30px; }
         
-        .social-btn {
-            width: 65px; height: 65px; background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .social-btn:active { transform: scale(0.8); border-color: var(--gold); }
-        .social-btn img { width: 30px; height: 30px; margin-bottom: 4px; }
-        .social-btn span { font-size: 8px; font-weight: 800; color: #444; }
+        .social-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 35px; }
+        .social-btn { width: 70px; height: 70px; background: var(--glass); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
+        .social-btn:active { transform: scale(0.85); border-color: var(--gold); }
+        .social-btn img { width: 32px; height: 32px; margin-bottom: 6px; }
+        .social-btn span { font-size: 8px; font-weight: 800; color: #555; }
 
-        .copy-text { font-size: 10px; color: #222; font-weight: 700; letter-spacing: 1px; margin-top: 20px; }
+        .copyright-line { font-size: 9px; color: #1a1a1a; font-weight: 700; letter-spacing: 1px; }
 
-        /* --- PAGE LOGIC --- */
-        .page { display: none; animation: pageFade 0.6s ease-out; }
-        @keyframes pageFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .page { display: none; animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Modal for News Detail */
+        #newsModal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 20000; display: none; padding: 40px 25px; overflow-y: auto; }
+        #modalContent h2 { font-family: 'Orbitron'; color: var(--gold); font-size: 1.2rem; }
+        #modalContent p { line-height: 1.8; color: #ccc; font-size: 0.95rem; }
     </style>
 </head>
 <body>
 
-    <div id="splash">
-        <div class="splash-logo">EHTISHAM <span>NEWS</span></div>
-        <div class="loading-line"></div>
-    </div>
+    <div id="splash"><div class="splash-logo">EHTISHAM <span>NEWS</span></div></div>
 
-    <header>
-        <h2 onclick="goHome()">EHTISHAM <span>NEWS</span></h2>
-        <div class="tagline">Premium Gaming Intelligence</div>
-    </header>
+    <header><h2 onclick="goHome()">EHTISHAM <span>NEWS</span></h2></header>
 
     <main style="flex: 1;">
         <div id="home" class="page" style="display:block;">
             <div class="container">
                 <div class="card" onclick="openCategory('gaming')">
                     <h3>🔥 Gaming Sector</h3>
-                    <p>Direct access to patch leaks, server status, and hidden events.</p>
+                    <p>Tap to view live events and leaks.</p>
                 </div>
                 <div class="card" onclick="openCategory('esports')">
                     <h3>🏆 Esports Hub</h3>
-                    <p>Global pro-circuit standings and roster movement tracking.</p>
+                    <p>Pro standings and tournament news.</p>
                 </div>
             </div>
         </div>
@@ -127,72 +80,65 @@
             <div class="container">
                 <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size:1rem; margin-bottom:25px;"></h2>
                 <div id="newsItems"></div>
-                <button onclick="goHome()" style="width:100%; padding:16px; border-radius:18px; background:var(--card-bg); border:1px solid var(--border); color:#fff; font-weight:800; cursor:pointer; margin-top:20px;">BACK TO COMMAND</button>
+                <button onclick="goHome()" style="width:100%; padding:18px; border-radius:18px; background:var(--glass); border:1px solid rgba(255,255,255,0.1); color:#fff; font-weight:800; cursor:pointer; margin-top:20px;">BACK TO COMMAND</button>
             </div>
         </div>
     </main>
 
+    <div id="newsModal">
+        <div id="modalContent" class="container"></div>
+        <button onclick="closeModal()" style="width:100%; padding:15px; border-radius:15px; background:var(--gold); color:#000; font-weight:900; border:none; margin-top:20px;">CLOSE ARTICLE</button>
+    </div>
+
     <div class="footer-wrap">
-        <div class="secure-title">SECURE CHANNELS</div>
-        <div class="social-row">
-            <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-btn">
-                <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA"><span>WA</span>
-            </a>
-            <a href="https://www.facebook.com/share/16UChCgJTn/" class="social-btn">
-                <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="FB"><span>FB</span>
-            </a>
-            <a href="https://www.instagram.com/ehtisham_nazeer" class="social-btn">
-                <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG"><span>IG</span>
-            </a>
-            <a href="https://www.tiktok.com/@ehtishamnazeer1" class="social-btn">
-                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK"><span>TK</span>
-            </a>
+        <div class="contact-heading">CONTACT US</div>
+        <div class="social-grid">
+            <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA"><span>WA</span></a>
+            <a href="https://www.facebook.com/share/16UChCgJTn/" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="FB"><span>FB</span></a>
+            <a href="https://www.instagram.com/ehtisham_nazeer" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG"><span>IG</span></a>
+            <a href="https://www.tiktok.com/@ehtishamnazeer1" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK"><span>TK</span></a>
         </div>
-        <a href="mailto:contact@ehtishamnews.com" style="text-decoration:none; color:#333; font-size:10px; font-weight:700;">CONTACT@EHTISHAMNEWS.COM</a>
-        <div class="copy-text">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</div>
+        <div class="copyright-line">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        firebase.initializeApp({
-            apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
-            authDomain: "ehtisham-news.firebaseapp.com",
-            projectId: "ehtisham-news"
-        });
+        firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
         const db = firebase.firestore();
 
-        // High-End Splash Logic
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                const s = document.getElementById('splash');
-                s.style.opacity = '0';
-                s.style.transform = 'scale(1.1)'; // Professional zoom-out effect
-                setTimeout(() => s.remove(), 800);
-            }, 3000);
+            setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(()=> document.getElementById('splash').remove(), 800); }, 2500);
         });
 
         function openCategory(cat) {
             document.getElementById('home').style.display = 'none';
             document.getElementById('newsList').style.display = 'block';
-            document.getElementById('catTitle').innerText = cat.toUpperCase() + " DATA STREAM";
+            document.getElementById('catTitle').innerText = cat.toUpperCase();
             
             db.collection("news").where("category","==",cat).orderBy("date","desc").get().then(snap => {
                 let html = "";
-                snap.forEach(d => {
-                    html += `<div class="card" style="cursor:default;"><h3>${d.data().title}</h3><p>${d.data().content}</p></div>`;
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    // Click fix: Yahan onclick event add kiya gaya hai news open karne ke liye
+                    html += `<div class="card" onclick="showFullNews('${data.title}', \`${data.content.replace(/'/g, "\\'")}\`)">
+                                <h3>${data.title}</h3>
+                                <p>${data.content.substring(0, 80)}...</p>
+                                <span style="font-size:10px; color:var(--gold); font-weight:800; margin-top:10px; display:block;">READ MORE</span>
+                             </div>`;
                 });
-                document.getElementById("newsItems").innerHTML = html || "<p style='color:#333'>Empty Stream.</p>";
-            }).catch(e => {
-                document.getElementById("newsItems").innerHTML = "<p style='color:red'>Stream Error: Check Indexing.</p>";
+                document.getElementById("newsItems").innerHTML = html || "Updating...";
             });
         }
 
-        function goHome() {
-            document.getElementById('newsList').style.display = 'none';
-            document.getElementById('home').style.display = 'block';
+        function showFullNews(title, content) {
+            document.getElementById('modalContent').innerHTML = `<h2>${title}</h2><p>${content}</p>`;
+            document.getElementById('newsModal').style.display = 'block';
         }
+
+        function closeModal() { document.getElementById('newsModal').style.display = 'none'; }
+        function goHome() { document.getElementById('newsList').style.display = 'none'; document.getElementById('home').style.display = 'block'; }
     </script>
 </body>
 </html>
