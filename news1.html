@@ -9,140 +9,98 @@
     <style>
         :root { --gold: #c9a23f; --bg: #ffffff; --card: #f8f9fa; --text: #000000; --border: #eeeeee; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-        /* TOP NAVIGATION */
+        /* TOP NAV FIX */
         .top-nav { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 15px 20px; background: #fff; position: sticky; top: 0; 
             z-index: 1000; border-bottom: 2px solid var(--gold);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .nav-logo { font-family: 'Orbitron'; font-size: 1.2rem; font-weight: 900; }
-        .nav-logo span { color: var(--gold); }
-        .nav-icons { display: flex; gap: 15px; }
-        .nav-btn { font-size: 1.4rem; cursor: pointer; border: 1px solid var(--border); padding: 5px 8px; border-radius: 10px; background: var(--card); }
+        .nav-icons { display: flex; gap: 12px; }
+        .nav-btn { font-size: 1.4rem; cursor: pointer; border: 1px solid var(--border); padding: 8px; border-radius: 12px; background: var(--card); line-height: 1; }
 
-        /* MAIN HEADER */
-        header { padding: 30px 20px 20px; text-align: center; }
+        header { padding: 30px 20px; text-align: center; }
         header h1 { font-family: 'Orbitron'; font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; }
-        header h1 span { color: var(--gold); }
+        header span { color: var(--gold); }
 
         .container { padding: 0 20px 40px; max-width: 500px; margin: 0 auto; width: 100%; }
 
         /* CATEGORY CARDS */
         .cat-card { 
             background: var(--card); border: 1px solid var(--border); border-radius: 20px; 
-            padding: 22px; margin-bottom: 15px; cursor: pointer; display: flex; 
-            align-items: center; gap: 15px; transition: 0.3s;
+            padding: 25px; margin-bottom: 15px; cursor: pointer; display: flex; 
+            align-items: center; gap: 15px; transition: 0.2s;
         }
-        .cat-card:active { transform: scale(0.97); border-color: var(--gold); }
-        .icon-box { font-size: 1.5rem; }
-        .cat-info h3 { font-size: 1rem; font-weight: 800; }
+        .cat-card:active { background: #eee; transform: scale(0.98); }
 
-        /* NEWS FEED CARDS */
+        /* NEWS LISTING */
         .news-card { 
-            background: #fff; border: 1px solid var(--border); border-radius: 25px; 
-            margin-bottom: 25px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            background: #fff; border: 2px solid var(--border); border-radius: 25px; 
+            margin-bottom: 25px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         .news-cover { width: 100%; height: 200px; object-fit: cover; background: #f0f0f0; }
-        .news-details { padding: 20px; }
-        .news-details h3 { font-size: 1.2rem; margin-bottom: 10px; line-height: 1.3; }
-        .news-details p { font-size: 0.9rem; color: #666; margin-bottom: 18px; line-height: 1.5; }
-
-        /* THE OPEN BUTTON */
-        .open-btn { 
-            display: block; width: 100%; padding: 16px; background: #000; color: #fff; 
-            border: none; border-radius: 12px; font-weight: 900; font-size: 0.9rem;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+        .news-info { padding: 20px; }
+        .news-info h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 900; }
+        
+        .read-btn { 
+            width: 100%; padding: 18px; background: #000; color: #fff; 
+            border: none; border-radius: 15px; font-weight: 900; font-size: 0.9rem;
+            cursor: pointer; text-transform: uppercase; margin-top: 10px;
         }
 
-        /* FULL SCREEN ARTICLE MODAL */
-        #newsModal { 
-            position: fixed; inset: 0; background: #fff; z-index: 2000; 
-            display: none; overflow-y: auto; 
-        }
-        .modal-nav { 
-            position: sticky; top: 0; background: #000; color: #fff; 
-            padding: 15px; text-align: center; font-weight: 900; cursor: pointer; 
-        }
-        .modal-image-main { width: 100%; height: auto; display: block; }
+        /* MODAL ARTICLE */
+        #newsModal { position: fixed; inset: 0; background: #fff; z-index: 2000; display: none; overflow-y: auto; }
+        .close-bar { position: sticky; top: 0; background: #000; color: #fff; padding: 15px; text-align: center; font-weight: 900; cursor: pointer; z-index: 10; }
         .modal-body { padding: 25px; }
-        .modal-body h2 { font-family: 'Orbitron'; font-size: 1.5rem; margin-bottom: 15px; }
-        .modal-content-text { font-size: 1.05rem; line-height: 1.8; color: #333; white-space: pre-wrap; }
-        .extra-img { width: 100%; border-radius: 15px; margin: 20px 0; border: 1px solid var(--border); }
-
-        /* FOOTER */
-        .footer { padding: 40px 20px; text-align: center; border-top: 1px solid var(--border); margin-top: 20px; }
-        .social-grid { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
-        .social-btn { width: 55px; height: 55px; background: #fff; border: 1px solid var(--border); border-radius: 15px; display: flex; align-items: center; justify-content: center; }
-        .social-btn img { width: 28px; height: 28px; }
+        .modal-body h2 { font-family: 'Orbitron'; margin-bottom: 20px; }
+        .modal-text { font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap; color: #333; }
+        .modal-img { width: 100%; border-radius: 15px; margin: 20px 0; }
 
         .page { display: none; }
+        .error-msg { color: red; text-align: center; padding: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <div class="nav-logo">E<span>.</span>NEWS</div>
+        <div style="font-family:'Orbitron'; font-weight:900;">E<span>.</span>NEWS</div>
         <div class="nav-icons">
-            <div class="nav-btn" onclick="triggerNotify()">🔔</div>
-            <div class="nav-btn" onclick="triggerInstall()">📲</div>
+            <button class="nav-btn" onclick="alert('Notifications Enabled! 🔔')">🔔</button>
+            <button class="nav-btn" onclick="alert('To Install: Click Browser Menu > Add to Home Screen 📲')">📲</button>
         </div>
     </div>
 
-    <header>
-        <h1 onclick="goHome()">EHTISHAM <span>NEWS</span></h1>
-    </header>
+    <header><h1 onclick="location.reload()">EHTISHAM <span>NEWS</span></h1></header>
 
     <main>
         <div id="home" class="page" style="display:block;">
             <div class="container">
-                <div class="cat-card" onclick="openCategory('gaming')">
-                    <div class="icon-box">🎮</div>
-                    <div class="cat-info"><h3>Game Update</h3></div>
-                </div>
-                <div class="cat-card" onclick="openCategory('community')">
-                    <div class="icon-box">👥</div>
-                    <div class="cat-info"><h3>Community News</h3></div>
-                </div>
-                <div class="cat-card" onclick="openCategory('esports')">
-                    <div class="icon-box">🏆</div>
-                    <div class="cat-info"><h3>Esports World Updates</h3></div>
-                </div>
+                <div class="cat-card" onclick="fetchNews('gaming')"><span>🎮</span> <h3>Game Update</h3></div>
+                <div class="cat-card" onclick="fetchNews('community')"><span>👥</span> <h3>Community News</h3></div>
+                <div class="cat-card" onclick="fetchNews('esports')"><span>🏆</span> <h3>Esports Updates</h3></div>
             </div>
         </div>
 
-        <div id="newsList" class="page">
+        <div id="newsFeed" class="page">
             <div class="container">
-                <h2 id="catTitle" style="color:var(--gold); font-size:1rem; margin-bottom:20px; font-family:'Orbitron'; text-align:center;"></h2>
-                <div id="newsItems"></div>
-                <button onclick="goHome()" style="width:100%; padding:18px; border-radius:12px; background:#f0f0f0; border:none; font-weight:800; margin-top:20px;">← BACK TO SECTORS</button>
+                <h2 id="feedTitle" style="color:var(--gold); font-family:Orbitron; margin-bottom:20px; text-align:center;"></h2>
+                <div id="newsContainer"></div>
+                <button onclick="goHome()" style="width:100%; padding:15px; background:#eee; border:none; border-radius:12px; font-weight:700; margin-top:20px;">← BACK</button>
             </div>
         </div>
     </main>
 
     <div id="newsModal">
-        <div class="modal-nav" onclick="closeModal()">CLOSE ARTICLE ✖</div>
-        <div id="modalContent"></div>
-    </div>
-
-    <div class="footer">
-        <div class="social-grid">
-            <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png"></a>
-            <a href="https://www.facebook.com/share/1A2bZ7tnBX/" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"></a>
-            <a href="https://www.instagram.com/ehtisham_nazeer" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"></a>
-            <a href="https://www.tiktok.com/@ehtishamnazeer1" target="_blank" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"></a>
-        </div>
-        <p style="font-size:9px; color:#bbb; font-weight:700;">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</p>
+        <div class="close-bar" onclick="closeModal()">CLOSE ✖</div>
+        <div id="modalData"></div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Firebase Setup
+        // Config
         const firebaseConfig = { 
             apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", 
             authDomain: "ehtisham-news.firebaseapp.com", 
@@ -151,66 +109,61 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // 1. App Controls
-        function triggerNotify() { alert("Notification Mode: ENABLED 🔔"); }
-        function triggerInstall() { alert("To Install: Open Browser Menu and select 'Add to Home Screen' 📲"); }
-
-        // 2. Fetch News with Cover Images
-        function openCategory(cat) {
+        // Functions
+        function fetchNews(cat) {
             document.getElementById('home').style.display = 'none';
-            document.getElementById('newsList').style.display = 'block';
-            document.getElementById('catTitle').innerText = "STREAM: " + cat.toUpperCase();
-            
+            document.getElementById('newsFeed').style.display = 'block';
+            document.getElementById('feedTitle').innerText = cat.toUpperCase();
+            document.getElementById('newsContainer').innerHTML = "<p style='text-align:center;'>Scanning for Intel...</p>";
+
             db.collection("news").where("category", "==", cat).orderBy("date", "desc")
             .onSnapshot((snap) => {
                 let html = "";
-                if (snap.empty) {
-                    html = `<div style="text-align:center; padding:50px; color:#999;">📡 SYSTEM IDLE:<br>Stay tuned for updated news.</div>`;
+                if(snap.empty) {
+                    html = "<p style='text-align:center; padding:40px;'>Stay tuned for updated news.</p>";
                 } else {
                     snap.forEach(doc => {
                         const d = doc.data();
-                        const cover = d.imgTop || 'https://via.placeholder.com/600x400?text=EHTISHAM+NEWS';
                         html += `
                         <div class="news-card">
-                            <img src="${cover}" class="news-cover">
-                            <div class="news-details">
+                            <img src="${d.imgTop || 'https://via.placeholder.com/500x300?text=EHTISHAM+NEWS'}" class="news-cover">
+                            <div class="news-info">
                                 <h3>${d.title}</h3>
-                                <p>${d.content.substring(0, 90)}...</p>
-                                <button class="open-btn" onclick="showFull(\`${d.title.replace(/'/g, "\\'")}\`, \`${d.content.replace(/'/g, "\\'")}\`, '${d.imgTop}', '${d.imgMid}', '${d.imgEnd}')">READ FULL ARTICLE</button>
+                                <p>${d.content.substring(0, 100)}...</p>
+                                <button class="read-btn" onclick="openFullArticle(\`${d.title.replace(/'/g, "\\'")}\`, \`${d.content.replace(/'/g, "\\'")}\`, '${d.imgTop}', '${d.imgMid}', '${d.imgEnd}')">READ FULL ARTICLE</button>
                             </div>
                         </div>`;
                     });
                 }
-                document.getElementById("newsItems").innerHTML = html;
+                document.getElementById('newsContainer').innerHTML = html;
+            }, (err) => {
+                document.getElementById('newsContainer').innerHTML = `<p class="error-msg">Error: ${err.message}<br>Check Firebase Rules!</p>`;
             });
         }
 
-        // 3. Article View System
-        function showFull(title, content, i1, i2, i3) {
-            const layout = `
-                <img src="${i1 || ''}" class="modal-image-main" style="display:${i1 ? 'block' : 'none'}">
+        function openFullArticle(t, c, i1, i2, i3) {
+            document.getElementById('modalData').innerHTML = `
+                <img src="${i1}" style="width:100%; display:${i1?'block':'none'};">
                 <div class="modal-body">
-                    <h2>${title}</h2>
-                    <div class="modal-content-text">${content}</div>
-                    ${i2 ? `<img src="${i2}" class="extra-img">` : ''}
-                    ${i3 ? `<img src="${i3}" class="extra-img">` : ''}
+                    <h2>${t}</h2>
+                    <p class="modal-text">${c}</p>
+                    ${i2 ? `<img src="${i2}" class="modal-img">` : ''}
+                    ${i3 ? `<img src="${i3}" class="modal-img">` : ''}
                 </div>
-                <div style="height:100px;"></div>
+                <div style="height:50px;"></div>
             `;
-            document.getElementById('modalContent').innerHTML = layout;
             document.getElementById('newsModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
 
-        // 4. Navigation System
+        function goHome() { 
+            document.getElementById('newsFeed').style.display = 'none'; 
+            document.getElementById('home').style.display = 'block'; 
+        }
+
         function closeModal() { 
             document.getElementById('newsModal').style.display = 'none'; 
             document.body.style.overflow = 'auto'; 
-        }
-        function goHome() { 
-            document.getElementById('newsList').style.display = 'none'; 
-            document.getElementById('home').style.display = 'block'; 
-            window.scrollTo(0,0);
         }
     </script>
 </body>
