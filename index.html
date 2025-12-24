@@ -3,82 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS | PRO</title>
+    <title>EHTISHAM NEWS PRO</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        :root { --gold: #c9a23f; --bg: #ffffff; --card: #ffffff; --shadow: 0 10px 30px rgba(0,0,0,0.06); }
+        :root { --gold: #c9a23f; --bg: #ffffff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background: #fcfcfc; color: #000; }
 
-        /* --- NAVIGATION --- */
-        .top-nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 12px 20px; background: #fff; position: sticky; top: 0; z-index: 1000;
-            border-bottom: 2px solid var(--gold); box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .nav-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1rem; }
+        /* HEADER */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #fff; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold); }
+        .nav-logo { font-family: 'Orbitron'; font-weight: 900; }
         .nav-icons { display: flex; gap: 10px; }
-        .nav-btn { background: #f8f9fa; border: 1px solid #eee; padding: 8px 12px; border-radius: 12px; cursor: pointer; transition: 0.3s; }
-        .nav-btn:active { transform: scale(0.9); background: var(--gold); color: #fff; }
-
-        /* --- HERO SECTION --- */
-        .hero { padding: 40px 20px 20px; text-align: center; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; line-height: 1; }
-        .hero h1 span { color: var(--gold); }
-        .hero p { font-size: 0.8rem; font-weight: 700; color: #aaa; margin-top: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .nav-btn { background: #f8f9fa; border: 1px solid #eee; padding: 8px 12px; border-radius: 12px; cursor: pointer; }
 
         .container { padding: 0 20px 40px; max-width: 500px; margin: 0 auto; }
+        .hero { padding: 40px 20px 20px; text-align: center; }
+        .hero h1 { font-family: 'Orbitron'; font-size: 2.2rem; font-weight: 900; }
+        .hero h1 span { color: var(--gold); }
 
-        /* --- ENHANCED CATEGORY CARDS --- */
-        .cat-card { 
-            background: #fff; border: 1.5px solid #f0f0f0; border-radius: 24px; 
-            padding: 25px; margin-bottom: 18px; cursor: pointer; display: flex; 
-            align-items: center; gap: 20px; box-shadow: var(--shadow);
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
-        }
-        .cat-card::after { content: '→'; position: absolute; right: 25px; color: #eee; font-size: 1.5rem; transition: 0.3s; }
-        .cat-card:active { transform: scale(0.97); border-color: var(--gold); }
-        .cat-card:active::after { color: var(--gold); right: 15px; }
-        .cat-icon { width: 55px; height: 55px; background: #f8f9fa; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 1px solid #f0f0f0; }
+        /* CARDS */
+        .cat-card { background: #fff; border: 1.5px solid #f0f0f0; border-radius: 24px; padding: 25px; margin-bottom: 18px; cursor: pointer; display: flex; align-items: center; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .cat-icon { width: 55px; height: 55px; background: #f8f9fa; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
 
-        /* --- NEWS FEED --- */
-        .news-item { background: #fff; border: 1px solid #eee; border-radius: 30px; margin-bottom: 30px; overflow: hidden; box-shadow: var(--shadow); animation: slideIn 0.5s ease-out; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* NEWS ITEMS */
+        .news-item { background: #fff; border: 1px solid #eee; border-radius: 30px; margin-bottom: 30px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .news-img { width: 100%; height: 230px; object-fit: cover; }
         .news-content { padding: 25px; }
-        .news-content h3 { font-size: 1.4rem; font-weight: 900; margin-bottom: 12px; line-height: 1.2; }
         
-        /* THE FIXED READ MORE BUTTON */
+        /* THE BUTTON - Fixed Z-Index & Logic */
         .read-btn { 
-            width: 100%; padding: 20px; background: #000; color: #fff; 
-            border: none; border-radius: 18px; font-weight: 900; 
-            font-size: 0.9rem; text-transform: uppercase; margin-top: 15px;
-            cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            display: block; width: 100%; padding: 20px; background: #000; color: #fff; 
+            border: none; border-radius: 18px; font-weight: 900; font-size: 0.9rem;
+            text-transform: uppercase; margin-top: 15px; cursor: pointer !important;
+            position: relative; z-index: 999;
         }
 
-        /* --- CONTACT US (REAL LOGOS) --- */
+        /* CONTACT SECTION */
         .contact-section { text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid #f0f0f0; }
-        .contact-title { font-weight: 900; font-size: 0.85rem; color: #222; letter-spacing: 1px; margin-bottom: 20px; }
-        .social-grid { display: flex; justify-content: center; gap: 20px; }
-        .social-link { 
-            width: 50px; height: 50px; border-radius: 15px; display: flex; 
-            align-items: center; justify-content: center; font-size: 1.5rem; 
-            text-decoration: none; background: #fff; border: 1px solid #eee; 
-            transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-        }
-        .fa-whatsapp { color: #25D366; } .fa-facebook { color: #1877F2; } 
-        .fa-instagram { color: #E4405F; } .fa-tiktok { color: #000; }
+        .social-grid { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        .social-link { width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 1px solid #eee; text-decoration: none; }
 
-        /* --- MODAL --- */
-        #articleModal { position: fixed; inset: 0; background: #fff; z-index: 2000; display: none; overflow-y: auto; }
-        .modal-nav { position: sticky; top: 0; background: #000; color: #fff; padding: 20px; text-align: center; font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .modal-body { padding: 0 0 60px 0; }
-        .modal-text { padding: 30px 25px; }
-        .modal-text h2 { font-family: 'Orbitron'; font-size: 1.8rem; margin-bottom: 20px; }
-        .modal-text p { font-size: 1.15rem; line-height: 1.9; color: #333; white-space: pre-wrap; }
-
+        /* MODAL */
+        #articleModal { position: fixed; inset: 0; background: #fff; z-index: 9999; display: none; overflow-y: auto; }
+        .modal-nav { position: sticky; top: 0; background: #000; color: #fff; padding: 20px; text-align: center; font-weight: 900; cursor: pointer; }
+        .modal-body { padding: 30px 25px; }
         .hidden { display: none; }
     </style>
 </head>
@@ -94,19 +64,86 @@
 
     <div class="container">
         <div id="home">
-            <div class="hero">
-                <h1>EHTISHAM <span>NEWS</span></h1>
-                <p>Select Your Command Sector</p>
-            </div>
+            <div class="hero"><h1>EHTISHAM <span>NEWS</span></h1><p style="color:#aaa; font-weight:700; font-size:0.7rem; letter-spacing:2px; margin-top:10px;">PREMIUM DATA STREAM</p></div>
+            <div class="cat-card" onclick="openCat('gaming')"><div class="cat-icon">🎮</div><div><h3 style="font-weight:900;">Gaming Hub</h3><p style="color:#888; font-size:0.8rem;">Patches & Leaks</p></div></div>
+            <div class="cat-card" onclick="openCat('community')"><div class="cat-icon">👥</div><div><h3 style="font-weight:900;">Community News</h3><p style="color:#888; font-size:0.8rem;">Events & Server Alerts</p></div></div>
+            <div class="cat-card" onclick="openCat('esports')"><div class="cat-icon">🏆</div><div><h3 style="font-weight:900;">Esports Sector</h3><p style="color:#888; font-size:0.8rem;">Tournament Standings</p></div></div>
 
-            <div class="cat-card" onclick="openSector('gaming')">
-                <div class="cat-icon">🎮</div>
-                <div><h3 style="font-weight:900;">Gaming Hub</h3><p style="color:#888; font-size:0.8rem;">Patches, Leaks & Updates</p></div>
+            <div class="contact-section">
+                <div style="font-weight:900; font-size:0.8rem;">CONTACT US</div>
+                <div class="social-grid">
+                    <a href="#" class="social-link" style="color:#25D366;"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-link" style="color:#1877F2;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link" style="color:#E4405F;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" style="color:#000;"><i class="fab fa-tiktok"></i></a>
+                </div>
             </div>
-            <div class="cat-card" onclick="openSector('community')">
-                <div class="cat-icon">👥</div>
-                <div><h3 style="font-weight:900;">Community News</h3><p style="color:#888; font-size:0.8rem;">Events & Server Alerts</p></div>
-            </div>
+        </div>
+
+        <div id="feed" class="hidden">
+            <h2 id="catName" style="text-align:center; font-family:Orbitron; color:var(--gold); margin: 30px 0;"></h2>
+            <div id="newsList"></div>
+            <button onclick="window.location.reload()" style="width:100%; padding:20px; background:#f0f0f0; border:none; border-radius:18px; font-weight:900; margin-top:20px;">← BACK</button>
+        </div>
+    </div>
+
+    <div id="articleModal">
+        <div class="modal-nav" onclick="closeModal()">CLOSE ARTICLE ✖</div>
+        <div id="modalContent"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
+        const db = firebase.firestore();
+        let cache = {}; // Global cache to store news data
+
+        function openCat(cat) {
+            document.getElementById('home').classList.add('hidden');
+            document.getElementById('feed').classList.remove('hidden');
+            document.getElementById('catName').innerText = cat.toUpperCase();
+            
+            db.collection("news").where("category", "==", cat).orderBy("date", "desc").onSnapshot(snap => {
+                let html = "";
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    cache[id] = data; // Store data by Firebase ID
+                    
+                    html += `
+                        <div class="news-item">
+                            <img src="${data.imgTop}" class="news-img">
+                            <div class="news-content">
+                                <h3>${data.title}</h3>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">${data.content.substring(0, 100)}...</p>
+                                <button class="read-btn" onclick="showFull('${id}')">Read Full Article</button>
+                            </div>
+                        </div>`;
+                });
+                document.getElementById('newsList').innerHTML = html || "<p style='text-align:center;'>Syncing Data...</p>";
+            });
+        }
+
+        function showFull(id) {
+            const article = cache[id];
+            if(!article) return;
+            document.getElementById('modalContent').innerHTML = `
+                <img src="${article.imgTop}" style="width:100%;">
+                <div class="modal-body">
+                    <h2 style="font-family:Orbitron; margin-bottom:20px;">${article.title}</h2>
+                    <p style="line-height:1.8; font-size:1.1rem; white-space:pre-wrap;">${article.content}</p>
+                    ${article.imgMid ? `<img src="${article.imgMid}" style="width:100%; border-radius:20px; margin-top:20px;">` : ''}
+                </div>`;
+            document.getElementById('articleModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() { document.getElementById('articleModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+    </script>
+</body>
+</html>            </div>
             <div class="cat-card" onclick="openSector('esports')">
                 <div class="cat-icon">🏆</div>
                 <div><h3 style="font-weight:900;">Esports Sector</h3><p style="color:#888; font-size:0.8rem;">Tournament Standings</p></div>
