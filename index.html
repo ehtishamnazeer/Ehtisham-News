@@ -8,104 +8,91 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- CORE THEME --- */
-        :root { --gold: #c9a23f; --bg: #050505; --surface: #121212; --glass: rgba(20, 20, 20, 0.95); }
+        :root { --gold: #c9a23f; --bg: #050505; --surface: #121212; }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body { font-family: 'Outfit', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
 
-        /* --- PRELOADER --- */
-        #loader { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
-        .ff-logo { width: 120px; animation: glow 2s infinite ease-in-out; filter: drop-shadow(0 0 10px var(--gold)); }
-        @keyframes glow { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.8; } }
+        /* PRELOADER */
+        #loader { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: 0.5s; }
+        .loader-text { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 5px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.1); } }
 
-        /* --- UI SHELL --- */
-        .app-wrap { max-width: 500px; margin: 0 auto; min-height: 100vh; position: relative; background: var(--bg); border-left: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; }
+        /* UI SHELL */
+        .app-wrap { max-width: 500px; margin: 0 auto; min-height: 100vh; background: var(--bg); position: relative; border-left: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; }
         
         .header { 
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
-            background: rgba(5,5,5,0.9); backdrop-filter: blur(10px); 
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); 
             position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #222;
         }
-        .logo h1 { font-family: 'Orbitron'; font-size: 1.1rem; letter-spacing: 1px; }
+        .logo h1 { font-family: 'Orbitron'; font-size: 1.1rem; }
         .logo span { color: var(--gold); }
 
         .install-btn { 
-            background: linear-gradient(45deg, var(--gold), #e0bd58); 
-            color: #000; padding: 8px 16px; border-radius: 20px; 
-            font-weight: 800; font-size: 0.7rem; text-decoration: none; 
-            box-shadow: 0 4px 15px rgba(201,162,63,0.3); transition: 0.3s;
+            background: linear-gradient(45deg, var(--gold), #f3cf7a); 
+            color: #000; padding: 8px 15px; border-radius: 20px; 
+            font-weight: 900; font-size: 0.7rem; text-decoration: none;
+            box-shadow: 0 0 20px rgba(201,162,63,0.2); transition: 0.3s;
         }
-        .install-btn:active { transform: scale(0.95); }
 
-        /* --- HERO SECTION --- */
+        /* PREMIUM SECTOR CARDS */
         .container { padding: 20px; }
-        .section-title { color: var(--gold); font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 15px; opacity: 0.8; }
+        .section-tag { color: var(--gold); font-family: 'Orbitron'; font-size: 0.6rem; letter-spacing: 4px; margin-bottom: 20px; display: block; text-align: center; opacity: 0.7; }
 
-        /* --- CATEGORY CARDS (Gaming Hub) --- */
-        .grid { display: grid; gap: 12px; }
+        .grid { display: grid; gap: 15px; }
         
         .cat-card { 
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border: 1px solid #222; border-radius: 16px; padding: 15px;
-            display: flex; align-items: center; gap: 15px;
-            position: relative; overflow: hidden; cursor: pointer; transition: 0.2s;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); 
+            border-radius: 18px; padding: 20px; display: flex; align-items: center; gap: 15px;
+            border: 1px solid #222; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden; cursor: pointer;
         }
-        .cat-card:active { transform: scale(0.98); border-color: var(--gold); }
         
-        /* Gold Shine Effect */
+        /* Gold Shine Effect on Hover */
         .cat-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(201,162,63,0.1), transparent);
-            transform: skewX(-25deg); transition: 0.5s;
+            transition: 0.5s;
         }
-        .cat-card:hover::before { left: 150%; }
+        .cat-card:hover::before { left: 100%; }
+        .cat-card:active { transform: scale(0.95); border-color: var(--gold); }
 
         .icon-box { 
-            width: 45px; height: 45px; background: #222; border-radius: 12px; 
+            width: 50px; height: 50px; background: #222; border-radius: 14px; 
             display: flex; align-items: center; justify-content: center; 
-            color: var(--gold); font-size: 1.2rem; border: 1px solid #333;
+            color: var(--gold); font-size: 1.4rem; border: 1px solid #333;
         }
-        .cat-info h3 { font-size: 1rem; font-weight: 600; color: #eee; margin-bottom: 2px; }
-        .cat-info p { font-size: 0.7rem; color: #777; }
+        .cat-info h3 { font-size: 1.1rem; color: #fff; margin-bottom: 4px; }
+        .cat-info p { font-size: 0.75rem; color: #777; font-weight: 300; }
 
-        /* --- NEWS FEED --- */
-        .news-card { 
-            background: #111; border-radius: 16px; overflow: hidden; margin-bottom: 20px; 
-            border: 1px solid #222; animation: fadeUp 0.4s ease forwards;
-        }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* NEWS CARDS */
+        .news-card { background: #111; border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid #222; animation: slideUp 0.5s ease forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        .news-img { width: 100%; height: 180px; object-fit: cover; opacity: 0.9; }
-        .news-data { padding: 15px; }
-        .news-data h2 { font-size: 1.1rem; line-height: 1.4; margin-bottom: 10px; color: #eee; }
-        
-        .action-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .date { font-size: 0.7rem; color: #555; }
-        .read-btn { 
-            background: transparent; border: 1px solid var(--gold); color: var(--gold); 
-            padding: 6px 15px; border-radius: 8px; font-size: 0.7rem; font-weight: 700;
+        .news-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; filter: brightness(0.8); transition: 0.5s; }
+        .news-card:hover .news-img { filter: brightness(1); transform: scale(1.05); }
+        .news-data { padding: 20px; }
+        .news-data h2 { font-size: 1.2rem; margin-bottom: 15px; line-height: 1.3; }
+        .view-btn { 
+            width: 100%; padding: 12px; background: transparent; color: var(--gold); 
+            border: 1px solid var(--gold); border-radius: 12px; font-weight: 800; cursor: pointer;
+            transition: 0.3s;
         }
+        .view-btn:hover { background: var(--gold); color: #000; }
 
-        /* --- MODAL (Article View) --- */
-        #modal { position: fixed; inset: 0; background: #000; z-index: 2000; display: none; overflow-y: auto; }
-        .close-bar { 
-            position: sticky; top: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px);
-            padding: 15px; display: flex; justify-content: flex-end; z-index: 10;
-        }
-        .close-btn { color: #fff; font-size: 1.5rem; cursor: pointer; }
-        .modal-content { padding: 0 20px 50px 20px; max-width: 600px; margin: 0 auto; }
-        .modal-title { font-family: 'Orbitron'; color: var(--gold); font-size: 1.4rem; line-height: 1.3; margin: 15px 0; }
-        .modal-text { font-size: 1rem; line-height: 1.7; color: #ccc; white-space: pre-wrap; }
+        /* FULL ARTICLE MODAL */
+        #modal { position: fixed; inset: 0; background: #000; z-index: 20000; display: none; overflow-y: auto; }
+        .modal-header { position: sticky; top: 0; background: rgba(0,0,0,0.9); padding: 15px; text-align: right; z-index: 10; }
+        .close-icon { color: var(--gold); font-size: 1.5rem; cursor: pointer; }
+        .modal-body { padding: 0 20px 40px; }
         
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div id="loader">
-        <h2 style="font-family:'Orbitron'; color:var(--gold); letter-spacing:2px;">LOADING...</h2>
-    </div>
+    <div id="loader"><div class="loader-text">INITIALIZING...</div></div>
 
     <div class="app-wrap">
         <header class="header">
@@ -115,95 +102,74 @@
 
         <div class="container">
             <div id="home-view">
-                <p class="section-title">SYSTEM CHANNELS</p>
+                <span class="section-tag">OPERATIONAL SECTORS</span>
                 <div class="grid">
                     <div class="cat-card" onclick="openCat('gaming')">
-                        <div class="icon-box"><i class="fas fa-gamepad"></i></div>
-                        <div class="cat-info"><h3>Gaming Hub</h3><p>Patches, Leaks & Updates</p></div>
+                        <div class="icon-box"><i class="fas fa-crosshairs"></i></div>
+                        <div class="cat-info"><h3>Gaming Hub</h3><p>Patches & Tonight leaks</p></div>
                     </div>
                     <div class="cat-card" onclick="openCat('community')">
-                        <div class="icon-box"><i class="fas fa-fire"></i></div>
-                        <div class="cat-info"><h3>Community</h3><p>Events & Giveaways</p></div>
+                        <div class="icon-box"><i class="fas fa-users-rays"></i></div>
+                        <div class="cat-info"><h3>Community</h3><p>Events & member news</p></div>
                     </div>
                     <div class="cat-card" onclick="openCat('esports')">
                         <div class="icon-box"><i class="fas fa-trophy"></i></div>
-                        <div class="cat-info"><h3>Esports Hub</h3><p>Tournaments & Results</p></div>
+                        <div class="cat-info"><h3>Esports Hub</h3><p>Global tournament circuit</p></div>
                     </div>
-                </div>
-
-                <div style="margin-top:50px; text-align:center; opacity:0.3;">
-                    <i class="fas fa-shield-alt" style="font-size:2rem; margin-bottom:10px;"></i>
-                    <p style="font-size:0.6rem;">SECURE CONNECTION ESTABLISHED</p>
                 </div>
             </div>
 
             <div id="feed-view" class="hidden">
-                <div onclick="backToHome()" style="padding:10px 0; color:var(--gold); font-weight:700; cursor:pointer; display:flex; align-items:center; gap:10px;">
-                    <i class="fas fa-arrow-left"></i> BACK TO HUB
+                <div onclick="backToHome()" style="color:var(--gold); margin-bottom:20px; cursor:pointer; font-weight:800;">
+                    <i class="fas fa-chevron-left"></i> RETURN TO HUB
                 </div>
-                <div id="news-list" style="margin-top:10px;"></div>
+                <div id="news-list"></div>
             </div>
         </div>
     </div>
 
     <div id="modal">
-        <div class="close-bar"><i class="fas fa-times close-btn" onclick="closeModal()"></i></div>
-        <div id="modal-content" class="modal-content"></div>
+        <div class="modal-header"><i class="fas fa-times-circle close-icon" onclick="closeModal()"></i></div>
+        <div id="modal-content" class="modal-body"></div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
-        // 1. Firebase Init
-        const firebaseConfig = {
+        const config = {
             apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
-            projectId: "ehtisham-news",
-            messagingSenderId: "951936357732",
-            appId: "1:951936357732:web:75039f69741e974e384f32"
+            projectId: "ehtisham-news"
         };
-        firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(config);
         const db = firebase.firestore();
-
-        // 2. Preloader Logic
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
-            }, 1000);
-        });
-
-        // 3. Navigation Logic
         let cache = {};
 
-        function openCat(category) {
+        window.onload = () => {
+            setTimeout(() => { document.getElementById('loader').style.opacity = '0'; 
+            setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
+            }, 1200);
+        };
+
+        function openCat(cat) {
             document.getElementById('home-view').classList.add('hidden');
             document.getElementById('feed-view').classList.remove('hidden');
-            document.getElementById('news-list').innerHTML = `<p style="text-align:center; color:#666; margin-top:20px;">Fetching Data...</p>`;
+            document.getElementById('news-list').innerHTML = "<p style='text-align:center; opacity:0.5;'>Loading Intel...</p>";
 
-            db.collection("news").where("category", "==", category).get().then((querySnapshot) => {
+            db.collection("news").where("category", "==", cat).onSnapshot(snap => {
                 let html = "";
-                if(querySnapshot.empty){
-                    html = `<p style="text-align:center; color:#888;">No news available in this section.</p>`;
-                } else {
-                    querySnapshot.forEach((doc) => {
-                        let data = doc.data();
-                        cache[doc.id] = data;
-                        html += `
-                            <div class="news-card" onclick="openArticle('${doc.id}')">
-                                <img src="${data.imgTop}" class="news-img">
-                                <div class="news-data">
-                                    <h2>${data.title}</h2>
-                                    <div class="action-row">
-                                        <span class="date">READ ARTICLE</span>
-                                        <button class="read-btn">OPEN</button>
-                                    </div>
-                                </div>
+                snap.forEach(doc => {
+                    const d = doc.data(); cache[doc.id] = d;
+                    html += `
+                        <div class="news-card">
+                            <img src="${d.imgTop}" class="news-img">
+                            <div class="news-data">
+                                <h2>${d.title}</h2>
+                                <button class="view-btn" onclick="openFull('${doc.id}')">ACCESS FULL DATA</button>
                             </div>
-                        `;
-                    });
-                }
-                document.getElementById('news-list').innerHTML = html;
+                        </div>`;
+                });
+                document.getElementById('news-list').innerHTML = html || "<p style='text-align:center;'>No Data Found.</p>";
             });
         }
 
@@ -212,18 +178,20 @@
             document.getElementById('home-view').classList.remove('hidden');
         }
 
-        function openArticle(id) {
-            let data = cache[id];
+        function openFull(id) {
+            const a = cache[id];
             document.getElementById('modal-content').innerHTML = `
-                <img src="${data.imgTop}" style="width:100%; border-radius:12px; margin-bottom:20px;">
-                <h1 class="modal-title">${data.title}</h1>
-                <p class="modal-text">${data.content}</p>
+                <img src="${a.imgTop}" style="width:100%; border-radius:15px; margin-bottom:20px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+                <h1 style="color:var(--gold); font-family:Orbitron; font-size:1.5rem; margin-bottom:15px;">${a.title}</h1>
+                <p style="font-size:1rem; line-height:1.8; color:#bbb; white-space:pre-wrap;">${a.content}</p>
             `;
             document.getElementById('modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
     </script>
 </body>
