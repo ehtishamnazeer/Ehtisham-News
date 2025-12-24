@@ -1,208 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ehtisham News | Elite Gaming Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ehtisham News | Elite Gaming Portal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a23f;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.08);
+        }
 
-<style>
-:root {
-  --gold: #c9a23f;
-  --bg: #050505;
-  --glass: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --thermal-glow: radial-gradient(circle at 50% 0%, #1a150a 0%, #050505 70%);
-}
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body {
+            margin: 0; font-family: 'Inter', sans-serif;
+            background: var(--bg); color: #fff; min-height: 100vh;
+            display: flex; flex-direction: column; overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% -20%, #1a150a 0%, #050505 80%);
+        }
 
-body {
-  margin: 0; font-family: 'Inter', sans-serif;
-  background-color: var(--bg);
-  background-image: var(--thermal-glow);
-  color: #fff; min-height: 100vh;
-  display: flex; flex-direction: column;
-}
+        /* --- 1. PERFECT CENTERED OPENING ANIMATION --- */
+        #splash {
+            position: fixed; inset: 0; background: #000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 10000; transition: all 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        }
 
-/* --- SMOOTH INTRO --- */
-#splash {
-  position: fixed; inset: 0; background: #000;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  z-index: 10000; transition: transform 0.8s cubic-bezier(0.8, 0, 0.2, 1), opacity 0.5s;
-}
+        .splash-logo {
+            font-family: 'Orbitron', sans-serif; font-size: 2.2rem;
+            letter-spacing: 8px; text-align: center;
+            animation: logoScale 2s ease-in-out infinite;
+        }
+        .splash-logo span { color: var(--gold); text-shadow: 0 0 30px rgba(201, 162, 63, 0.5); }
 
-#splash h1 {
-  font-family: 'Orbitron', sans-serif; font-size: 2rem;
-  letter-spacing: 6px; color: #fff; margin: 0;
-  animation: textPulse 2s infinite ease-in-out;
-}
-#splash h1 span { color: var(--gold); }
+        .loading-line {
+            width: 120px; height: 1px; background: rgba(255,255,255,0.1);
+            margin-top: 20px; position: relative; overflow: hidden;
+        }
+        .loading-line::after {
+            content: ''; position: absolute; left: -100%; width: 100%; height: 100%;
+            background: var(--gold); animation: loadBar 1.5s infinite;
+        }
 
-@keyframes textPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.98); } }
+        @keyframes logoScale { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } }
+        @keyframes loadBar { 100% { left: 100%; } }
 
-/* --- NAVIGATION / HEADER --- */
-header {
-  padding: 40px 25px 20px; text-align: left;
-}
-header h2 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; margin: 0; }
-header h2 span { color: var(--gold); }
-.sub-nav { font-size: 10px; color: #444; letter-spacing: 2px; margin-top: 5px; font-weight: 800; }
+        /* --- 2. SMOOTH HEADER --- */
+        header { padding: 50px 25px 20px; max-width: 800px; margin: 0 auto; width: 100%; }
+        header h2 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; margin: 0; cursor: pointer; }
+        header span { color: var(--gold); }
+        .tagline { font-size: 9px; color: #444; letter-spacing: 3px; margin-top: 5px; font-weight: 800; text-transform: uppercase; }
 
-/* --- MODERN GLASS CARDS --- */
-.container { padding: 0 20px 40px; max-width: 600px; margin: 0 auto; width: 100%; }
+        /* --- 3. ENHANCED USER-FRIENDLY CARDS --- */
+        .container { padding: 0 20px 40px; max-width: 600px; margin: 0 auto; width: 100%; }
 
-.card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 28px; padding: 25px; margin-bottom: 18px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative; overflow: hidden;
-}
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 24px; padding: 25px; margin-bottom: 18px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer; position: relative; z-index: 5;
+            backdrop-filter: blur(10px);
+        }
+        .card:active { transform: scale(0.96); border-color: var(--gold); background: rgba(255,255,255,0.05); }
 
-.card:active { transform: scale(0.95); background: rgba(255,255,255,0.06); }
+        .card h3 { margin: 0 0 10px; font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .card p { margin: 0; font-size: 0.85rem; color: #666; line-height: 1.6; }
 
-.card h3 { 
-  margin: 0 0 10px; font-size: 1.1rem; color: #fff; font-weight: 700; 
-  display: flex; align-items: center; gap: 10px;
-}
-.card p { margin: 0; font-size: 0.9rem; color: #777; line-height: 1.6; font-weight: 400; }
+        /* --- 4. PRECISE FOOTER DESIGN (Matches Screenshot) --- */
+        .footer-wrap {
+            margin-top: auto; padding: 60px 20px 40px; text-align: center;
+            background: linear-gradient(to top, #000 0%, transparent 100%);
+        }
 
-/* --- SMOOTH PAGE SWITCHING --- */
-.page { display: none; animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
-@keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .secure-title { font-size: 10px; letter-spacing: 5px; color: #222; font-weight: 900; margin-bottom: 25px; }
 
-/* --- ELITE SOCIAL FOOTER --- */
-.footer-wrap {
-  margin-top: auto; padding: 50px 20px;
-  background: linear-gradient(to top, #000, transparent);
-  text-align: center;
-}
+        .social-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 35px; }
+        
+        .social-btn {
+            width: 65px; height: 65px; background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .social-btn:active { transform: scale(0.8); border-color: var(--gold); }
+        .social-btn img { width: 30px; height: 30px; margin-bottom: 4px; }
+        .social-btn span { font-size: 8px; font-weight: 800; color: #444; }
 
-.social-container {
-  display: flex; justify-content: center; gap: 20px;
-  margin: 25px 0;
-}
+        .copy-text { font-size: 10px; color: #222; font-weight: 700; letter-spacing: 1px; margin-top: 20px; }
 
-.social-circle {
-  width: 55px; height: 55px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 18px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-decoration: none; transition: 0.3s;
-}
-
-.social-circle:active { transform: scale(0.85); border-color: var(--gold); }
-
-.social-circle img { width: 28px; height: 28px; margin-bottom: 4px; }
-.social-circle span { font-size: 8px; font-weight: 800; color: #555; }
-
-.contact-email { font-size: 11px; color: #333; margin-top: 20px; text-decoration: none; }
-</style>
+        /* --- PAGE LOGIC --- */
+        .page { display: none; animation: pageFade 0.6s ease-out; }
+        @keyframes pageFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
-
 <body>
 
-<div id="splash">
-  <h1>EHTISHAM <span>NEWS</span></h1>
-  <div style="width: 20px; height: 20px; border: 2px solid var(--gold); border-top-color: transparent; border-radius: 50%; margin-top: 30px; animation: spin 0.8s linear infinite;"></div>
-</div>
-
-<header>
-  <h2 onclick="goHome()">EHTISHAM <span>NEWS</span></h2>
-  <div class="sub-nav">PREMIUM GAMING INTEL</div>
-</header>
-
-<main style="flex: 1;">
-  <div id="home" class="page" style="display:block;">
-    <div class="container">
-      <div class="card" onclick="openCategory('gaming')">
-        <h3><span>🔥</span> Gaming Feed</h3>
-        <p>Real-time updates on AAA titles and server status.</p>
-      </div>
-      <div class="card" onclick="openCategory('esports')">
-        <h3><span>🏆</span> Esports Hub</h3>
-        <p>Global tournament schedules and roster changes.</p>
-      </div>
-      <div class="card" onclick="openCategory('community')">
-        <h3><span>👥</span> Community</h3>
-        <p>Join elite discussions and local gaming events.</p>
-      </div>
+    <div id="splash">
+        <div class="splash-logo">EHTISHAM <span>NEWS</span></div>
+        <div class="loading-line"></div>
     </div>
-  </div>
 
-  <div id="newsList" class="page">
-    <div class="container">
-      <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size: 1rem; margin-bottom: 25px;"></h2>
-      <div id="newsItems"></div>
-      <button onclick="goHome()" style="background:var(--glass); color:#aaa; border:1px solid var(--glass-border); padding:12px 25px; border-radius:15px; font-weight:700; cursor:pointer; width: 100%; margin-top: 20px;">BACK TO COMMAND</button>
+    <header>
+        <h2 onclick="goHome()">EHTISHAM <span>NEWS</span></h2>
+        <div class="tagline">Premium Gaming Intelligence</div>
+    </header>
+
+    <main style="flex: 1;">
+        <div id="home" class="page" style="display:block;">
+            <div class="container">
+                <div class="card" onclick="openCategory('gaming')">
+                    <h3>🔥 Gaming Sector</h3>
+                    <p>Direct access to patch leaks, server status, and hidden events.</p>
+                </div>
+                <div class="card" onclick="openCategory('esports')">
+                    <h3>🏆 Esports Hub</h3>
+                    <p>Global pro-circuit standings and roster movement tracking.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="newsList" class="page">
+            <div class="container">
+                <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size:1rem; margin-bottom:25px;"></h2>
+                <div id="newsItems"></div>
+                <button onclick="goHome()" style="width:100%; padding:16px; border-radius:18px; background:var(--card-bg); border:1px solid var(--border); color:#fff; font-weight:800; cursor:pointer; margin-top:20px;">BACK TO COMMAND</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="footer-wrap">
+        <div class="secure-title">SECURE CHANNELS</div>
+        <div class="social-row">
+            <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA"><span>WA</span>
+            </a>
+            <a href="https://www.facebook.com/share/16UChCgJTn/" class="social-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="FB"><span>FB</span>
+            </a>
+            <a href="https://www.instagram.com/ehtisham_nazeer" class="social-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG"><span>IG</span>
+            </a>
+            <a href="https://www.tiktok.com/@ehtishamnazeer1" class="social-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK"><span>TK</span>
+            </a>
+        </div>
+        <a href="mailto:contact@ehtishamnews.com" style="text-decoration:none; color:#333; font-size:10px; font-weight:700;">CONTACT@EHTISHAMNEWS.COM</a>
+        <div class="copy-text">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</div>
     </div>
-  </div>
-</main>
 
-<div class="footer-wrap">
-  <div style="font-size: 10px; letter-spacing: 4px; color: #222; font-weight: 900;">SECURE CHANNELS</div>
-  <div class="social-container">
-    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" class="social-circle">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WA"><span>WA</span>
-    </a>
-    <a href="https://www.facebook.com/share/16UChCgJTn/" class="social-circle">
-      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="FB"><span>FB</span>
-    </a>
-    <a href="https://www.instagram.com/ehtisham_nazeer" class="social-circle">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG"><span>IG</span>
-    </a>
-    <a href="https://www.tiktok.com/@ehtishamnazeer1" class="social-circle">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK"><span>TK</span>
-    </a>
-  </div>
-  <a href="mailto:contact@ehtishamnews.com" class="contact-email">CONTACT@EHTISHAMNEWS.COM</a>
-  <p style="font-size: 8px; color: #1a1a1a; margin-top: 30px;">© 2025 EHTISHAM NEWS | OPERATIONAL</p>
-</div>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
+            authDomain: "ehtisham-news.firebaseapp.com",
+            projectId: "ehtisham-news"
+        });
+        const db = firebase.firestore();
 
-<script>
-firebase.initializeApp({
-  apiKey:"AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao",
-  authDomain:"ehtisham-news.firebaseapp.com",
-  projectId:"ehtisham-news"
-});
-const db = firebase.firestore();
+        // High-End Splash Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const s = document.getElementById('splash');
+                s.style.opacity = '0';
+                s.style.transform = 'scale(1.1)'; // Professional zoom-out effect
+                setTimeout(() => s.remove(), 800);
+            }, 3000);
+        });
 
-// Smooth Splash Exit
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const s = document.getElementById('splash');
-    s.style.opacity = '0';
-    s.style.transform = 'translateY(-100%)';
-    setTimeout(() => s.remove(), 800);
-  }, 3000);
-});
+        function openCategory(cat) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('newsList').style.display = 'block';
+            document.getElementById('catTitle').innerText = cat.toUpperCase() + " DATA STREAM";
+            
+            db.collection("news").where("category","==",cat).orderBy("date","desc").get().then(snap => {
+                let html = "";
+                snap.forEach(d => {
+                    html += `<div class="card" style="cursor:default;"><h3>${d.data().title}</h3><p>${d.data().content}</p></div>`;
+                });
+                document.getElementById("newsItems").innerHTML = html || "<p style='color:#333'>Empty Stream.</p>";
+            }).catch(e => {
+                document.getElementById("newsItems").innerHTML = "<p style='color:red'>Stream Error: Check Indexing.</p>";
+            });
+        }
 
-function openCategory(cat) {
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('newsList').style.display = 'block';
-  document.getElementById('catTitle').innerText = cat.toUpperCase() + " SECTOR";
-  
-  db.collection("news").where("category","==",cat).orderBy("date","desc").get().then(snap => {
-    let html = "";
-    snap.forEach(d => {
-      html += `<div class="card"><h3>${d.data().title}</h3><p>${d.data().content.substring(0,110)}...</p></div>`;
-    });
-    document.getElementById("newsItems").innerHTML = html || "<p style='color:#333'>Fetching data...</p>";
-  });
-}
-
-function goHome() {
-  document.getElementById('newsList').style.display = 'none';
-  document.getElementById('home').style.display = 'block';
-}
-</script>
-
-<style> @keyframes spin { 100% { transform: rotate(360deg); } } </style>
+        function goHome() {
+            document.getElementById('newsList').style.display = 'none';
+            document.getElementById('home').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
