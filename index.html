@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS | V-FINAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <title>EHTISHAM NEWS | PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -12,47 +12,59 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body { font-family: 'Outfit', sans-serif; background: #ffffff; color: var(--dark); overflow-x: hidden; }
 
-        /* --- PRE-LOADER (ANIMATION ONLY ONCE) --- */
-        #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5s; }
-        .loader-text { font-family: 'Orbitron'; color: #fff; font-size: 1.8rem; }
+        /* --- ONE-TIME LOADER --- */
+        #loader { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .loader-text { font-family: 'Orbitron'; color: #fff; font-size: 1.8rem; letter-spacing: 2px; }
         .loader-sub { color: var(--gold); font-size: 0.8rem; margin-top: 10px; letter-spacing: 5px; animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         /* --- STICKY NAV --- */
         .nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #fff; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold); }
-        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1rem; }
+        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem; }
         .logo span { color: var(--gold); }
+        .install-btn { background: #000; color: #fff; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 900; font-size: 0.7rem; cursor: pointer; }
 
         .container { padding: 20px; max-width: 500px; margin: 0 auto; }
 
-        /* --- HD IMAGE FIX (STRICT ASPECT RATIO) --- */
-        .news-box { background: #fff; border-radius: 20px; margin-bottom: 25px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        
-        /* Pixel Phathny Ka Ilaj: Object Fit Cover + Fixed Height Container */
-        .img-wrap { width: 100%; height: 220px; background: #eee; overflow: hidden; position: relative; }
-        .news-img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; image-rendering: -webkit-optimize-contrast; }
+        /* --- HD IMAGE FIX (STRICT) --- */
+        .news-box { background: #fff; border-radius: 24px; margin-bottom: 30px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .img-hd-wrap { width: 100%; height: 230px; background: #f0f0f0; overflow: hidden; }
+        .news-img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; /* Fixed: Ab image stretch nahi hogi */
+            image-rendering: -webkit-optimize-contrast; 
+            display: block; 
+        }
 
-        .news-body { padding: 20px; }
-        .read-btn { width: 100%; padding: 16px; background: #000; color: #fff; border-radius: 12px; font-weight: 800; border: none; cursor: pointer; }
+        .news-body { padding: 25px; }
+        .news-body h2 { font-size: 1.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 12px; }
+        .read-btn { width: 100%; padding: 18px; background: #000; color: #fff; border-radius: 16px; font-weight: 900; border: none; cursor: pointer; }
 
         /* --- SECTOR CARDS --- */
-        .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .card-icon { width: 50px; height: 50px; background: #f9f9f9; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border: 1px solid #eee; }
+        .card { background: #fff; border-radius: 22px; padding: 25px; margin-bottom: 18px; display: flex; align-items: center; gap: 20px; border: 1.5px solid #f5f5f5; box-shadow: 0 5px 15px rgba(0,0,0,0.02); cursor: pointer; }
+        .card-icon { width: 55px; height: 55px; background: #f9f9f9; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 1px solid #eee; }
 
-        /* --- CONTACT BUTTONS (WORKING LINKS) --- */
-        .footer { text-align: center; padding: 30px 0; border-top: 1px solid #eee; margin-top: 30px; }
-        .social-row { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
-        .s-link { width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border: 1px solid #eee; text-decoration: none; }
-        /* Brand Colors */
-        .fa-whatsapp { color: #25D366; } .fa-facebook-f { color: #1877F2; } .fa-instagram { color: #E4405F; } .fa-tiktok { color: #000; }
+        /* --- CUSTOMER SUPPORT (CLICKABLE) --- */
+        .footer { text-align: center; margin-top: 40px; padding: 40px 20px; border-top: 1px solid #f0f0f0; }
+        .social-row { display: flex; justify-content: center; gap: 18px; margin: 25px 0; }
+        .s-link { 
+            width: 55px; height: 55px; border-radius: 18px; display: flex; align-items: center; 
+            justify-content: center; font-size: 1.6rem; border: 1px solid #eee; 
+            text-decoration: none !important; /* Fix: No purple color */
+            transition: 0.3s;
+        }
+        /* Strict Branding Colors */
+        .wa-color { color: #25D366 !important; }
+        .fb-color { color: #1877F2 !important; }
+        .ig-color { color: #E4405F !important; }
+        .tk-color { color: #000000 !important; }
+        .s-link:active { transform: scale(0.9); background: #fafafa; }
 
+        /* --- MODAL --- */
         #modal { position: fixed; inset: 0; background: #fff; z-index: 5000; display: none; overflow-y: auto; }
-        .modal-close { position: sticky; top: 0; background: #000; color: #fff; padding: 15px; text-align: center; font-weight: 800; }
+        .modal-top { position: sticky; top: 0; background: #000; color: #fff; padding: 20px; text-align: center; font-weight: 900; cursor: pointer; }
 
         .hidden { display: none !important; }
-
-        /* --- INSTALL BUTTON --- */
-        .install-btn { background: #000; color: #fff; border: none; padding: 10px 15px; border-radius: 10px; font-weight: 800; font-size: 0.7rem; display: flex; align-items: center; gap: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -64,12 +76,12 @@
 
     <div class="nav">
         <div class="logo">EHTISHAM <span>NEWS</span></div>
-        <button id="installBtn" class="install-btn"><i class="fas fa-plus-square"></i> INSTALL APP</button>
+        <button id="btnInstall" class="install-btn">INSTALL APP</button>
     </div>
 
     <div class="container">
-        <div id="homePage">
-            <h2 style="font-family:Orbitron; text-align:center; font-size:0.8rem; margin: 20px 0; color:#999; letter-spacing:2px;">SELECT SECTOR</h2>
+        <div id="home">
+            <h2 style="font-family:Orbitron; text-align:center; font-size:0.8rem; margin: 25px 0; color:#999; letter-spacing:3px;">SELECT SECTOR</h2>
             
             <div class="card" onclick="openSector('gaming')">
                 <div class="card-icon">🎮</div>
@@ -87,26 +99,26 @@
             </div>
 
             <div class="footer">
-                <p style="font-weight: 800; font-size: 0.8rem;">CONTACT US</p>
+                <p style="font-weight: 900; font-size: 0.9rem; letter-spacing: 1px;">CUSTOMER SUPPORT</p>
                 <div class="social-row">
-                    <a href="https://wa.me/923000000000" class="s-link"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://facebook.com/yourpage" class="s-link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://instagram.com/yourprofile" class="s-link"><i class="fab fa-instagram"></i></a>
-                    <a href="https://tiktok.com/@yourprofile" class="s-link"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://wa.me/yournumber" class="s-link wa-color"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://facebook.com/yourlink" class="s-link fb-color"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/yourlink" class="s-link ig-color"><i class="fab fa-instagram"></i></a>
+                    <a href="https://tiktok.com/@yourlink" class="s-link tk-color"><i class="fab fa-tiktok"></i></a>
                 </div>
-                <p style="font-size: 0.7rem; color: #ccc;">© 2025 EHTISHAM NAZEER</p>
+                <p style="font-size: 0.7rem; color: #ccc;">© 2025 EHTISHAM NAZEER | V-PRO</p>
             </div>
         </div>
 
-        <div id="feedPage" class="hidden">
-            <h2 id="sectorTitle" style="font-family:Orbitron; color:var(--gold); text-align:center; margin-bottom:20px;"></h2>
-            <div id="newsList"></div>
-            <button onclick="goBack()" style="width:100%; padding:18px; background:#f0f0f0; border:none; border-radius:12px; font-weight:800; margin-top:20px;">← BACK</button>
+        <div id="feed" class="hidden">
+            <h2 id="sectorTitle" style="font-family:Orbitron; color:var(--gold); text-align:center; margin-bottom:20px; text-transform:uppercase;"></h2>
+            <div id="newsItems"></div>
+            <button onclick="goHome()" style="width:100%; padding:20px; background:#f5f5f5; border:none; border-radius:18px; font-weight:900; margin-top:20px;">← BACK TO MENU</button>
         </div>
     </div>
 
     <div id="modal">
-        <div class="modal-close" onclick="closeModal()">CLOSE ✖</div>
+        <div class="modal-top" onclick="closeModal()">BACK TO FEED ✖</div>
         <div id="modalContent"></div>
     </div>
 
@@ -114,40 +126,25 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // LOAD SCREEN FIX
-        window.addEventListener('load', () => {
-            setTimeout(() => { document.getElementById('loader').style.opacity = '0'; 
-            setTimeout(() => document.getElementById('loader').style.display = 'none', 500); }, 1500);
-        });
+        // BOOT ANIMATION FIX
+        window.onload = () => { setTimeout(() => { 
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+        }, 1500); };
 
-        // INSTALL LOGIC (PWA)
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installBtn').style.display = 'flex';
-        });
-
-        document.getElementById('installBtn').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') deferredPrompt = null;
-            } else {
-                alert("Please use 'Add to Home Screen' from browser menu.");
-            }
-        });
-
-        // FIREBASE & DATA
+        // FIREBASE SETUP
         firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
         const db = firebase.firestore();
         let cache = {};
 
+        // BACK BUTTON LOGIC (FIXED)
+        history.replaceState({page: 'home'}, '');
         function openSector(cat) {
-            history.pushState({p: 1}, "");
-            document.getElementById('homePage').classList.add('hidden');
-            document.getElementById('feedPage').classList.remove('hidden');
+            history.pushState({page: 'feed'}, '');
+            document.getElementById('home').classList.add('hidden');
+            document.getElementById('feed').classList.remove('hidden');
             document.getElementById('sectorTitle').innerText = cat;
+            window.scrollTo(0,0);
 
             db.collection("news").where("category", "==", cat).orderBy("date", "desc").onSnapshot(snap => {
                 let html = "";
@@ -155,33 +152,47 @@
                     const d = doc.data(); const id = doc.id; cache[id] = d;
                     html += `
                         <div class="news-box">
-                            <div class="img-wrap"><img src="${d.imgTop}" class="news-img"></div>
+                            <div class="img-hd-wrap"><img src="${d.imgTop}" class="news-img"></div>
                             <div class="news-body">
-                                <h2 style="font-weight:800; font-size:1.3rem; margin-bottom:10px;">${d.title}</h2>
-                                <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">${d.content.substring(0,80)}...</p>
-                                <button class="read-btn" onclick="openFull('${id}')">Read Full Article</button>
+                                <h2>${d.title}</h2>
+                                <p style="color:#666; margin-bottom:20px;">${d.content.substring(0,90)}...</p>
+                                <button class="read-btn" onclick="openArt('${id}')">Full Intel</button>
                             </div>
                         </div>`;
                 });
-                document.getElementById('newsList').innerHTML = html || "<p style='text-align:center;'>Loading...</p>";
+                document.getElementById('newsItems').innerHTML = html || "<p style='text-align:center;'>Syncing HD Data...</p>";
             });
         }
 
-        function goBack() {
-            document.getElementById('feedPage').classList.add('hidden');
-            document.getElementById('homePage').classList.remove('hidden');
+        function goHome() { 
+            document.getElementById('feed').classList.add('hidden'); 
+            document.getElementById('home').classList.remove('hidden'); 
         }
 
-        window.onpopstate = () => goBack();
+        window.onpopstate = (e) => {
+            if (e.state && e.state.page === 'home') goHome();
+        };
 
-        function openFull(id) {
+        // INSTALL APK (PWA PROMPT)
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); deferredPrompt = e;
+        });
+        document.getElementById('btnInstall').onclick = async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt = null;
+            } else { alert("Open Browser Settings > Add to Home Screen"); }
+        };
+
+        function openArt(id) {
             const a = cache[id];
             document.getElementById('modalContent').innerHTML = `
-                <img src="${a.imgTop}" style="width:100%; height:auto; display:block;">
+                <img src="${a.imgTop}" style="width:100%; display:block;">
                 <div style="padding:25px;">
-                    <h1 style="font-family:Orbitron; margin-bottom:15px; font-size:1.5rem;">${a.title}</h1>
-                    <p style="font-size:1.1rem; line-height:1.7; white-space:pre-wrap;">${a.content}</p>
-                    ${a.imgMid ? `<img src="${a.imgMid}" style="width:100%; border-radius:15px; margin-top:20px;">` : ''}
+                    <h1 style="font-family:Orbitron; margin-bottom:20px; font-size:1.6rem;">${a.title}</h1>
+                    <p style="font-size:1.1rem; line-height:1.8; white-space:pre-wrap;">${a.content}</p>
+                    ${a.imgMid ? `<img src="${a.imgMid}" style="width:100%; border-radius:20px; margin-top:20px;">` : ''}
                 </div>`;
             document.getElementById('modal').style.display = 'block';
             document.body.style.overflow = 'hidden';
