@@ -3,218 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS v10</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;800&display=swap" rel="stylesheet">
-
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>EHTISHAM NEWS PRO</title>
+    
     <style>
-        :root { --gold: #c9a23f; --bg: #ffffff; --card: #f8f9fa; --border: #eeeeee; }
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #000; overflow-x: hidden; }
+        /* Force CSS Update with !important */
+        :root { --gold: #c9a23f; --bg: #ffffff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: #fff; color: #000; }
 
-        /* HEADER SYMBOLS - Symbols Fixed in Top Bar */
-        .header-bar { 
-            display: flex !important; justify-content: space-between; align-items: center; 
-            padding: 12px 20px; background: #fff; position: sticky; top: 0; 
-            z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        /* HEADER SYMBOLS FIX */
+        .header-fixed { 
+            display: flex !important; 
+            justify-content: space-between !important; 
+            align-items: center !important; 
+            padding: 15px 20px !important; 
+            background: #fff !important; 
+            border-bottom: 4px solid var(--gold) !important;
+            position: sticky; top: 0; z-index: 99999;
         }
-        .control-btns { display: flex; gap: 10px; }
-        .action-icon { 
-            background: var(--card); border: 1px solid var(--border); border-radius: 10px; 
-            width: 40px; height: 40px; display: flex; align-items: center; 
-            justify-content: center; cursor: pointer; font-size: 1.2rem;
+        .icon-group { display: flex !important; gap: 12px !important; }
+        .symbol-btn { 
+            width: 45px; height: 45px; background: #f0f0f0; 
+            border: 1px solid #ddd; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.3rem; cursor: pointer;
         }
 
-        header { padding: 25px 20px; text-align: center; }
-        header h1 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 1px; }
-        header span { color: var(--gold); }
-
-        /* SECTORS CARDS */
-        .sector-box { 
-            background: #fff; border: 2px solid var(--border); border-radius: 20px; 
-            padding: 22px; margin: 0 20px 15px; cursor: pointer; display: flex; 
-            align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        /* NEW CARD DESIGN */
+        .news-card-v11 { 
+            background: #fff; border: 2px solid #eee; border-radius: 25px; 
+            margin: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
-        .sector-box:active { transform: scale(0.96); background: #f9f9f9; }
-
-        /* NEWS LISTING - Fixed Card Design */
-        .news-item { 
-            background: #fff; border: 1px solid var(--border); border-radius: 25px; 
-            margin: 0 20px 25px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.06); 
-        }
-        .item-img { width: 100%; height: 200px; object-fit: cover; background: #eee; }
-        .item-text { padding: 20px; }
+        .card-img { width: 100%; height: 210px; object-fit: cover; }
+        .card-info { padding: 22px; }
         
-        /* READ MORE BUTTON - The Missing Piece */
-        .read-btn { 
-            width: 100%; padding: 16px; background: #000; color: #fff; 
-            border: none; border-radius: 12px; font-weight: 800; font-size: 0.9rem;
-            cursor: pointer; text-transform: uppercase; margin-top: 15px;
+        /* READ MORE - BIG BLACK BUTTON */
+        .btn-open { 
+            display: block !important; width: 100% !important; 
+            padding: 18px !important; background: #000 !important; 
+            color: #fff !important; border-radius: 15px !important; 
+            font-weight: 900 !important; text-align: center !important;
+            text-transform: uppercase !important; margin-top: 20px !important;
+            cursor: pointer !important; text-decoration: none !important;
+            font-size: 1rem;
         }
 
-        /* ARTICLE MODAL */
-        #articleViewer { position: fixed; inset: 0; background: #fff; z-index: 9999; display: none; overflow-y: auto; }
-        .close-top { position: sticky; top: 0; background: #000; color: #fff; padding: 15px; text-align: center; font-weight: 900; cursor: pointer; }
-        .article-body { padding: 25px; }
-
-        .hidden { display: none; }
+        /* MODAL ARTICLE */
+        #fullArticle { position: fixed; inset: 0; background: #fff; z-index: 100000; display: none; overflow-y: auto; }
+        .top-close { background: #000; color: #fff; padding: 18px; text-align: center; font-weight: 900; cursor: pointer; }
+        .page-div { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="header-bar">
-        <div style="font-family:'Orbitron'; font-weight:900; font-size:1rem;">E<span>.</span>NEWS</div>
-        <div class="control-btns">
-            <div class="action-icon" onclick="alert('🔔 Notifications Active!')">🔔</div>
-            <div class="action-icon" onclick="alert('📲 Click 3-Dots > Add to Home Screen')">📲</div>
+    <div class="header-fixed">
+        <div style="font-weight:900; font-size:1.2rem; letter-spacing:1px;">E.NEWS</div>
+        <div class="icon-group">
+            <div class="symbol-btn" onclick="alert('🔔 Notifications Active!')">🔔</div>
+            <div class="symbol-btn" onclick="alert('📲 Click Browser Menu > Add to Home Screen')">📲</div>
         </div>
     </div>
 
-    <header><h1 onclick="location.reload()">EHTISHAM <span>NEWS</span></h1></header>
-
-    <div id="homeView">
-        <div class="sector-box" onclick="loadContent('gaming')"><span>🎮</span> <h3>Game Updates</h3></div>
-        <div class="sector-box" onclick="loadContent('community')"><span>👥</span> <h3>Community News</h3></div>
-        <div class="sector-box" onclick="loadContent('esports')"><span>🏆</span> <h3>Esports Updates</h3></div>
+    <div id="home" class="page-div" style="display:block; padding: 20px;">
+        <h2 style="margin-bottom:20px; text-align:center;">SELECT SECTOR</h2>
+        <div onclick="openFeed('gaming')" style="padding:25px; background:#f8f9fa; border-radius:20px; margin-bottom:15px; border:1px solid #eee; cursor:pointer; display:flex; gap:15px; align-items:center;">
+            <span style="font-size:1.5rem;">🎮</span> <h3>Gaming Feed</h3>
+        </div>
+        <div onclick="openFeed('community')" style="padding:25px; background:#f8f9fa; border-radius:20px; margin-bottom:15px; border:1px solid #eee; cursor:pointer; display:flex; gap:15px; align-items:center;">
+            <span style="font-size:1.5rem;">👥</span> <h3>Community Hub</h3>
+        </div>
+        <div onclick="openFeed('esports')" style="padding:25px; background:#f8f9fa; border-radius:20px; margin-bottom:15px; border:1px solid #eee; cursor:pointer; display:flex; gap:15px; align-items:center;">
+            <span style="font-size:1.5rem;">🏆</span> <h3>Esports Sector</h3>
+        </div>
     </div>
 
-    <div id="feedView" class="hidden">
-        <div id="itemsContainer"></div>
-        <div style="padding: 0 20px 40px;"><button onclick="goHome()" style="width:100%; padding:18px; border:none; background:#eee; border-radius:15px; font-weight:900;">← BACK TO SECTORS</button></div>
+    <div id="feed" class="page-div">
+        <div id="contentBox"></div>
+        <div style="padding: 0 20px 40px;"><button onclick="location.reload()" style="width:100%; padding:20px; border:none; background:#eee; border-radius:15px; font-weight:900;">← BACK</button></div>
     </div>
 
-    <div id="articleViewer">
-        <div class="close-top" onclick="closeArticle()">CLOSE ✖</div>
-        <div id="fullData"></div>
+    <div id="fullArticle">
+        <div class="top-close" onclick="closeDoc()">CLOSE ARTICLE ✖</div>
+        <div id="modalBody" style="padding:25px;"></div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        const config = { apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" };
-        firebase.initializeApp(config);
-        const db = firebase.firestore();
+        // Init Firebase
+        const cfg = { apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" };
+        firebase.initializeApp(cfg);
+        const store = firebase.firestore();
 
-        function loadContent(cat) {
-            document.getElementById('homeView').classList.add('hidden');
-            document.getElementById('feedView').classList.remove('hidden');
+        function openFeed(c) {
+            document.getElementById('home').style.display='none';
+            document.getElementById('feed').style.display='block';
             
-            db.collection("news").where("category", "==", cat).orderBy("date", "desc").onSnapshot(snap => {
-                let html = "";
+            store.collection("news").where("category","==",c).orderBy("date","desc").onSnapshot(snap => {
+                let cards = "";
                 snap.forEach(doc => {
-                    const d = doc.data();
-                    html += `
-                    <div class="news-item">
-                        <img src="${d.imgTop || 'https://via.placeholder.com/500x300'}" class="item-img">
-                        <div class="item-text">
-                            <h3>${d.title}</h3>
-                            <p style="color:#666; font-size:0.9rem; margin-top:8px;">${d.content.substring(0,80)}...</p>
-                            <button class="read-btn" onclick="openFull(\`${d.title}\`,\`${d.content}\`,'${d.imgTop}','${d.imgMid}','${d.imgEnd}')">Open Full Article</button>
+                    const data = doc.data();
+                    cards += `
+                    <div class="news-card-v11">
+                        <img src="${data.imgTop}" class="card-img">
+                        <div class="card-info">
+                            <h3 style="font-size:1.3rem;">${data.title}</h3>
+                            <div class="btn-open" onclick="readFull(\`${data.title}\`,\`${data.content}\`,'${data.imgTop}','${data.imgMid}')">READ FULL ARTICLE</div>
                         </div>
                     </div>`;
                 });
-                document.getElementById('itemsContainer').innerHTML = html || "<p style='text-align:center; padding:40px;'>Syncing...</p>";
+                document.getElementById('contentBox').innerHTML = cards || "<p style='text-align:center; padding:50px;'>Syncing...</p>";
             });
         }
 
-        function openFull(t, c, i1, i2, i3) {
-            document.getElementById('fullData').innerHTML = `
-                <img src="${i1}" style="width:100%;">
-                <div class="article-body">
-                    <h2 style="font-family:Orbitron; margin-bottom:15px;">${t}</h2>
-                    <p style="line-height:1.8; white-space:pre-wrap;">${c}</p>
-                    ${i2 ? `<img src="${i2}" style="width:100%; border-radius:15px; margin:20px 0;">` : ''}
-                    ${i3 ? `<img src="${i3}" style="width:100%; border-radius:15px; margin:20px 0;">` : ''}
-                </div>
+        function readFull(t, c, i1, i2) {
+            document.getElementById('modalBody').innerHTML = `
+                <img src="${i1}" style="width:100%; border-radius:15px;">
+                <h2 style="margin:20px 0;">${t}</h2>
+                <p style="line-height:1.7; white-space:pre-wrap; font-size:1.1rem;">${c}</p>
+                ${i2 ? `<img src="${i2}" style="width:100%; border-radius:15px; margin-top:20px;">` : ''}
             `;
-            document.getElementById('articleViewer').style.display = 'block';
+            document.getElementById('fullArticle').style.display='block';
             document.body.style.overflow = 'hidden';
         }
 
-        function closeArticle() { document.getElementById('articleViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function goHome() { document.getElementById('feedView').classList.add('hidden'); document.getElementById('homeView').classList.remove('hidden'); }
-    </script>
-</body>
-</html>                document.getElementById('newsItems').innerHTML = h || "<p style='text-align:center;'>No news found.</p>";
-            });
-        }
-
-        function showM(t,c,i1,i2,i3) {
-            document.getElementById('mContent').innerHTML = `
-                <img src="${i1}" style="width:100%;">
-                <div style="padding:25px;">
-                    <h2 style="font-family:Orbitron; margin-bottom:15px;">${t}</h2>
-                    <p style="line-height:1.8; white-space:pre-wrap;">${c}</p>
-                    ${i2 ? `<img src="${i2}" style="width:100%; border-radius:15px; margin:15px 0;">` : ''}
-                    ${i3 ? `<img src="${i3}" style="width:100%; border-radius:15px; margin:15px 0;">` : ''}
-                </div>
-            `;
-            document.getElementById('newsModal').style.display='block';
-        }
-
-        function closeM(){ document.getElementById('newsModal').style.display='none'; }
-        function goHome(){ document.getElementById('feed').style.display='none'; document.getElementById('home').style.display='block'; }
-    </script>
-</body>
-</html>        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // Functions
-        function fetchNews(cat) {
-            document.getElementById('home').style.display = 'none';
-            document.getElementById('newsFeed').style.display = 'block';
-            document.getElementById('feedTitle').innerText = cat.toUpperCase();
-            document.getElementById('newsContainer').innerHTML = "<p style='text-align:center;'>Scanning for Intel...</p>";
-
-            db.collection("news").where("category", "==", cat).orderBy("date", "desc")
-            .onSnapshot((snap) => {
-                let html = "";
-                if(snap.empty) {
-                    html = "<p style='text-align:center; padding:40px;'>Stay tuned for updated news.</p>";
-                } else {
-                    snap.forEach(doc => {
-                        const d = doc.data();
-                        html += `
-                        <div class="news-card">
-                            <img src="${d.imgTop || 'https://via.placeholder.com/500x300?text=EHTISHAM+NEWS'}" class="news-cover">
-                            <div class="news-info">
-                                <h3>${d.title}</h3>
-                                <p>${d.content.substring(0, 100)}...</p>
-                                <button class="read-btn" onclick="openFullArticle(\`${d.title.replace(/'/g, "\\'")}\`, \`${d.content.replace(/'/g, "\\'")}\`, '${d.imgTop}', '${d.imgMid}', '${d.imgEnd}')">READ FULL ARTICLE</button>
-                            </div>
-                        </div>`;
-                    });
-                }
-                document.getElementById('newsContainer').innerHTML = html;
-            }, (err) => {
-                document.getElementById('newsContainer').innerHTML = `<p class="error-msg">Error: ${err.message}<br>Check Firebase Rules!</p>`;
-            });
-        }
-
-        function openFullArticle(t, c, i1, i2, i3) {
-            document.getElementById('modalData').innerHTML = `
-                <img src="${i1}" style="width:100%; display:${i1?'block':'none'};">
-                <div class="modal-body">
-                    <h2>${t}</h2>
-                    <p class="modal-text">${c}</p>
-                    ${i2 ? `<img src="${i2}" class="modal-img">` : ''}
-                    ${i3 ? `<img src="${i3}" class="modal-img">` : ''}
-                </div>
-                <div style="height:50px;"></div>
-            `;
-            document.getElementById('newsModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function goHome() { 
-            document.getElementById('newsFeed').style.display = 'none'; 
-            document.getElementById('home').style.display = 'block'; 
-        }
-
-        function closeModal() { 
-            document.getElementById('newsModal').style.display = 'none'; 
-            document.body.style.overflow = 'auto'; 
-        }
+        function closeDoc() { document.getElementById('fullArticle').style.display='none'; document.body.style.overflow = 'auto'; }
     </script>
 </body>
 </html>
