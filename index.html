@@ -3,62 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS | PRO</title>
+    <title>EHTISHAM NEWS | V-FINAL PRO</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        :root { --gold: #c9a23f; --dark: #000; }
+        :root { --gold: #c9a23f; --dark: #000; --white: #fff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { font-family: 'Outfit', sans-serif; background: #ffffff; color: var(--dark); overflow-x: hidden; }
+        body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
 
-        /* --- ONE-TIME LOADER --- */
+        /* --- PRE-LOADER --- */
         #loader { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .loader-text { font-family: 'Orbitron'; color: #fff; font-size: 1.8rem; letter-spacing: 2px; }
-        .loader-sub { color: var(--gold); font-size: 0.8rem; margin-top: 10px; letter-spacing: 5px; animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .loader-text { font-family: 'Orbitron'; color: #fff; font-size: 2rem; letter-spacing: 2px; }
 
         /* --- STICKY NAV --- */
-        .nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #fff; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold); }
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #fff; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem; }
         .logo span { color: var(--gold); }
-        .install-btn { background: #000; color: #fff; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 900; font-size: 0.7rem; cursor: pointer; }
+        .nav-right { display: flex; gap: 12px; align-items: center; }
+        .nav-icon { font-size: 1.3rem; color: #333; cursor: pointer; }
+
+        /* --- INSTALL APK BUTTON --- */
+        .apk-btn { 
+            background: var(--dark); color: #fff; border: none; padding: 8px 15px; 
+            border-radius: 10px; font-weight: 900; font-size: 0.75rem; 
+            text-decoration: none; display: flex; align-items: center; gap: 5px;
+        }
 
         .container { padding: 20px; max-width: 500px; margin: 0 auto; }
 
-        /* --- HD IMAGE FIX (STRICT) --- */
-        .news-box { background: #fff; border-radius: 24px; margin-bottom: 30px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .img-hd-wrap { width: 100%; height: 230px; background: #f0f0f0; overflow: hidden; }
+        /* --- HD IMAGE ENGINE --- */
+        .news-box { background: #fff; border-radius: 25px; margin-bottom: 30px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 12px 30px rgba(0,0,0,0.06); }
+        .img-hd-wrap { width: 100%; height: 240px; background: #000; overflow: hidden; }
         .news-img { 
             width: 100%; height: 100%; 
-            object-fit: cover; /* Fixed: Ab image stretch nahi hogi */
-            image-rendering: -webkit-optimize-contrast; 
-            display: block; 
+            object-fit: cover; 
+            image-rendering: -webkit-optimize-contrast; /* Sharpness tool */
+            display: block;
         }
 
         .news-body { padding: 25px; }
-        .news-body h2 { font-size: 1.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 12px; }
-        .read-btn { width: 100%; padding: 18px; background: #000; color: #fff; border-radius: 16px; font-weight: 900; border: none; cursor: pointer; }
+        .news-body h2 { font-size: 1.6rem; font-weight: 900; line-height: 1.2; margin-bottom: 12px; }
+        .read-btn { width: 100%; padding: 18px; background: #000; color: #fff; border-radius: 15px; font-weight: 900; border: none; cursor: pointer; text-transform: uppercase; }
 
-        /* --- SECTOR CARDS --- */
-        .card { background: #fff; border-radius: 22px; padding: 25px; margin-bottom: 18px; display: flex; align-items: center; gap: 20px; border: 1.5px solid #f5f5f5; box-shadow: 0 5px 15px rgba(0,0,0,0.02); cursor: pointer; }
-        .card-icon { width: 55px; height: 55px; background: #f9f9f9; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 1px solid #eee; }
+        /* --- CATEGORY CARDS --- */
+        .card { background: #fff; border-radius: 22px; padding: 25px; margin-bottom: 18px; display: flex; align-items: center; gap: 20px; border: 1.5px solid #f2f2f2; cursor: pointer; transition: 0.3s; }
+        .card:active { transform: scale(0.97); border-color: var(--gold); }
+        .card-icon { width: 55px; height: 55px; background: #f9f9f9; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
 
-        /* --- CUSTOMER SUPPORT (CLICKABLE) --- */
-        .footer { text-align: center; margin-top: 40px; padding: 40px 20px; border-top: 1px solid #f0f0f0; }
+        /* --- CUSTOMER SUPPORT & REAL LINKS --- */
+        .footer { text-align: center; margin-top: 50px; padding: 40px 20px; border-top: 1px solid #eee; }
         .social-row { display: flex; justify-content: center; gap: 18px; margin: 25px 0; }
         .s-link { 
             width: 55px; height: 55px; border-radius: 18px; display: flex; align-items: center; 
             justify-content: center; font-size: 1.6rem; border: 1px solid #eee; 
-            text-decoration: none !important; /* Fix: No purple color */
-            transition: 0.3s;
+            text-decoration: none !important; transition: 0.3s;
         }
-        /* Strict Branding Colors */
-        .wa-color { color: #25D366 !important; }
-        .fb-color { color: #1877F2 !important; }
-        .ig-color { color: #E4405F !important; }
-        .tk-color { color: #000000 !important; }
-        .s-link:active { transform: scale(0.9); background: #fafafa; }
+        .wa { color: #25D366 !important; } 
+        .fb { color: #1877F2 !important; } 
+        .ig { color: #E4405F !important; } 
+        .tk { color: #000000 !important; }
 
         /* --- MODAL --- */
         #modal { position: fixed; inset: 0; background: #fff; z-index: 5000; display: none; overflow-y: auto; }
@@ -71,17 +75,21 @@
 
     <div id="loader">
         <div class="loader-text">EHTISHAM NEWS</div>
-        <div class="loader-sub">LOADING...</div>
     </div>
 
     <div class="nav">
-        <div class="logo">EHTISHAM <span>NEWS</span></div>
-        <button id="btnInstall" class="install-btn">INSTALL APP</button>
+        <div class="logo">E.<span>NEWS</span></div>
+        <div class="nav-right">
+            <i class="fas fa-bell nav-icon" onclick="alert('Notifications Active!')"></i>
+            <a href="ehtisham-news.apk" download class="apk-btn">
+                <i class="fas fa-download"></i> APK
+            </a>
+        </div>
     </div>
 
     <div class="container">
         <div id="home">
-            <h2 style="font-family:Orbitron; text-align:center; font-size:0.8rem; margin: 25px 0; color:#999; letter-spacing:3px;">SELECT SECTOR</h2>
+            <h2 style="font-family:Orbitron; text-align:center; font-size:0.8rem; margin: 25px 0; color:#999; letter-spacing:3px;">COMMAND CENTER</h2>
             
             <div class="card" onclick="openSector('gaming')">
                 <div class="card-icon">🎮</div>
@@ -99,21 +107,21 @@
             </div>
 
             <div class="footer">
-                <p style="font-weight: 900; font-size: 0.9rem; letter-spacing: 1px;">CUSTOMER SUPPORT</p>
+                <p style="font-weight: 900; font-size: 1rem;">CUSTOMER SUPPORT</p>
                 <div class="social-row">
-                    <a href="https://wa.me/yournumber" class="s-link wa-color"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://facebook.com/yourlink" class="s-link fb-color"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://instagram.com/yourlink" class="s-link ig-color"><i class="fab fa-instagram"></i></a>
-                    <a href="https://tiktok.com/@yourlink" class="s-link tk-color"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://whatsapp.com/channel/0029VaFurLDD8SE2bbOUxy1L" target="_blank" class="s-link wa"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/share/1A2bZ7tnBX/" target="_blank" class="s-link fb"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ehtisham_nazeer?igsh=M3RoMzN5eTNqbXZu" target="_blank" class="s-link ig"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@ehtishamnazeer1?_r=1&_t=ZS-92Th6E1cjHL" target="_blank" class="s-link tk"><i class="fab fa-tiktok"></i></a>
                 </div>
-                <p style="font-size: 0.7rem; color: #ccc;">© 2025 EHTISHAM NAZEER | V-PRO</p>
+                <p style="font-size: 0.75rem; color: #ccc;">© 2025 EHTISHAM NAZEER | PRE-LAUNCH</p>
             </div>
         </div>
 
         <div id="feed" class="hidden">
             <h2 id="sectorTitle" style="font-family:Orbitron; color:var(--gold); text-align:center; margin-bottom:20px; text-transform:uppercase;"></h2>
             <div id="newsItems"></div>
-            <button onclick="goHome()" style="width:100%; padding:20px; background:#f5f5f5; border:none; border-radius:18px; font-weight:900; margin-top:20px;">← BACK TO MENU</button>
+            <button onclick="goHome()" style="width:100%; padding:20px; background:#f5f5f5; border:none; border-radius:18px; font-weight:900; margin-top:20px;">← BACK</button>
         </div>
     </div>
 
@@ -126,21 +134,16 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // BOOT ANIMATION FIX
-        window.onload = () => { setTimeout(() => { 
-            document.getElementById('loader').style.opacity = '0';
-            setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
-        }, 1500); };
+        window.onload = () => { setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1200); };
 
-        // FIREBASE SETUP
         firebase.initializeApp({ apiKey: "AIzaSyC9Cfh60ZyeZTbhK45a_sKWBFCy8DrqDao", authDomain: "ehtisham-news.firebaseapp.com", projectId: "ehtisham-news" });
         const db = firebase.firestore();
         let cache = {};
 
-        // BACK BUTTON LOGIC (FIXED)
-        history.replaceState({page: 'home'}, '');
+        // Back Button Fix
+        history.replaceState({p: 'home'}, '');
         function openSector(cat) {
-            history.pushState({page: 'feed'}, '');
+            history.pushState({p: 'feed'}, '');
             document.getElementById('home').classList.add('hidden');
             document.getElementById('feed').classList.remove('hidden');
             document.getElementById('sectorTitle').innerText = cat;
@@ -156,7 +159,7 @@
                             <div class="news-body">
                                 <h2>${d.title}</h2>
                                 <p style="color:#666; margin-bottom:20px;">${d.content.substring(0,90)}...</p>
-                                <button class="read-btn" onclick="openArt('${id}')">Full Intel</button>
+                                <button class="read-btn" onclick="openArt('${id}')">Full Article</button>
                             </div>
                         </div>`;
                 });
@@ -170,19 +173,7 @@
         }
 
         window.onpopstate = (e) => {
-            if (e.state && e.state.page === 'home') goHome();
-        };
-
-        // INSTALL APK (PWA PROMPT)
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); deferredPrompt = e;
-        });
-        document.getElementById('btnInstall').onclick = async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt = null;
-            } else { alert("Open Browser Settings > Add to Home Screen"); }
+            if (e.state && e.state.p === 'home') goHome();
         };
 
         function openArt(id) {
@@ -191,7 +182,7 @@
                 <img src="${a.imgTop}" style="width:100%; display:block;">
                 <div style="padding:25px;">
                     <h1 style="font-family:Orbitron; margin-bottom:20px; font-size:1.6rem;">${a.title}</h1>
-                    <p style="font-size:1.1rem; line-height:1.8; white-space:pre-wrap;">${a.content}</p>
+                    <p style="font-size:1.15rem; line-height:1.9; white-space:pre-wrap;">${a.content}</p>
                     ${a.imgMid ? `<img src="${a.imgMid}" style="width:100%; border-radius:20px; margin-top:20px;">` : ''}
                 </div>`;
             document.getElementById('modal').style.display = 'block';
