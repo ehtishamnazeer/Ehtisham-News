@@ -3,129 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHTISHAM NEWS | Pro Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <title>Ehtisham News | Elite Gaming Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
-        :root { --gold: #c9a23f; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.08); }
+        :root { --gold: #c9a23f; --bg: #050505; --card-bg: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.08); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         
         body { 
             font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; 
             min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;
-            background-image: radial-gradient(circle at 50% -10%, #1a150a 0%, #050505 80%);
+            background-image: radial-gradient(circle at 50% 0%, #1a150a 0%, #050505 100%);
         }
 
-        /* --- 1. PRO ANIMATED SPLASH --- */
+        /* --- 1. PERFECT CENTERED ANIMATION --- */
         #splash {
             position: fixed; inset: 0; background: #000; z-index: 10000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
-        .splash-logo { font-family: 'Orbitron'; font-size: 2rem; letter-spacing: 8px; animation: glow 2s infinite; }
-        .splash-logo span { color: var(--gold); }
-        @keyframes glow { 0%, 100% { opacity: 0.6; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
+        .splash-logo { font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 5px; color: #fff; text-align: center; }
+        .splash-logo span { color: var(--gold); display: block; font-size: 1rem; margin-top: 10px; letter-spacing: 10px; }
+        
+        /* Centered Loading Pulse */
+        .pulse-loader {
+            width: 50px; height: 50px; border: 2px solid var(--gold); border-radius: 50%;
+            margin-top: 30px; animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(0.8); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.8); opacity: 0.5; } }
 
         /* --- 2. PREMIUM HEADER --- */
-        header { padding: 50px 25px 20px; text-align: left; max-width: 600px; margin: 0 auto; width: 100%; }
-        header h2 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; cursor: pointer; }
+        header { padding: 50px 25px 30px; text-align: center; }
+        header h2 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 2px; }
         header span { color: var(--gold); }
 
-        /* --- 3. DYNAMIC CONTAINER & CARDS --- */
-        .container { padding: 0 20px 40px; max-width: 550px; margin: 0 auto; width: 100%; }
+        /* --- 3. CATEGORY CARDS (RANKED) --- */
+        .container { padding: 0 20px 40px; max-width: 500px; margin: 0 auto; width: 100%; }
         
-        .card { 
-            background: var(--glass); border: 1px solid var(--border); 
-            border-radius: 24px; padding: 25px; margin-bottom: 20px; 
-            cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(15px); position: relative; overflow: hidden;
+        .cat-card { 
+            background: var(--card-bg); border: 1px solid var(--border); 
+            border-radius: 20px; padding: 25px; margin-bottom: 15px; 
+            cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; gap: 15px;
         }
-        .card:active { transform: scale(0.95); border-color: var(--gold); }
-        .card h3 { font-size: 1.1rem; margin-bottom: 10px; font-weight: 800; }
-        .card p { font-size: 0.85rem; color: #888; line-height: 1.6; }
+        .cat-card:active { transform: scale(0.96); border-color: var(--gold); background: rgba(201,162,63,0.05); }
+        .icon-circle { width: 45px; height: 45px; background: rgba(201,162,63,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 1.2rem; }
+        .cat-info h3 { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
+        .cat-info p { font-size: 0.75rem; color: #666; }
 
-        /* --- 4. NEWS MODAL (THE STAGE) --- */
-        #newsModal { 
-            position: fixed; inset: 0; background: #000; z-index: 20000; 
-            display: none; overflow-y: auto; padding-bottom: 50px;
-            animation: slideUp 0.5s ease-out;
-        }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-        .modal-hero { width: 100%; height: 250px; object-fit: cover; border-radius: 0 0 30px 30px; margin-bottom: 25px; }
-        .modal-body-img { width: 100%; border-radius: 20px; margin: 20px 0; border: 1px solid var(--border); }
-        .modal-content { font-size: 1rem; line-height: 1.8; color: #ccc; }
-        .modal-title { font-family: 'Orbitron'; color: var(--gold); font-size: 1.4rem; margin-bottom: 15px; }
+        /* --- 4. NEWS LIST & MODAL --- */
+        .news-card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 12px; border: 1px solid var(--border); cursor: pointer; }
+        #newsModal { position: fixed; inset: 0; background: #000; z-index: 20000; display: none; overflow-y: auto; padding: 30px 20px; }
+        .modal-img { width: 100%; border-radius: 15px; margin: 15px 0; object-fit: cover; }
 
         /* --- 5. CONTACT US FOOTER --- */
-        .footer-wrap { margin-top: auto; padding: 60px 20px 40px; text-align: center; }
-        .contact-box { 
-            display: inline-block; padding: 6px 20px; border-radius: 12px;
-            background: rgba(201, 162, 63, 0.05); border: 1px solid var(--gold);
-            margin-bottom: 30px;
-        }
-        .contact-heading { font-size: 11px; letter-spacing: 5px; color: var(--gold); font-weight: 900; }
+        .footer-wrap { margin-top: auto; padding: 40px 20px; text-align: center; }
+        .contact-box { display: inline-block; padding: 6px 20px; border-radius: 8px; border: 1px solid #222; margin-bottom: 25px; }
+        .contact-heading { font-size: 10px; letter-spacing: 4px; color: #444; font-weight: 900; }
+        
+        .social-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .social-btn { width: 60px; height: 60px; background: var(--card-bg); border-radius: 18px; display: flex; align-items: center; justify-content: center; text-decoration: none; border: 1px solid var(--border); }
+        .social-btn img { width: 25px; height: 25px; }
 
-        .social-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
-        .social-btn { 
-            width: 65px; height: 65px; background: var(--glass); border: 1px solid var(--border);
-            border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; transition: 0.3s;
-        }
-        .social-btn img { width: 28px; height: 28px; margin-bottom: 5px; }
-        .social-btn span { font-size: 8px; font-weight: 800; color: #444; }
+        .copyright { font-size: 9px; color: #222; font-weight: 700; letter-spacing: 1px; }
 
-        .copyright { font-size: 10px; color: #222; font-weight: 700; letter-spacing: 1px; }
-
-        .page { display: none; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .back-btn { background: var(--gold); color: #000; border: none; padding: 18px; border-radius: 20px; width: 100%; font-weight: 900; font-size: 1rem; cursor: pointer; margin-top: 30px; }
+        .page { display: none; animation: pageIn 0.4s ease-out; }
+        @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="splash"><div class="splash-logo">EHTISHAM <span>NEWS</span></div></div>
+    <div id="splash">
+        <div class="splash-logo">EHTISHAM <span>PORTAL</span></div>
+        <div class="pulse-loader"></div>
+    </div>
 
     <header><h2 onclick="goHome()">EHTISHAM <span>NEWS</span></h2></header>
 
     <main style="flex: 1;">
         <div id="home" class="page" style="display:block;">
             <div class="container">
-                <div class="card" onclick="openCategory('gaming')">
-                    <h3>🔥 Gaming Sector</h3>
-                    <p>Access forbidden patch notes, leaks, and server intel.</p>
+                <div class="cat-card" onclick="openCategory('gaming')">
+                    <div class="icon-circle">🎮</div>
+                    <div class="cat-info"><h3>Game Update</h3><p>Latest patches & server leaks</p></div>
                 </div>
-                <div class="card" onclick="openCategory('esports')">
-                    <h3>🏆 Esports Hub</h3>
-                    <p>Global pro-circuit standings and roster movement tracking.</p>
+                <div class="cat-card" onclick="openCategory('community')">
+                    <div class="icon-circle">👥</div>
+                    <div class="cat-info"><h3>Community News</h3><p>Server events & member alerts</p></div>
+                </div>
+                <div class="cat-card" onclick="openCategory('esports')">
+                    <div class="icon-circle">🏆</div>
+                    <div class="cat-info"><h3>Esports World Updates</h3><p>Global pro-circuit standings</p></div>
                 </div>
             </div>
         </div>
 
         <div id="newsList" class="page">
             <div class="container">
-                <h2 id="catTitle" style="font-family:'Orbitron'; color:var(--gold); font-size:1rem; margin-bottom:25px; letter-spacing:2px;"></h2>
+                <h2 id="catTitle" style="color:var(--gold); font-size:0.9rem; margin-bottom:20px; font-family:'Orbitron';"></h2>
                 <div id="newsItems"></div>
-                <button onclick="goHome()" class="back-btn" style="background:transparent; color:#fff; border:1px solid #333;">BACK TO HUB</button>
+                <button onclick="goHome()" style="width:100%; padding:15px; border-radius:15px; background:transparent; color:#555; border:1px solid #222; font-weight:800; cursor:pointer; margin-top:20px;">BACK TO SECTORS</button>
             </div>
         </div>
     </main>
 
     <div id="newsModal">
-        <div id="modalData"></div>
-        <div class="container">
-            <button onclick="closeModal()" class="back-btn">CLOSE ARTICLE</button>
-        </div>
+        <div id="modalData" class="container"></div>
+        <div class="container"><button onclick="closeModal()" style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:15px; font-weight:900; color:#000;">CLOSE ARTICLE</button></div>
     </div>
 
     <div class="footer-wrap">
         <div class="contact-box"><div class="contact-heading">CONTACT US</div></div>
         <div class="social-grid">
-            <a href="https://wa.me/923000000000" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png"><span>WA</span></a>
-            <a href="https://facebook.com/share/..." class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"><span>FB</span></a>
-            <a href="https://instagram.com/ehtisham_nazeer" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"><span>IG</span></a>
-            <a href="https://tiktok.com/@ehtishamnazeer1" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"><span>TK</span></a>
+            <a href="https://wa.me/923000000000" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png"></a>
+            <a href="https://facebook.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"></a>
+            <a href="https://instagram.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"></a>
+            <a href="https://tiktok.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"></a>
         </div>
         <div class="copyright">© 2025 EHTISHAM NAZEER | ALL RIGHTS RESERVED</div>
     </div>
@@ -141,6 +134,7 @@
             setTimeout(() => { 
                 const s = document.getElementById('splash');
                 s.style.opacity = '0';
+                s.style.transform = 'scale(0.9)';
                 setTimeout(() => s.remove(), 800);
             }, 2500);
         };
@@ -148,56 +142,38 @@
         function openCategory(cat) {
             document.getElementById('home').style.display = 'none';
             document.getElementById('newsList').style.display = 'block';
-            document.getElementById('catTitle').innerText = "> " + cat.toUpperCase();
+            document.getElementById('catTitle').innerText = cat.toUpperCase() + " DATA STREAM";
             
             db.collection("news").where("category", "==", cat).orderBy("date", "desc")
             .onSnapshot((snap) => {
                 let html = "";
                 snap.forEach(doc => {
                     const d = doc.data();
-                    // Pass all image data to the function
-                    html += `
-                    <div class="card" onclick="showFull(\`${d.title}\`, \`${d.content.replace(/\n/g, '<br>')}\`, '${d.imgTop||''}', '${d.imgMid||''}', '${d.imgEnd||''}')">
-                        <h3>${d.title}</h3>
-                        <p>${d.content.substring(0, 100)}...</p>
-                        <span style="color:var(--gold); font-size:10px; font-weight:800; display:block; margin-top:15px;">READ FULL DATA ➔</span>
+                    html += `<div class="news-card" onclick="showFull(\`${d.title}\`, \`${d.content}\`, '${d.imgTop||''}', '${d.imgMid||''}', '${d.imgEnd||''}')">
+                        <h3 style="font-size:1rem; margin-bottom:8px;">${d.title}</h3>
+                        <p style="font-size:0.8rem; color:#666;">${d.content.substring(0,80)}...</p>
                     </div>`;
                 });
-                document.getElementById("newsItems").innerHTML = html || "SCANNING FOR DATA...";
+                document.getElementById("newsItems").innerHTML = html || "No data found.";
             });
         }
 
         function showFull(title, content, i1, i2, i3) {
-            // Split content in half to insert mid image
             const middle = Math.floor(content.length / 2);
-            const part1 = content.substring(0, middle);
-            const part2 = content.substring(middle);
-
             let modalHtml = `
-                ${i1 ? `<img src="${i1}" class="modal-hero">` : `<div style='height:50px'></div>`}
-                <div class="container">
-                    <h2 class="modal-title">${title}</h2>
-                    <div class="modal-content">
-                        <p>${part1}</p>
-                        ${i2 ? `<img src="${i2}" class="modal-body-img">` : ''}
-                        <p>${part2}</p>
-                        ${i3 ? `<img src="${i3}" class="modal-body-img">` : ''}
-                    </div>
-                </div>
+                <h2 style="color:var(--gold); font-family:Orbitron; font-size:1.3rem; margin-bottom:20px;">${title}</h2>
+                ${i1 ? `<img src="${i1}" class="modal-img">` : ''}
+                <p style="line-height:1.8; color:#ccc;">${content.substring(0, middle)}</p>
+                ${i2 ? `<img src="${i2}" class="modal-img">` : ''}
+                <p style="line-height:1.8; color:#ccc;">${content.substring(middle)}</p>
+                ${i3 ? `<img src="${i3}" class="modal-img">` : ''}
             `;
             document.getElementById('modalData').innerHTML = modalHtml;
             document.getElementById('newsModal').style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Stop scrolling behind
         }
 
-        function closeModal() { 
-            document.getElementById('newsModal').style.display = 'none'; 
-            document.body.style.overflow = 'auto';
-        }
-        function goHome() { 
-            document.getElementById('newsList').style.display = 'none'; 
-            document.getElementById('home').style.display = 'block'; 
-        }
+        function closeModal() { document.getElementById('newsModal').style.display = 'none'; }
+        function goHome() { document.getElementById('newsList').style.display = 'none'; document.getElementById('home').style.display = 'block'; }
     </script>
 </body>
 </html>
