@@ -3,24 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Stats Pro</title>
+    <title>FF Ultimate Stats Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+        .ff-font { font-family: 'Orbitron', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
 </head>
-<body class="bg-slate-900 text-white flex flex-col items-center justify-center min-h-screen">
+<body class="bg-black text-white min-h-screen flex flex-col items-center py-10 px-4">
 
-    <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl border-b-4 border-yellow-500">
-        <h1 class="text-4xl font-black text-yellow-500 italic mb-2">FREE FIRE STATS</h1>
-        <p class="text-slate-400 text-center">Enter UID to fetch player profile</p>
-        
-        <div class="mt-6">
-            <input type="text" placeholder="UID yahan likho..." 
-                   class="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 focus:outline-none focus:border-yellow-500">
-            <button class="w-full mt-4 bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-lg transition">
-                SEARCH
+    <div class="text-center mb-8">
+        <h1 class="ff-font text-5xl font-black text-yellow-500 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)] italic">FREE FIRE</h1>
+        <p class="text-slate-500 tracking-[0.3em] font-bold mt-2">ULTIMATE API TRACKER</p>
+    </div>
+
+    <div class="w-full max-w-lg glass p-8 rounded-3xl shadow-2xl">
+        <div class="flex flex-col gap-4">
+            <div class="flex gap-2">
+                <select id="region" class="bg-slate-800 p-3 rounded-xl border border-slate-600 focus:border-yellow-500 outline-none text-sm font-bold">
+                    <option value="IND">IND</option>
+                    <option value="PK">PK</option>
+                    <option value="BD">BD</option>
+                    <option value="BR">BR</option>
+                </select>
+                <input id="uidInput" type="text" placeholder="Enter Player UID..." 
+                       class="flex-1 p-4 rounded-xl bg-slate-800 border border-slate-600 focus:outline-none focus:border-yellow-500 text-yellow-400 font-mono tracking-widest">
+            </div>
+            
+            <button onclick="fetchAllData()" id="searchBtn"
+                    class="ff-font w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-xl transition-all active:scale-95 text-xl">
+                RUN MULTI-API SCAN
             </button>
+        </div>
+        <p id="loader" class="text-center mt-4 text-yellow-500 hidden animate-pulse font-bold text-xs uppercase tracking-widest">Scanning Garena Databases...</p>
+    </div>
+
+    <div id="resultContainer" class="w-full max-w-lg mt-8 hidden space-y-4">
+        <div class="glass rounded-3xl overflow-hidden border-l-8 border-yellow-500">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <p class="text-slate-400 text-xs uppercase font-bold tracking-tighter">Nickname</p>
+                        <h2 id="resName" class="text-3xl font-black text-white italic">---</h2>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-slate-400 text-xs uppercase font-bold">Level</p>
+                        <p id="resLevel" class="text-2xl font-black text-yellow-500">--</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-700/50">
+                    <div>
+                        <p class="text-slate-500 text-[10px] uppercase">Region</p>
+                        <p id="resRegionDisp" class="font-bold text-sm text-slate-200">--</p>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-[10px] uppercase">API Status</p>
+                        <p class="font-bold text-sm text-green-400">SUCCESS</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <script>
+        async function fetchAllData() {
+            const uid = document.getElementById('uidInput').value.trim();
+            const region = document.getElementById('region').value;
+            const btn = document.getElementById('searchBtn');
+            const loader = document.getElementById('loader');
+            const container = document.getElementById('resultContainer');
+
+            if (!uid) return alert("UID to daalo!");
+
+            // UI Reset
+            loader.classList.remove('hidden');
+            container.classList.add('hidden');
+            btn.disabled = true;
+
+            // List of all Working APIs
+            const apis = [
+                `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
+                `https://freefire-api.com/api/v1/stats/${region}/${uid}`, // Potential Third Party
+                `https://ashqking.com/api/ff_info?uid=${uid}&region=${region.toLowerCase()}` 
+            ];
+
+            let foundData = null;
+
+            // Multi-API Logic (Agar ek fail hogi to agli check karega)
+            for (let url of apis) {
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    
+                    if (data && (data.basicInfo || data.nickname)) {
+                        foundData = data;
+                        break; // Data mil gaya to loop khatam
+                    }
+                } catch (e) {
+                    console.warn("Retrying with another API...");
+                }
+            }
+
+            if (foundData) {
+                // Formatting data properly
+                document.getElementById('resName').innerText = foundData.basicInfo?.nickname || foundData.nickname || "Unknown";
+                document.getElementById('resLevel').innerText = foundData.basicInfo?.level || foundData.level || "0";
+                document.getElementById('resRegionDisp').innerText = region;
+                container.classList.remove('hidden');
+            } else {
+                alert("All APIs failed! Shayed UID galat hai ya Garena ne endpoints block kar diye hain.");
+            }
+
+            loader.classList.add('hidden');
+            btn.disabled = false;
+        }
+    </script>
 </body>
 </html>
 
