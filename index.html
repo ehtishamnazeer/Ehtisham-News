@@ -1,112 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Master Hub - Fixed</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
-        body { background: #050505; color: white; font-family: sans-serif; }
-        .ff-font { font-family: 'Orbitron', sans-serif; }
-        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); border: 1px solid #333; }
-        .glow-btn { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
-    </style>
-</head>
-<body class="min-h-screen p-4 flex flex-col items-center">
+<script>
+    async function superFetch() {
+        const uid = document.getElementById('uidInput').value.trim();
+        const region = document.getElementById('region').value;
+        const btn = document.getElementById('mainBtn');
+        const resBox = document.getElementById('resultBox');
 
-    <div class="my-10 text-center">
-        <h1 class="ff-font text-4xl text-yellow-500 italic">FF MASTER HUB</h1>
-        <p class="text-slate-500 text-[10px] tracking-widest uppercase font-bold mt-2">v3.0 - Bypass Edition</p>
-    </div>
+        if(!uid) return alert("UID to dalo!");
 
-    <div class="w-full max-w-lg glass p-6 rounded-3xl border-t-4 border-yellow-500 shadow-2xl">
-        <div class="flex flex-col gap-4">
-            <div class="flex gap-2">
-                <select id="region" class="bg-slate-900 p-4 rounded-xl border border-slate-700 outline-none font-bold text-yellow-500">
-                    <option value="PK">PK</option>
-                    <option value="IND">IND</option>
-                    <option value="BD">BD</option>
-                </select>
-                <input id="uidInput" type="text" placeholder="Enter Player UID..." 
-                       class="flex-1 p-4 rounded-xl bg-slate-950 border border-slate-700 focus:border-yellow-500 outline-none font-mono text-yellow-500 tracking-widest">
-            </div>
-            <button onclick="superFetch()" id="mainBtn" class="ff-font w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-xl transition-all glow-btn">
-                RUN BYPASS SCAN
-            </button>
-        </div>
-        <p id="loader" class="text-center mt-4 text-yellow-500 hidden animate-pulse font-bold text-[10px]">PENETRATING GARENA SECURITY...</p>
-    </div>
+        btn.innerText = "OB51 SCANNING...";
+        btn.disabled = true;
 
-    <div id="resultBox" class="w-full max-w-lg mt-8 hidden">
-        <div class="glass p-8 rounded-3xl border-l-8 border-yellow-500">
-            <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">Nickname</p>
-            <h2 id="resName" class="text-4xl font-black italic mb-4">---</h2>
-            <div class="grid grid-cols-2 gap-4 border-t border-slate-800 pt-6">
-                <div>
-                    <p class="text-slate-500 text-[10px] uppercase">Level</p>
-                    <p id="resLevel" class="text-2xl font-bold">--</p>
-                </div>
-                <div>
-                    <p class="text-slate-500 text-[10px] uppercase">Status</p>
-                    <p id="resStatus" class="text-2xl font-bold text-green-500">SAFE</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        // OB51 Updated Endpoints
+        const apiPool = [
+            `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
+            `https://ff-api-v2.vercel.app/api/info?uid=${uid}&region=${region}`, // New V2 Endpoint
+            `https://ashqking.com/api/ff_info?uid=${uid}&region=${region.toLowerCase()}`
+        ];
 
-    <script>
-        async function superFetch() {
-            const uid = document.getElementById('uidInput').value.trim();
-            const region = document.getElementById('region').value;
-            const btn = document.getElementById('mainBtn');
-            const loader = document.getElementById('loader');
-            const resultBox = document.getElementById('resultBox');
+        const proxy = "https://api.allorigins.win/get?url=";
+        let found = false;
 
-            if(!uid) return alert("UID to likho bhai!");
+        for (let apiUrl of apiPool) {
+            try {
+                const response = await fetch(proxy + encodeURIComponent(apiUrl));
+                const wrapper = await response.json();
+                const data = JSON.parse(wrapper.contents);
 
-            btn.disabled = true;
-            loader.classList.remove('hidden');
-            resultBox.classList.add('hidden');
-
-            // --- THE BYPASS LOGIC ---
-            // Hum multiple proxies try karenge
-            const proxies = [
-                "https://api.allorigins.win/get?url=",
-                "https://thingproxy.freeboard.io/fetch/",
-                "https://corsproxy.io/?"
-            ];
-
-            const apiUrl = `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`;
-            let success = false;
-
-            for (let proxy of proxies) {
-                try {
-                    console.log("Trying with: " + proxy);
-                    const response = await fetch(proxy + encodeURIComponent(apiUrl));
-                    const rawData = await response.json();
-                    
-                    // AllOrigins wrapper handle karna
-                    let data = rawData.contents ? JSON.parse(rawData.contents) : rawData;
-
-                    if (data && data.basicInfo) {
-                        document.getElementById('resName').innerText = data.basicInfo.nickname;
-                        document.getElementById('resLevel').innerText = data.basicInfo.level;
-                        resultBox.classList.remove('hidden');
-                        success = true;
-                        break;
-                    }
-                } catch (e) {
-                    console.warn("Proxy failed, switching...");
+                if (data && (data.basicInfo || data.nickname)) {
+                    document.getElementById('resName').innerText = data.basicInfo?.nickname || data.nickname;
+                    document.getElementById('resLevel').innerText = data.basicInfo?.level || data.level;
+                    resBox.classList.remove('hidden');
+                    found = true;
+                    break; 
                 }
+            } catch (e) {
+                console.log("Switching to next OB51 API...");
             }
-
-            if(!success) alert("Sari APIs block hain! Shayad Garena ne internal port change kar diya hai. Thori der baad try karo.");
-
-            btn.disabled = false;
-            loader.classList.add('hidden');
         }
-    </script>
-</body>
-</html>
+
+        if(!found) {
+            alert("OB51 Security Alert: Public APIs are currently updating. Please try again after some time or check another UID.");
+        }
+
+        btn.innerText = "RUN BYPASS SCAN";
+        btn.disabled = false;
+    }
+</script>
 
