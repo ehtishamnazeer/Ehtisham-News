@@ -3,140 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF OB51 ULTIMATE HUB</title>
+    <title>FF ELITE TRACKER - OB51</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
-        body { background: #020617; color: white; font-family: 'Segoe UI', sans-serif; }
+        body { background: #000; color: #fff; font-family: sans-serif; overflow-x: hidden; }
         .ff-font { font-family: 'Orbitron', sans-serif; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid #1e293b; }
-        .btn-glow:hover { box-shadow: 0 0 20px rgba(234, 179, 8, 0.6); transform: scale(1.02); }
-        .loader { border-top-color: #eab308; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .event-card { background: linear-gradient(145deg, #111, #050505); border: 1px solid #222; position: relative; }
+        .event-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #eab308, transparent); }
+        .glow-text { text-shadow: 0 0 10px rgba(234, 179, 8, 0.5); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4">
 
-    <div class="text-center my-12">
-        <h1 class="ff-font text-5xl font-black text-yellow-500 italic tracking-tighter">FF PRO HUB</h1>
-        <p class="text-slate-500 text-xs tracking-[0.3em] font-bold mt-2 uppercase">OB51 Official Scraper</p>
+    <div class="mt-12 mb-10 text-center">
+        <h1 class="ff-font text-5xl font-black italic text-yellow-500 tracking-tighter glow-text">ELITE TRACKER</h1>
+        <div class="flex items-center justify-center gap-2 mt-2">
+            <span class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
+            <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em]">Live Event Scanner v5.1</p>
+        </div>
     </div>
 
-    <div class="w-full max-w-xl glass p-8 rounded-[2.5rem] shadow-2xl border-b-4 border-yellow-600">
-        <div class="flex flex-col gap-6">
-            <div class="flex gap-3">
-                <select id="region" class="bg-slate-900 p-4 rounded-2xl border border-slate-800 outline-none font-bold text-yellow-500 focus:border-yellow-500">
-                    <option value="PK">PK</option>
-                    <option value="IND">IND</option>
-                    <option value="BD">BD</option>
-                    <option value="BR">BR</option>
+    <div class="w-full max-w-lg event-card p-8 rounded-[2rem] shadow-2xl">
+        <div class="space-y-6">
+            <div class="flex gap-2">
+                <select id="region" class="bg-zinc-900 p-4 rounded-2xl border border-zinc-800 outline-none font-bold text-yellow-500 text-sm">
+                    <option value="PK">PAKISTAN</option>
+                    <option value="IND">INDIA</option>
+                    <option value="BD">BANGLADESH</option>
                 </select>
-                <input id="uidInput" type="number" placeholder="Enter Player UID..." 
-                       class="flex-1 p-4 rounded-2xl bg-slate-950 border border-slate-800 focus:border-yellow-500 outline-none font-mono text-xl text-yellow-400">
+                <input id="uid" type="text" placeholder="Enter Player UID" 
+                       class="flex-1 bg-black p-4 rounded-2xl border border-zinc-800 focus:border-yellow-500 outline-none font-mono text-xl text-yellow-500">
             </div>
-            
-            <button onclick="startUltraScan()" id="mainBtn" 
-                    class="ff-font w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl transition-all btn-glow active:scale-95">
-                FETCH PLAYER DATA
+
+            <button onclick="startScrape()" id="scanBtn" 
+                    class="ff-font w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl transition-all hover:bg-yellow-400 active:scale-95">
+                START SCANNING
             </button>
         </div>
 
-        <div id="loadingArea" class="hidden mt-6 text-center">
-            <div class="inline-block w-8 h-8 border-4 border-slate-700 rounded-full loader mb-2"></div>
-            <p id="statusTxt" class="text-[10px] text-yellow-500 uppercase font-black tracking-widest">Bypassing OB51 Firewalls...</p>
+        <div id="loader" class="hidden mt-6 text-center">
+            <div class="inline-block w-6 h-6 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-[9px] text-zinc-500 mt-2 font-bold uppercase tracking-widest">Accessing xv.ct nodes...</p>
         </div>
     </div>
 
-    <div id="resultCard" class="w-full max-w-xl mt-8 hidden animate-in fade-in duration-500">
-        <div class="glass p-8 rounded-[2.5rem] border-l-8 border-yellow-500 relative overflow-hidden">
-            <div class="absolute -top-4 -right-4 opacity-5 ff-font text-8xl italic">FF</div>
-            
-            <div class="relative z-10">
-                <p class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Account Nickname</p>
-                <h2 id="resName" class="text-4xl font-black text-white italic drop-shadow-md">---</h2>
-                
-                <div class="grid grid-cols-2 gap-6 mt-8 pt-6 border-t border-slate-800/50">
-                    <div class="bg-slate-900/50 p-4 rounded-2xl">
-                        <p class="text-slate-500 text-[10px] uppercase font-bold">Level</p>
-                        <p id="resLevel" class="text-3xl font-black text-yellow-500">--</p>
-                    </div>
-                    <div class="bg-slate-900/50 p-4 rounded-2xl">
-                        <p class="text-slate-500 text-[10px] uppercase font-bold">Region</p>
-                        <p id="resRegion" class="text-2xl font-black">--</p>
-                    </div>
+    <div id="result" class="w-full max-w-lg mt-8 hidden animate-in slide-in-from-bottom duration-500">
+        <div class="event-card p-8 rounded-[2rem] border-l-4 border-yellow-500">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <p class="text-[10px] text-zinc-500 font-bold uppercase">Target ID</p>
+                    <h2 id="outName" class="text-3xl font-black italic glow-text">---</h2>
                 </div>
-
-                <div class="mt-6 flex items-center justify-between">
-                    <span class="text-[10px] bg-green-500/20 text-green-500 px-3 py-1 rounded-full font-bold uppercase">● System Online</span>
-                    <p class="text-slate-600 text-[10px]">Verified via Multi-API</p>
+                <div class="text-right">
+                    <p class="text-[10px] text-zinc-500 font-bold uppercase">Region</p>
+                    <p id="outReg" class="font-bold text-yellow-500">--</p>
                 </div>
             </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-zinc-900/50 p-4 rounded-2xl border border-zinc-800">
+                    <p class="text-[10px] text-zinc-500 uppercase mb-1">Account Level</p>
+                    <p id="outLv" class="text-2xl font-black">--</p>
+                </div>
+                <div class="bg-zinc-900/50 p-4 rounded-2xl border border-zinc-800">
+                    <p class="text-[10px] text-zinc-500 uppercase mb-1">OB51 Status</p>
+                    <p class="text-green-500 font-bold uppercase text-xs">SECURE</p>
+                </div>
+            </div>
+            
+            <p class="mt-6 text-[9px] text-zinc-600 italic text-center uppercase tracking-widest">Data fetched via xv-encrypted-node</p>
         </div>
     </div>
 
     <script>
-        async function startUltraScan() {
-            const uid = document.getElementById('uidInput').value.trim();
+        async function startScrape() {
+            const uid = document.getElementById('uid').value.trim();
             const region = document.getElementById('region').value;
-            const btn = document.getElementById('mainBtn');
-            const loader = document.getElementById('loadingArea');
-            const statusTxt = document.getElementById('statusTxt');
-            const resultCard = document.getElementById('resultCard');
+            const btn = document.getElementById('scanBtn');
+            const loader = document.getElementById('loader');
+            const result = document.getElementById('result');
 
-            if(!uid) return alert("Pehle UID likho!");
+            if(!uid) return alert("UID to likho bc!");
 
-            // UI Setup
             btn.disabled = true;
-            btn.classList.add('opacity-50');
             loader.classList.remove('hidden');
-            resultCard.classList.add('hidden');
+            result.classList.add('hidden');
 
-            // List of OB51 Compatible Endpoints (Topup patterns)
-            const apis = [
+            // xv.ct.ws Jesa Multiple API Bypass Logic
+            const apiNodes = [
                 `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
-                `https://ff-api-p7v7.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
-                `https://ashqking.com/api/ff_info?uid=${uid}&region=${region.toLowerCase()}`
+                `https://ff-api-p7v7.onrender.com/api/v1/account?region=${region}&uid=${uid}`
             ];
 
-            const proxies = [
-                "https://api.allorigins.win/get?url=",
-                "https://corsproxy.io/?"
-            ];
+            const proxy = "https://api.allorigins.win/get?url=";
+            let finalData = null;
 
-            let foundData = null;
-
-            // Scraper Engine
-            for (let proxy of proxies) {
-                for (let url of apis) {
-                    try {
-                        statusTxt.innerText = "Switching API Node...";
-                        const response = await fetch(proxy + encodeURIComponent(url));
-                        const raw = await response.json();
-                        const data = raw.contents ? JSON.parse(raw.contents) : raw;
-
-                        if (data && (data.basicInfo || data.nickname)) {
-                            foundData = data;
-                            break;
-                        }
-                    } catch (e) {
-                        continue; // Try next
+            for(let node of apiNodes) {
+                try {
+                    const resp = await fetch(proxy + encodeURIComponent(node));
+                    const json = await resp.json();
+                    const data = JSON.parse(json.contents);
+                    
+                    if(data && data.basicInfo) {
+                        finalData = data;
+                        break;
                     }
-                }
-                if(foundData) break;
+                } catch(e) { console.log("Node failed, retrying..."); }
             }
 
-            if (foundData) {
-                document.getElementById('resName').innerText = foundData.basicInfo?.nickname || foundData.nickname;
-                document.getElementById('resLevel').innerText = foundData.basicInfo?.level || foundData.level;
-                document.getElementById('resRegion').innerText = region;
-                resultCard.classList.remove('hidden');
-                statusTxt.innerText = "Data Extracted!";
+            if(finalData) {
+                document.getElementById('outName').innerText = finalData.basicInfo.nickname;
+                document.getElementById('outLv').innerText = finalData.basicInfo.level;
+                document.getElementById('outReg').innerText = region;
+                result.classList.remove('hidden');
             } else {
-                alert("OB51 Error: No active data stream found for this UID. Garena endpoints are currently under maintenance.");
+                alert("OB51 Error: Garena servers ne request block kar di hai. 2 minute baad try karo!");
             }
 
             btn.disabled = false;
-            btn.classList.remove('opacity-50');
             loader.classList.add('hidden');
         }
     </script>
