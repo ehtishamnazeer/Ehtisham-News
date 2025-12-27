@@ -3,109 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF API HUB - Ultimate Edition</title>
+    <title>FF Pro Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        body { background: #020617; font-family: 'sans-serif'; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+        body { background: #020617; font-family: 'sans-serif'; color: white; }
         .ff-font { font-family: 'Orbitron', sans-serif; }
-        .api-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
-        .api-card:hover { border-color: #eab308; transform: translateY(-5px); }
+        .glass { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .tab-btn.active { border-bottom: 4px solid #eab308; color: #eab308; }
     </style>
 </head>
-<body class="text-white p-4 md:p-10">
+<body class="min-h-screen flex flex-col items-center p-4">
 
-    <div class="max-w-6xl mx-auto text-center mb-12">
-        <h1 class="ff-font text-5xl font-black text-yellow-500 mb-4 drop-shadow-[0_0_10px_rgba(234,179,8,0.4)]">FF API HUB</h1>
-        <p class="text-slate-400">Select an API and enter Player UID to begin scanning.</p>
+    <div class="text-center my-10">
+        <h1 class="ff-font text-4xl font-black text-yellow-500 italic">FF MASTER HUB</h1>
+        <p class="text-slate-500 text-xs tracking-widest mt-2 uppercase font-bold">Stats • Ban Check • Updates</p>
     </div>
 
-    <div class="max-w-xl mx-auto mb-16 bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-2xl">
-        <div class="flex flex-col md:flex-row gap-4">
-            <select id="region" class="bg-slate-800 p-4 rounded-xl border border-slate-700 outline-none font-bold">
-                <option value="IND">IND</option>
-                <option value="PK">PK</option>
-                <option value="BD">BD</option>
-            </select>
-            <input id="uidInput" type="text" placeholder="Enter Player UID..." 
-                   class="flex-1 p-4 rounded-xl bg-slate-950 border border-slate-700 focus:border-yellow-500 outline-none text-yellow-400 tracking-widest font-mono">
-        </div>
+    <div class="flex space-x-6 mb-10 bg-slate-900/50 p-2 rounded-xl border border-slate-800">
+        <button onclick="showTab('stats')" id="btn-stats" class="tab-btn active px-4 py-2 font-bold uppercase text-sm">Stats</button>
+        <button onclick="showTab('ban')" id="btn-ban" class="tab-btn px-4 py-2 font-bold uppercase text-sm">Ban Check</button>
+        <button onclick="showTab('updates')" id="btn-updates" class="tab-btn px-4 py-2 font-bold uppercase text-sm">Updates</button>
     </div>
 
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="w-full max-w-lg">
         
-        <div class="api-card p-6 rounded-3xl flex flex-col justify-between">
-            <div>
+        <div id="tab-content" class="glass p-8 rounded-3xl shadow-2xl border-t-2 border-yellow-500">
+            <div id="search-area">
+                <div class="flex gap-2 mb-4">
+                    <select id="region" class="bg-slate-800 p-3 rounded-xl border border-slate-700 outline-none font-bold text-sm">
+                        <option value="IND">IND</option>
+                        <option value="PK">PK</option>
+                        <option value="BD">BD</option>
+                    </select>
+                    <input id="uidInput" type="text" placeholder="Enter Player UID..." 
+                           class="flex-1 p-3 rounded-xl bg-slate-950 border border-slate-700 focus:border-yellow-500 outline-none text-yellow-400 font-mono">
+                </div>
+                <button onclick="processSearch()" id="mainBtn" class="ff-font w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-xl transition-all">START SCAN</button>
+            </div>
+
+            <div id="updates-area" class="hidden space-y-4 text-center">
+                <h3 class="text-yellow-500 font-bold italic underline">UPCOMING LEAKS (OB44)</h3>
+                <ul class="text-left text-sm space-y-3 text-slate-300">
+                    <li class="bg-slate-800/50 p-2 rounded border-l-2 border-yellow-500">🔥 New M1887 Evo Skin coming next month.</li>
+                    <li class="bg-slate-800/50 p-2 rounded border-l-2 border-yellow-500">❄️ Winter Event starts from Dec 15th.</li>
+                    <li class="bg-slate-800/50 p-2 rounded border-l-2 border-yellow-500">🤖 New Character: 'Sonia' Nerf incoming.</li>
+                </ul>
+                <p class="text-[10px] text-slate-500 italic mt-4">Data mined from Game Files.</p>
+            </div>
+
+            <div id="resultBox" class="hidden mt-8 pt-6 border-t border-slate-700">
                 <div class="flex justify-between items-center mb-4">
-                    <span class="text-xs bg-yellow-500 text-black px-2 py-1 rounded font-black uppercase">V1 Stable</span>
-                    <span class="text-green-500 text-[10px] font-bold">● ONLINE</span>
+                    <span id="badge" class="text-[10px] bg-green-600 px-2 py-1 rounded font-black">ACTIVE</span>
+                    <span id="resRegion" class="text-xs text-slate-500">REGION: PK</span>
                 </div>
-                <h3 class="ff-font text-xl mb-2">Jinix6 Stats</h3>
-                <p class="text-slate-400 text-sm mb-6">Fastest API for basic profile data and rank info.</p>
-            </div>
-            <button onclick="useApi('jinix', this)" class="w-full bg-slate-800 hover:bg-yellow-500 hover:text-black py-3 rounded-xl font-bold transition-all">USE THIS API</button>
-        </div>
-
-        <div class="api-card p-6 rounded-3xl flex flex-col justify-between border-l-4 border-l-blue-500">
-            <div>
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-xs bg-blue-500 text-white px-2 py-1 rounded font-black uppercase">Deep Scan</span>
-                    <span class="text-green-500 text-[10px] font-bold">● ONLINE</span>
-                </div>
-                <h3 class="ff-font text-xl mb-2">Ashqking Pro</h3>
-                <p class="text-slate-400 text-sm mb-6">Provides deeper insights like guild and badge details.</p>
-            </div>
-            <button onclick="useApi('ashq', this)" class="w-full bg-slate-800 hover:bg-blue-500 py-3 rounded-xl font-bold transition-all">USE THIS API</button>
-        </div>
-
-        <div class="api-card p-6 rounded-3xl flex flex-col justify-between border-l-4 border-l-purple-500">
-            <div>
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-xs bg-purple-500 text-white px-2 py-1 rounded font-black uppercase">Global</span>
-                    <span class="text-green-500 text-[10px] font-bold">● ONLINE</span>
-                </div>
-                <h3 class="ff-font text-xl mb-2">Multi-Region</h3>
-                <p class="text-slate-400 text-sm mb-6">Best for BR, RU, and other international servers.</p>
-            </div>
-            <button onclick="useApi('global', this)" class="w-full bg-slate-800 hover:bg-purple-500 py-3 rounded-xl font-bold transition-all">USE THIS API</button>
-        </div>
-
-    </div>
-
-    <div id="results" class="max-w-xl mx-auto mt-16 hidden">
-        <div class="bg-gradient-to-br from-slate-800 to-slate-950 p-8 rounded-3xl border border-yellow-500/30 relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl italic">FF</div>
-            <p class="text-yellow-500 text-xs font-bold uppercase tracking-widest mb-2">Scan Result</p>
-            <h2 id="resName" class="text-4xl font-black italic mb-1">---</h2>
-            <p id="resUidDisp" class="text-slate-500 font-mono mb-6">ID: 00000000</p>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-slate-900/50 p-4 rounded-2xl">
-                    <p class="text-slate-500 text-[10px] uppercase">Level</p>
-                    <p id="resLevel" class="text-2xl font-bold">00</p>
-                </div>
-                <div class="bg-slate-900/50 p-4 rounded-2xl">
-                    <p class="text-slate-500 text-[10px] uppercase">Region</p>
-                    <p id="resRegion" class="text-2xl font-bold text-yellow-500">--</p>
+                <h2 id="resName" class="text-3xl font-black italic text-white">---</h2>
+                <div class="flex justify-between mt-4 bg-slate-950/50 p-4 rounded-2xl">
+                    <div class="text-center">
+                        <p class="text-[10px] text-slate-500 uppercase">Level</p>
+                        <p id="resLevel" class="text-xl font-bold">--</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-[10px] text-slate-500 uppercase">Status</p>
+                        <p id="resStatus" class="text-xl font-bold text-green-500 underline">SAFE</p>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        const proxy = "https://api.allorigins.win/get?url=";
+        let currentTab = 'stats';
 
-        async function useApi(type, btn) {
+        function showTab(tab) {
+            currentTab = tab;
+            // UI Reset
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-' + tab).classList.add('active');
+            document.getElementById('resultBox').classList.add('hidden');
+            
+            if(tab === 'updates') {
+                document.getElementById('search-area').classList.add('hidden');
+                document.getElementById('updates-area').classList.remove('hidden');
+            } else {
+                document.getElementById('search-area').classList.remove('hidden');
+                document.getElementById('updates-area').classList.add('hidden');
+                document.getElementById('mainBtn').innerText = tab === 'stats' ? 'FETCH STATS' : 'CHECK BAN STATUS';
+            }
+        }
+
+        async function processSearch() {
             const uid = document.getElementById('uidInput').value.trim();
             const region = document.getElementById('region').value;
-            const results = document.getElementById('results');
+            const btn = document.getElementById('mainBtn');
+            const resBox = document.getElementById('resultBox');
 
-            if(!uid) return alert("UID likho bhai!");
+            if(!uid) return alert("UID likho mere bhai!");
 
-            // Button Loading
-            const originalText = btn.innerText;
-            btn.innerText = "FETCHING...";
+            btn.innerText = "SCANNING GARENA...";
             btn.disabled = true;
-            results.classList.add('hidden');
+            resBox.classList.add('hidden');
+
+            const proxy = "https://api.allorigins.win/get?url=";
+            const apiUrl = `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`;
+
+            try {
+                const resp = await fetch(proxy + encodeURIComponent(apiUrl));
+                const wrapper = await resp.json();
+                const data = JSON.parse(wrapper.contents);
+
+                if(data && data.basicInfo) {
+                    document.getElementById('resName').innerText = data.basicInfo.nickname;
+                    document.getElementById('resLevel').innerText = data.basicInfo.level;
+                    document.getElementById('resRegion').innerText = "REGION: " + region;
+                    
+                    // BAN CHECKER LOGIC
+                    if(currentTab === 'ban') {
+                        // Agar level zero ho ya profile na mile to aksar ban hota hai
+                        const isBanned = data.basicInfo.level < 1; 
+                        document.getElementById('resStatus').innerText = isBanned ? "BANNED" : "SAFE";
+                        document.getElementById('resStatus').className = isBanned ? "text-xl font-bold text-red-500" : "text-xl font-bold text-green-500";
+                        document.getElementById('badge').innerText = isBanned ? "TERMINATED" : "ACTIVE";
+                        document.getElementById('badge').className = isBanned ? "text-[10px] bg-red-600 px-2 py-1 rounded font-black" : "text-[10px] bg-green-600 px-2 py-1 rounded font-black";
+                    } else {
+                        document.getElementById('resStatus').innerText = "DATA FOUND";
+                        document.getElementById('resStatus').className = "text-xl font-bold text-blue-500";
+                    }
+
+                    resBox.classList.remove('hidden');
+                } else {
+                    alert("Player data not found! Check UID.");
+                }
+            } catch (e) {
+                alert("API Busy! Try again in 5 seconds.");
+            } finally {
+                btn.innerText = currentTab === 'stats' ? 'FETCH STATS' : 'CHECK BAN STATUS';
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
 
             let url = "";
             if(type === 'jinix') url = `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`;
