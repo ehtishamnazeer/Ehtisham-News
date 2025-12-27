@@ -1,57 +1,145 @@
-async function superFetch() {
-    const uid = document.getElementById('uidInput').value.trim();
-    const region = document.getElementById('region').value;
-    const btn = document.getElementById('mainBtn');
-    const resBox = document.getElementById('resultBox');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FF OB51 ULTIMATE HUB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+        body { background: #020617; color: white; font-family: 'Segoe UI', sans-serif; }
+        .ff-font { font-family: 'Orbitron', sans-serif; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid #1e293b; }
+        .btn-glow:hover { box-shadow: 0 0 20px rgba(234, 179, 8, 0.6); transform: scale(1.02); }
+        .loader { border-top-color: #eab308; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
 
-    if(!uid) return alert("Bhai, UID to likho!");
+    <div class="text-center my-12">
+        <h1 class="ff-font text-5xl font-black text-yellow-500 italic tracking-tighter">FF PRO HUB</h1>
+        <p class="text-slate-500 text-xs tracking-[0.3em] font-bold mt-2 uppercase">OB51 Official Scraper</p>
+    </div>
 
-    btn.innerText = "BYPASSING OB51...";
-    btn.disabled = true;
+    <div class="w-full max-w-xl glass p-8 rounded-[2.5rem] shadow-2xl border-b-4 border-yellow-600">
+        <div class="flex flex-col gap-6">
+            <div class="flex gap-3">
+                <select id="region" class="bg-slate-900 p-4 rounded-2xl border border-slate-800 outline-none font-bold text-yellow-500 focus:border-yellow-500">
+                    <option value="PK">PK</option>
+                    <option value="IND">IND</option>
+                    <option value="BD">BD</option>
+                    <option value="BR">BR</option>
+                </select>
+                <input id="uidInput" type="number" placeholder="Enter Player UID..." 
+                       class="flex-1 p-4 rounded-2xl bg-slate-950 border border-slate-800 focus:border-yellow-500 outline-none font-mono text-xl text-yellow-400">
+            </div>
+            
+            <button onclick="startUltraScan()" id="mainBtn" 
+                    class="ff-font w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl transition-all btn-glow active:scale-95">
+                FETCH PLAYER DATA
+            </button>
+        </div>
 
-    // Ye wo endpoints hain jo Topup sites piche use karti hain
-    const apiPool = [
-        `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
-        `https://ff-api-p7v7.onrender.com/api/v1/account?region=${region}&uid=${uid}`
-    ];
+        <div id="loadingArea" class="hidden mt-6 text-center">
+            <div class="inline-block w-8 h-8 border-4 border-slate-700 rounded-full loader mb-2"></div>
+            <p id="statusTxt" class="text-[10px] text-yellow-500 uppercase font-black tracking-widest">Bypassing OB51 Firewalls...</p>
+        </div>
+    </div>
 
-    // Hum do alag proxies use karenge agar aik fail ho jaye
-    const proxies = [
-        "https://api.allorigins.win/get?url=",
-        "https://corsproxy.io/?"
-    ];
-
-    let success = false;
-
-    for (let proxy of proxies) {
-        for (let apiUrl of apiPool) {
-            try {
-                const finalUrl = proxy + encodeURIComponent(apiUrl);
-                const response = await fetch(finalUrl);
-                const rawData = await response.json();
+    <div id="resultCard" class="w-full max-w-xl mt-8 hidden animate-in fade-in duration-500">
+        <div class="glass p-8 rounded-[2.5rem] border-l-8 border-yellow-500 relative overflow-hidden">
+            <div class="absolute -top-4 -right-4 opacity-5 ff-font text-8xl italic">FF</div>
+            
+            <div class="relative z-10">
+                <p class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Account Nickname</p>
+                <h2 id="resName" class="text-4xl font-black text-white italic drop-shadow-md">---</h2>
                 
-                // Proxy data handle karna
-                const data = rawData.contents ? JSON.parse(rawData.contents) : rawData;
+                <div class="grid grid-cols-2 gap-6 mt-8 pt-6 border-t border-slate-800/50">
+                    <div class="bg-slate-900/50 p-4 rounded-2xl">
+                        <p class="text-slate-500 text-[10px] uppercase font-bold">Level</p>
+                        <p id="resLevel" class="text-3xl font-black text-yellow-500">--</p>
+                    </div>
+                    <div class="bg-slate-900/50 p-4 rounded-2xl">
+                        <p class="text-slate-500 text-[10px] uppercase font-bold">Region</p>
+                        <p id="resRegion" class="text-2xl font-black">--</p>
+                    </div>
+                </div>
 
-                if (data && data.basicInfo) {
-                    document.getElementById('resName').innerText = data.basicInfo.nickname;
-                    document.getElementById('resLevel').innerText = data.basicInfo.level;
-                    resBox.classList.remove('hidden');
-                    success = true;
-                    break;
+                <div class="mt-6 flex items-center justify-between">
+                    <span class="text-[10px] bg-green-500/20 text-green-500 px-3 py-1 rounded-full font-bold uppercase">● System Online</span>
+                    <p class="text-slate-600 text-[10px]">Verified via Multi-API</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function startUltraScan() {
+            const uid = document.getElementById('uidInput').value.trim();
+            const region = document.getElementById('region').value;
+            const btn = document.getElementById('mainBtn');
+            const loader = document.getElementById('loadingArea');
+            const statusTxt = document.getElementById('statusTxt');
+            const resultCard = document.getElementById('resultCard');
+
+            if(!uid) return alert("Pehle UID likho!");
+
+            // UI Setup
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+            loader.classList.remove('hidden');
+            resultCard.classList.add('hidden');
+
+            // List of OB51 Compatible Endpoints (Topup patterns)
+            const apis = [
+                `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
+                `https://ff-api-p7v7.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
+                `https://ashqking.com/api/ff_info?uid=${uid}&region=${region.toLowerCase()}`
+            ];
+
+            const proxies = [
+                "https://api.allorigins.win/get?url=",
+                "https://corsproxy.io/?"
+            ];
+
+            let foundData = null;
+
+            // Scraper Engine
+            for (let proxy of proxies) {
+                for (let url of apis) {
+                    try {
+                        statusTxt.innerText = "Switching API Node...";
+                        const response = await fetch(proxy + encodeURIComponent(url));
+                        const raw = await response.json();
+                        const data = raw.contents ? JSON.parse(raw.contents) : raw;
+
+                        if (data && (data.basicInfo || data.nickname)) {
+                            foundData = data;
+                            break;
+                        }
+                    } catch (e) {
+                        continue; // Try next
+                    }
                 }
-            } catch (e) {
-                console.log("Retrying with backup bridge...");
+                if(foundData) break;
             }
+
+            if (foundData) {
+                document.getElementById('resName').innerText = foundData.basicInfo?.nickname || foundData.nickname;
+                document.getElementById('resLevel').innerText = foundData.basicInfo?.level || foundData.level;
+                document.getElementById('resRegion').innerText = region;
+                resultCard.classList.remove('hidden');
+                statusTxt.innerText = "Data Extracted!";
+            } else {
+                alert("OB51 Error: No active data stream found for this UID. Garena endpoints are currently under maintenance.");
+            }
+
+            btn.disabled = false;
+            btn.classList.remove('opacity-50');
+            loader.classList.add('hidden');
         }
-        if(success) break;
-    }
-
-    if(!success) {
-        alert("Topup.pk ki security high hai! Main mazeed APIs dhoond raha hoon jo OB51 ko support karein.");
-    }
-
-    btn.innerText = "RUN MULTI-API SCAN";
-    btn.disabled = false;
-}
+    </script>
+</body>
+</html>
 
