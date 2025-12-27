@@ -1,49 +1,57 @@
-<script>
-    async function superFetch() {
-        const uid = document.getElementById('uidInput').value.trim();
-        const region = document.getElementById('region').value;
-        const btn = document.getElementById('mainBtn');
-        const resBox = document.getElementById('resultBox');
+async function superFetch() {
+    const uid = document.getElementById('uidInput').value.trim();
+    const region = document.getElementById('region').value;
+    const btn = document.getElementById('mainBtn');
+    const resBox = document.getElementById('resultBox');
 
-        if(!uid) return alert("UID to dalo!");
+    if(!uid) return alert("Bhai, UID to likho!");
 
-        btn.innerText = "OB51 SCANNING...";
-        btn.disabled = true;
+    btn.innerText = "BYPASSING OB51...";
+    btn.disabled = true;
 
-        // OB51 Updated Endpoints
-        const apiPool = [
-            `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
-            `https://ff-api-v2.vercel.app/api/info?uid=${uid}&region=${region}`, // New V2 Endpoint
-            `https://ashqking.com/api/ff_info?uid=${uid}&region=${region.toLowerCase()}`
-        ];
+    // Ye wo endpoints hain jo Topup sites piche use karti hain
+    const apiPool = [
+        `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`,
+        `https://ff-api-p7v7.onrender.com/api/v1/account?region=${region}&uid=${uid}`
+    ];
 
-        const proxy = "https://api.allorigins.win/get?url=";
-        let found = false;
+    // Hum do alag proxies use karenge agar aik fail ho jaye
+    const proxies = [
+        "https://api.allorigins.win/get?url=",
+        "https://corsproxy.io/?"
+    ];
 
+    let success = false;
+
+    for (let proxy of proxies) {
         for (let apiUrl of apiPool) {
             try {
-                const response = await fetch(proxy + encodeURIComponent(apiUrl));
-                const wrapper = await response.json();
-                const data = JSON.parse(wrapper.contents);
+                const finalUrl = proxy + encodeURIComponent(apiUrl);
+                const response = await fetch(finalUrl);
+                const rawData = await response.json();
+                
+                // Proxy data handle karna
+                const data = rawData.contents ? JSON.parse(rawData.contents) : rawData;
 
-                if (data && (data.basicInfo || data.nickname)) {
-                    document.getElementById('resName').innerText = data.basicInfo?.nickname || data.nickname;
-                    document.getElementById('resLevel').innerText = data.basicInfo?.level || data.level;
+                if (data && data.basicInfo) {
+                    document.getElementById('resName').innerText = data.basicInfo.nickname;
+                    document.getElementById('resLevel').innerText = data.basicInfo.level;
                     resBox.classList.remove('hidden');
-                    found = true;
-                    break; 
+                    success = true;
+                    break;
                 }
             } catch (e) {
-                console.log("Switching to next OB51 API...");
+                console.log("Retrying with backup bridge...");
             }
         }
-
-        if(!found) {
-            alert("OB51 Security Alert: Public APIs are currently updating. Please try again after some time or check another UID.");
-        }
-
-        btn.innerText = "RUN BYPASS SCAN";
-        btn.disabled = false;
+        if(success) break;
     }
-</script>
+
+    if(!success) {
+        alert("Topup.pk ki security high hai! Main mazeed APIs dhoond raha hoon jo OB51 ko support karein.");
+    }
+
+    btn.innerText = "RUN MULTI-API SCAN";
+    btn.disabled = false;
+}
 
