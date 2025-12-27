@@ -3,174 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Pro Dashboard</title>
+    <title>FF Master Hub - Fixed</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
-        body { background: #020617; font-family: 'sans-serif'; color: white; }
+        body { background: #050505; color: white; font-family: sans-serif; }
         .ff-font { font-family: 'Orbitron', sans-serif; }
-        .glass { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .tab-btn.active { border-bottom: 4px solid #eab308; color: #eab308; }
+        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); border: 1px solid #333; }
+        .glow-btn { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4">
+<body class="min-h-screen p-4 flex flex-col items-center">
 
-    <div class="text-center my-10">
-        <h1 class="ff-font text-4xl font-black text-yellow-500 italic">FF MASTER HUB</h1>
-        <p class="text-slate-500 text-xs tracking-widest mt-2 uppercase font-bold">Stats • Ban Check • Updates</p>
+    <div class="my-10 text-center">
+        <h1 class="ff-font text-4xl text-yellow-500 italic">FF MASTER HUB</h1>
+        <p class="text-slate-500 text-[10px] tracking-widest uppercase font-bold mt-2">v3.0 - Bypass Edition</p>
     </div>
 
-    <div class="flex space-x-6 mb-10 bg-slate-900/50 p-2 rounded-xl border border-slate-800">
-        <button onclick="showTab('stats')" id="btn-stats" class="tab-btn active px-4 py-2 font-bold uppercase text-sm">Stats</button>
-        <button onclick="showTab('ban')" id="btn-ban" class="tab-btn px-4 py-2 font-bold uppercase text-sm">Ban Check</button>
-        <button onclick="showTab('updates')" id="btn-updates" class="tab-btn px-4 py-2 font-bold uppercase text-sm">Updates</button>
+    <div class="w-full max-w-lg glass p-6 rounded-3xl border-t-4 border-yellow-500 shadow-2xl">
+        <div class="flex flex-col gap-4">
+            <div class="flex gap-2">
+                <select id="region" class="bg-slate-900 p-4 rounded-xl border border-slate-700 outline-none font-bold text-yellow-500">
+                    <option value="PK">PK</option>
+                    <option value="IND">IND</option>
+                    <option value="BD">BD</option>
+                </select>
+                <input id="uidInput" type="text" placeholder="Enter Player UID..." 
+                       class="flex-1 p-4 rounded-xl bg-slate-950 border border-slate-700 focus:border-yellow-500 outline-none font-mono text-yellow-500 tracking-widest">
+            </div>
+            <button onclick="superFetch()" id="mainBtn" class="ff-font w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-xl transition-all glow-btn">
+                RUN BYPASS SCAN
+            </button>
+        </div>
+        <p id="loader" class="text-center mt-4 text-yellow-500 hidden animate-pulse font-bold text-[10px]">PENETRATING GARENA SECURITY...</p>
     </div>
 
-    <div class="w-full max-w-lg">
-        
-        <div id="tab-content" class="glass p-8 rounded-3xl shadow-2xl border-t-2 border-yellow-500">
-            <div id="search-area">
-                <div class="flex gap-2 mb-4">
-                    <select id="region" class="bg-slate-800 p-3 rounded-xl border border-slate-700 outline-none font-bold text-sm">
-                        <option value="IND">IND</option>
-                        <option value="PK">PK</option>
-                        <option value="BD">BD</option>
-                    </select>
-                    <input id="uidInput" type="text" placeholder="Enter Player UID..." 
-                           class="flex-1 p-3 rounded-xl bg-slate-950 border border-slate-700 focus:border-yellow-500 outline-none text-yellow-400 font-mono">
+    <div id="resultBox" class="w-full max-w-lg mt-8 hidden">
+        <div class="glass p-8 rounded-3xl border-l-8 border-yellow-500">
+            <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">Nickname</p>
+            <h2 id="resName" class="text-4xl font-black italic mb-4">---</h2>
+            <div class="grid grid-cols-2 gap-4 border-t border-slate-800 pt-6">
+                <div>
+                    <p class="text-slate-500 text-[10px] uppercase">Level</p>
+                    <p id="resLevel" class="text-2xl font-bold">--</p>
                 </div>
-                <button onclick="processSearch()" id="mainBtn" class="ff-font w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-xl transition-all">START SCAN</button>
-            </div>
-
-            <div id="updates-area" class="hidden space-y-4 text-center">
-                <h3 class="text-yellow-500 font-bold italic underline">UPCOMING LEAKS (OB44)</h3>
-                <ul class="text-left text-sm space-y-3 text-slate-300">
-                    <li class="bg-slate-800/50 p-2 rounded border-l-2 border-yellow-500">🔥 New M1887 Evo Skin coming next month.</li>
-                    <li class="bg-slate-800/50 p-2 rounded border-l-2 border-yellow-500">❄️ Winter Event starts from Dec 15th.</li>
-                    <li class="bg-slate-800/50 p-2 rounded border-l-2 border-yellow-500">🤖 New Character: 'Sonia' Nerf incoming.</li>
-                </ul>
-                <p class="text-[10px] text-slate-500 italic mt-4">Data mined from Game Files.</p>
-            </div>
-
-            <div id="resultBox" class="hidden mt-8 pt-6 border-t border-slate-700">
-                <div class="flex justify-between items-center mb-4">
-                    <span id="badge" class="text-[10px] bg-green-600 px-2 py-1 rounded font-black">ACTIVE</span>
-                    <span id="resRegion" class="text-xs text-slate-500">REGION: PK</span>
-                </div>
-                <h2 id="resName" class="text-3xl font-black italic text-white">---</h2>
-                <div class="flex justify-between mt-4 bg-slate-950/50 p-4 rounded-2xl">
-                    <div class="text-center">
-                        <p class="text-[10px] text-slate-500 uppercase">Level</p>
-                        <p id="resLevel" class="text-xl font-bold">--</p>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-[10px] text-slate-500 uppercase">Status</p>
-                        <p id="resStatus" class="text-xl font-bold text-green-500 underline">SAFE</p>
-                    </div>
+                <div>
+                    <p class="text-slate-500 text-[10px] uppercase">Status</p>
+                    <p id="resStatus" class="text-2xl font-bold text-green-500">SAFE</p>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
-        let currentTab = 'stats';
-
-        function showTab(tab) {
-            currentTab = tab;
-            // UI Reset
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('btn-' + tab).classList.add('active');
-            document.getElementById('resultBox').classList.add('hidden');
-            
-            if(tab === 'updates') {
-                document.getElementById('search-area').classList.add('hidden');
-                document.getElementById('updates-area').classList.remove('hidden');
-            } else {
-                document.getElementById('search-area').classList.remove('hidden');
-                document.getElementById('updates-area').classList.add('hidden');
-                document.getElementById('mainBtn').innerText = tab === 'stats' ? 'FETCH STATS' : 'CHECK BAN STATUS';
-            }
-        }
-
-        async function processSearch() {
+        async function superFetch() {
             const uid = document.getElementById('uidInput').value.trim();
             const region = document.getElementById('region').value;
             const btn = document.getElementById('mainBtn');
-            const resBox = document.getElementById('resultBox');
+            const loader = document.getElementById('loader');
+            const resultBox = document.getElementById('resultBox');
 
-            if(!uid) return alert("UID likho mere bhai!");
+            if(!uid) return alert("UID to likho bhai!");
 
-            btn.innerText = "SCANNING GARENA...";
             btn.disabled = true;
-            resBox.classList.add('hidden');
+            loader.classList.remove('hidden');
+            resultBox.classList.add('hidden');
 
-            const proxy = "https://api.allorigins.win/get?url=";
+            // --- THE BYPASS LOGIC ---
+            // Hum multiple proxies try karenge
+            const proxies = [
+                "https://api.allorigins.win/get?url=",
+                "https://thingproxy.freeboard.io/fetch/",
+                "https://corsproxy.io/?"
+            ];
+
             const apiUrl = `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`;
+            let success = false;
 
-            try {
-                const resp = await fetch(proxy + encodeURIComponent(apiUrl));
-                const wrapper = await resp.json();
-                const data = JSON.parse(wrapper.contents);
-
-                if(data && data.basicInfo) {
-                    document.getElementById('resName').innerText = data.basicInfo.nickname;
-                    document.getElementById('resLevel').innerText = data.basicInfo.level;
-                    document.getElementById('resRegion').innerText = "REGION: " + region;
+            for (let proxy of proxies) {
+                try {
+                    console.log("Trying with: " + proxy);
+                    const response = await fetch(proxy + encodeURIComponent(apiUrl));
+                    const rawData = await response.json();
                     
-                    // BAN CHECKER LOGIC
-                    if(currentTab === 'ban') {
-                        // Agar level zero ho ya profile na mile to aksar ban hota hai
-                        const isBanned = data.basicInfo.level < 1; 
-                        document.getElementById('resStatus').innerText = isBanned ? "BANNED" : "SAFE";
-                        document.getElementById('resStatus').className = isBanned ? "text-xl font-bold text-red-500" : "text-xl font-bold text-green-500";
-                        document.getElementById('badge').innerText = isBanned ? "TERMINATED" : "ACTIVE";
-                        document.getElementById('badge').className = isBanned ? "text-[10px] bg-red-600 px-2 py-1 rounded font-black" : "text-[10px] bg-green-600 px-2 py-1 rounded font-black";
-                    } else {
-                        document.getElementById('resStatus').innerText = "DATA FOUND";
-                        document.getElementById('resStatus').className = "text-xl font-bold text-blue-500";
+                    // AllOrigins wrapper handle karna
+                    let data = rawData.contents ? JSON.parse(rawData.contents) : rawData;
+
+                    if (data && data.basicInfo) {
+                        document.getElementById('resName').innerText = data.basicInfo.nickname;
+                        document.getElementById('resLevel').innerText = data.basicInfo.level;
+                        resultBox.classList.remove('hidden');
+                        success = true;
+                        break;
                     }
-
-                    resBox.classList.remove('hidden');
-                } else {
-                    alert("Player data not found! Check UID.");
+                } catch (e) {
+                    console.warn("Proxy failed, switching...");
                 }
-            } catch (e) {
-                alert("API Busy! Try again in 5 seconds.");
-            } finally {
-                btn.innerText = currentTab === 'stats' ? 'FETCH STATS' : 'CHECK BAN STATUS';
-                btn.disabled = false;
             }
-        }
-    </script>
-</body>
-</html>
 
-            let url = "";
-            if(type === 'jinix') url = `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=${region}&uid=${uid}`;
-            if(type === 'ashq') url = `https://ashqking.com/api/ff_info?uid=${uid}&region=${region.toLowerCase()}`;
-            if(type === 'global') url = `https://free-ff-api-src-5plp.onrender.com/api/v1/account?region=BR&uid=${uid}`;
+            if(!success) alert("Sari APIs block hain! Shayad Garena ne internal port change kar diya hai. Thori der baad try karo.");
 
-            try {
-                const resp = await fetch(proxy + encodeURIComponent(url));
-                const wrapper = await resp.json();
-                const data = JSON.parse(wrapper.contents);
-
-                if(data && (data.basicInfo || data.nickname)) {
-                    document.getElementById('resName').innerText = data.basicInfo?.nickname || data.nickname;
-                    document.getElementById('resLevel').innerText = data.basicInfo?.level || data.level;
-                    document.getElementById('resUidDisp').innerText = "ID: " + (data.basicInfo?.accountId || uid);
-                    document.getElementById('resRegion').innerText = region;
-                    results.classList.remove('hidden');
-                } else {
-                    alert("Data not found on this API!");
-                }
-            } catch (e) {
-                alert("API Error! Try another card.");
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }
+            btn.disabled = false;
+            loader.classList.add('hidden');
         }
     </script>
 </body>
